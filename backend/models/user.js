@@ -20,6 +20,9 @@ const user = sequelize.define('user', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    image: {
+        type: DataTypes.STRING,
+    },
     role: {
         type: DataTypes.INTEGER,
         defaultValue: 2
