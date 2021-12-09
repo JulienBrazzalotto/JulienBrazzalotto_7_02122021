@@ -30,9 +30,11 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash =>{
             user.create({
-                pseudo: req.body.pseudo,
+                nom: req.body.nom,
+                prenom: req.body.prenom,
                 email: req.body.email,
-                password: hash
+                password: hash,
+                role: req.body.role
             })
                 .then(() => res.status(201).json({message: 'Utilisateur créé !'}))
                 .catch(error => res.status(400).json({error}));
