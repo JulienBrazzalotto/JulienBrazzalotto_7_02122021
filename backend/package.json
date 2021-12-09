@@ -1,10 +1,9 @@
 {
   "name": "JulienBrazzalotto_7_02122021",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Groupomania",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brazzalotto",
   "license": "Apache-2.0",
