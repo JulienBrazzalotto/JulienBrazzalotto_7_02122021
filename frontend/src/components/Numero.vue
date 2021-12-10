@@ -9,3 +9,11 @@
     </ul>
 </template>
 
+
+<style scoped>
+ul {
+    display: flex;
+    flex-direction: column;
+}
+</style>
+
