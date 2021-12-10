@@ -1,21 +1,26 @@
 <template>
   <section id="app" class="app">
-    <nav class="nav">
-    <Header/>
-    </nav>
-    <router-view/>
+    <div class="nav">
+      <Header />
+    </div>
+    <router-view />
+    <div>
+      <Footer />
+    </div>
   </section>
 </template>
 
 <script>
-import Header from './components/Header'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Header
-  }
-}
+    Header,
+    Footer
+  },
+};
 </script>
 
 
@@ -41,6 +46,6 @@ export default {
 }
 
 .nav a.router-link-exact-active {
-  color: #FD2D01;
+  color: #fd2d01;
 }
 </style>

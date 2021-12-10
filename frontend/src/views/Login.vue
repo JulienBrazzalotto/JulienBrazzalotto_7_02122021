@@ -9,7 +9,7 @@
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="password" name="password" class="password" placeholder="Password" required>
+          <input type="text" name="password" class="password" placeholder="Password" required>
         </li>
         <li>
           <button type="submit">Se connecter</button>
