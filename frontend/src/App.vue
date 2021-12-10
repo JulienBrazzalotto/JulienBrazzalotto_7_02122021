@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Header from './components/Header.vue'
+import Header from './components/Header'
 
 export default {
   name: 'App',
@@ -20,10 +20,6 @@ export default {
 
 
 <style>
-body{
-  margin: 0;
-}
-
 .app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,12 +29,8 @@ body{
   color: #000000;
 }
 
-.padding {
-  padding-left: 10px;
-}
-
 .nav {
-  padding: 30px;
+  padding: 50px;
   font-size: 1rem;
   justify-content: center;
 }

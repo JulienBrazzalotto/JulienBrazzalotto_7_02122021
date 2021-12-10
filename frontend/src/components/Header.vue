@@ -17,11 +17,6 @@
 
 
 <style scoped>
-
-body{
-  margin: 0;
-}
-
 header {
     display: flex;
     align-items: center;
@@ -31,4 +26,11 @@ header {
 img {
     height: 5vw;
 }
+
+.padding {
+  padding-left: 50px;
+  font-size: 1.3vw;
+  text-decoration: none;
+}
+
 </style>
