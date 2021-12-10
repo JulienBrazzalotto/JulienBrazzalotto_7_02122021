@@ -27,14 +27,14 @@ CREATE TABLE Users
 )
 ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Comment
+CREATE TABLE Comments
 (
   id            SMALLINT        UNSIGNED      PRIMARY KEY   AUTO_INCREMENT,
   content       TEXT            NOT NULL,
   created_date  DATETIME        NOT NULL,
   article_id    SMALLINT        UNSIGNED      NOT NULL,
   user_id       SMALLINT        UNSIGNED      NOT NULL,
-  CONSTRAINT    fk_article_id   FOREIGN KEY   (article_id)  REFERENCES      Article(id),
+  CONSTRAINT    fk_article_id   FOREIGN KEY   (article_id)  REFERENCES      Articles(id),
   CONSTRAINT    fk_user_id      FOREIGN KEY   (user_id)     REFERENCES      Users(id)
 )
 ENGINE=INNODB DEFAULT CHARSET=utf8;

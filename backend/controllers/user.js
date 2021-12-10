@@ -47,6 +47,7 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
     user.findOne({ where: {email: req.body.email} })
+    
         .then(user => {
 
             if (!user) {
@@ -74,5 +75,11 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({error}));
 };
 
+exports.delete = (req, res, next) => {
+    user.destroy({ where: {id: req.params.id} })
+
+        .then(() => res.status(201).json({message: 'Utilisateur supprimé !'}))
+        .catch(error => res.status(400).json({error}));
+}
 
 
