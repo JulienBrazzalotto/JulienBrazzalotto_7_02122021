@@ -5,7 +5,7 @@
 <style scoped>
 h1 {
   color: #fd2d01;
-  padding-top: 200px;
+  padding: 200px 0 200px 0;
   font-size: 2rem;
 }
 </style>

@@ -5,17 +5,15 @@
       <ul>
         <li>
           <label for="email">Email</label>
-          <input type="email" name="email" class="email" placeholder="Email" required>
+          <input type="email" name="email" class="email" placeholder="Email" size="50" required>
         </li>
         <li>
           <label for="password">Password</label>
-          <input type="text" name="password" class="password" placeholder="Password" required>
+          <input type="password" name="password" class="password" placeholder="Password" size="50" required>
         </li>
-        <li>
-          <button type="submit">Se connecter</button>
-        </li>
-      </ul>
+      </ul>  
     </form>
+    <button type="submit">Se connecter</button>
   </div>
 </template>
 
@@ -56,5 +54,6 @@ button {
   border-radius: 10px;
   background: #ffd7d7;
   font-size: 1rem;
+  cursor: pointer;
 }
 </style>

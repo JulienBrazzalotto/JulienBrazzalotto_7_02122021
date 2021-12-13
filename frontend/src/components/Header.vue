@@ -3,10 +3,10 @@
     <a href="/">
       <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
     </a>
-    <div>
-      <router-link to="/signup" class="padding">Inscription</router-link>
-      <router-link to="/login" class="padding">Se connecter</router-link>
-    </div>
+    <nav>
+      <router-link to="/signup" class="link">Inscription</router-link>
+      <router-link to="/login" class="link">Se connecter</router-link>
+    </nav>
   </header>
 </template>
 
@@ -27,9 +27,16 @@ img {
   height: 5vw;
 }
 
-.padding {
+.link {
   padding-left: 50px;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
   text-decoration: none;
 }
+
+.link:hover {
+  color: #fd2d01;
+
+}
+
+
 </style>
