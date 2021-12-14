@@ -5,35 +5,71 @@
       <ul>
         <li>
           <label for="nom">Nom :</label>
-          <input type="text" name="nom" class="input" placeholder="Nom" size="50" required>
+          <input type="text" v-model="nom" class="input" placeholder="Nom" size="50" required>
         </li>
         <li>
           <label for="prenom">Prénom :</label>
-          <input type="text" name="prenom" class="input" placeholder="Prénom" size="50" required>
+          <input type="text" v-model="prenom" class="input" placeholder="Prénom" size="50" required>
         </li>
         <li>
           <label for="email">Email :</label>
-          <input type="email" name="email" class="input" placeholder="Email" size="50" required>
+          <input type="email" v-model="email" class="input" placeholder="Email" size="50" required>
         </li>
         <li>
           <label for="password">Password :</label>
-          <input type="password" name="password" class="input" placeholder="Password" size="50" required>
-        </li>
-        <li>
-          <button type="submit">S'inscrire</button>
+          <input type="password" v-model="password" class="input" placeholder="Password" size="50" required>
         </li>
       </ul>
-    </form>
+    </form>   
+    <button @click="submit()" type="submit">S'inscrire</button>
   </div>
 </template>
 
+<script>
+export default {
+  name: 'signup',
+  data() {
+    return {
+      nom: '',
+      prenom: '',
+      image: '',
+      email: '',
+      password: '',
+    }
+  },
+
+  methods: {
+    submit() {
+      let data = {
+          nom: this.nom,
+          prenom: this.prenom,
+          email: this.email,
+          password: this.password
+      };
+
+      fetch("http://localhost:3000/api/auth/signup", {
+
+          method: "POST",
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(function(response){
+          return response.json(); 
+      })
+
+      .catch(error => console.log(error))
+
+    }
+  }
+}
+</script>
+
+
 
 <style scoped>
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 h2 {
   width: 30%;
@@ -47,9 +83,11 @@ list-style: none;
 padding: 0;
 }
 
-.input {
-  margin: 30px 0 0 20px;
-  align-items: flex-end;
+li {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 30px;
 }
 
 button {
@@ -61,4 +99,11 @@ button {
   font-size: 1rem;
   cursor: pointer;
 }
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>

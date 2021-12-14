@@ -4,19 +4,60 @@
     <form>
       <ul>
         <li>
-          <label for="email">Email</label>
-          <input type="email" name="email" class="email" placeholder="Email" size="50" required>
+          <label for="email">Email :</label>
+          <input type="email" v-model="email" class="email" placeholder="Email" size="50" required>
         </li>
         <li>
-          <label for="password">Password</label>
-          <input type="password" name="password" class="password" placeholder="Password" size="50" required>
+          <label for="password">Password :</label>
+          <input type="password" v-model="password" class="password" placeholder="Password" size="50" required>
         </li>
       </ul>  
     </form>
-    <button type="submit">Se connecter</button>
+    <button @click="submit()" type="submit">Se connecter</button>
   </div>
 </template>
 
+<script>
+export default {
+  name: 'login',
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+
+  methods: {
+    submit() {
+        
+      let data = {
+          email: this.email,
+          password: this.password
+      };
+
+      fetch("http://localhost:3000/api/auth/login",
+      {
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify(data)
+      })
+      .then(function(response){
+          return response.json(); //transforme la réponse en json pour être lu par le javascript
+      })
+
+      .then(function(value){
+          const user = JSON.stringify(value);
+          localStorage.setItem("user", user);
+          window.location.href='http://localhost:8080/AllPosts';
+      })
+      .catch(error => console.log(error))
+    }
+  }
+}
+</script>
 
 
 
@@ -42,9 +83,11 @@ list-style: none;
 padding: 0;
 }
 
-.email,
-.password {
-  margin: 30px 0 0 20px;
+li {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 30px;
 }
 
 button {
