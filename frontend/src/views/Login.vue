@@ -4,11 +4,9 @@
     <form>
       <ul>
         <li>
-          <label for="email">Email :</label>
           <input type="email" v-model="email" class="email" placeholder="Email" size="50" required>
         </li>
         <li>
-          <label for="password">Password :</label>
           <input type="password" v-model="password" class="password" placeholder="Password" size="50" required>
         </li>
       </ul>  
@@ -19,7 +17,6 @@
 
 <script>
 export default {
-  name: 'login',
   data() {
     return {
       email: '',
@@ -35,25 +32,35 @@ export default {
           password: this.password
       };
 
-      fetch("http://localhost:3000/api/auth/login",
-      {
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          },
-          method: "POST",
-          body: JSON.stringify(data)
-      })
-      .then(function(response){
-          return response.json(); //transforme la réponse en json pour être lu par le javascript
-      })
-
-      .then(function(value){
-          const user = JSON.stringify(value);
+        fetch("http://localhost:3000/api/auth/login",
+        {
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+        
+        .then(response => {
+          if(response.ok) {
+           return response.json()
+          } else {
+            return response.text()
+            .then((text) => {
+              throw new Error(text)}
+            )
+          }
+        })  
+          
+        .then((value) => {
+          const user = JSON.stringify(value.token);
           localStorage.setItem("user", user);
-          window.location.href='http://localhost:8080/AllPosts';
-      })
-      .catch(error => console.log(error))
+          this.$router.push("/allposts");
+          }
+        )
+
+        .catch(alert)
     }
   }
 }
@@ -98,5 +105,9 @@ button {
   background: #ffd7d7;
   font-size: 1rem;
   cursor: pointer;
+}
+
+::placeholder {
+  text-align: center;
 }
 </style>

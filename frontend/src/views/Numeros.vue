@@ -43,13 +43,13 @@ ul {
     align-items: center;
     list-style: none;
     padding: 0 40px 0 40px;
-    border: 2px solid #000000;
+    border: 2px solid #fd2d01;
 }
 
 li {
     padding: 15px 0 15px 0;
     font-size: 1.2rem;
-    color: #fd2d01;
+    color: #000000;
 }
 
 .numéro {

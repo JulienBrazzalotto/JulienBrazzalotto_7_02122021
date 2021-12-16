@@ -13,7 +13,6 @@ schema
   .has().uppercase()
   .has().lowercase()
   .has().digits(1)
-  .has().not().spaces();
 
 
 
@@ -23,7 +22,7 @@ exports.signup = (req, res, next) => {
     }
 
     if (!schema.validate(req.body.password)){
-        return res.status(401).json({message: 'Le mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule et ne possédant pas d\'espace !!!'});
+        return res.status(401).json({message: 'Le mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!'});
     };
 
     
@@ -51,14 +50,14 @@ exports.login = (req, res, next) => {
         .then(user => {
 
             if (!user) {
-                return res.status(401).json({error: 'Utilisateur non trouvé !'});
+                return res.status(401).json('Utilisateur non trouvé !');
             }
             
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
 
                     if (!valid) {
-                        return res.status(401).json({error: 'Mot de passe incorrect !'});
+                        return res.status(401).json('Mot de passe incorrect !');
                     }
 
                     res.status(200).json({
@@ -68,7 +67,7 @@ exports.login = (req, res, next) => {
                         image: user.image,
                         role: user.role,
                         token: jwt.sign(
-                            {userId: user.id},
+                            {id: user.id},
                             process.env.TOKEN, 
                             {expiresIn: '24h'} 
                         )

@@ -1,9 +1,9 @@
 <template>
-  <section id="app" class="app">
+  <section class="app">
     <div class="nav">
       <Header />
     </div>
-    <router-view />
+    <router-view></router-view>
     <div>
       <Footer />
     </div>

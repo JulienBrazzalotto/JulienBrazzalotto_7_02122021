@@ -4,19 +4,15 @@
     <form>
       <ul>
         <li>
-          <label for="nom">Nom :</label>
           <input type="text" v-model="nom" class="input" placeholder="Nom" size="50" required>
         </li>
         <li>
-          <label for="prenom">Prénom :</label>
           <input type="text" v-model="prenom" class="input" placeholder="Prénom" size="50" required>
         </li>
         <li>
-          <label for="email">Email :</label>
           <input type="email" v-model="email" class="input" placeholder="Email" size="50" required>
         </li>
         <li>
-          <label for="password">Password :</label>
           <input type="password" v-model="password" class="input" placeholder="Password" size="50" required>
         </li>
       </ul>
@@ -27,12 +23,11 @@
 
 <script>
 export default {
-  name: 'signup',
+  
   data() {
     return {
       nom: '',
       prenom: '',
-      image: '',
       email: '',
       password: '',
     }
@@ -47,21 +42,49 @@ export default {
           password: this.password
       };
 
-      fetch("http://localhost:3000/api/auth/signup", {
+      const regexText = /^[a-zA-Z-\s]+$/;
+      const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/; // eslint-disable-line
+      const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{3,50}$/;
 
-          method: "POST",
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-      })
-      .then(function(response){
-          return response.json(); 
-      })
+      if (this.nom === "") {
+          alert("Veuillez remplir votre nom");
+      } else if (regexText.test(this.nom) === false) {
+          alert("Veuillez vérifier que l'écriture de votre nom soit uniquement en lettre");}
+      
+      if (this.prenom === "") {
+          alert("Veuillez remplir votre prénom");
+      } else if (regexText.test(this.prenom) === false) {
+          alert("Veuillez vérifier que l'écriture de votre prénom soit uniquement en lettre");}
 
-      .catch(error => console.log(error))
+      if (this.email === "") {
+          alert("Veuillez remplir votre adresse email");
+      } else if (regexEmail.test(this.email) === false) {
+          alert("Veuillez écrire une adresse email valide");}
 
+      if (this.password === "") {
+          alert("Veuillez remplir votre mot de passe");
+      } else if (regexPassword.test(this.password) === false) {
+          alert("Veuillez vérifier l'écriture de votre mot de passe, il doit contenir une majuscule, une minuscule ainsi qu'un chiffre");
+
+      }else if ((regexText.test(this.nom) === true) || regexText.test(this.prenom) === true || regexEmail.test(this.email) === true || regexPassword.test(this.password) === true ) {
+          alert("Votre inscription est bien prise en compte");
+
+          fetch("http://localhost:3000/api/auth/signup", {
+              method: "POST",
+              headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          })
+          .then((response) => {
+              return response.json();
+          })
+          .catch(error => console.log(error))
+
+          this.$router.push("/login");
+
+      }
     }
   }
 }
@@ -91,7 +114,7 @@ li {
 }
 
 button {
-  margin-top: 60px;
+  margin-top: 10px;
   padding: 5px 30px ;
   border: 2px solid #fd2d01;
   border-radius: 10px;
@@ -104,6 +127,10 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+::placeholder {
+  text-align: center;
 }
 
 </style>

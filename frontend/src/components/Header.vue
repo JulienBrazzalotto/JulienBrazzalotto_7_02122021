@@ -11,11 +11,6 @@
 </template>
 
 
-
-
-
-
-
 <style scoped>
 header {
   display: flex;
