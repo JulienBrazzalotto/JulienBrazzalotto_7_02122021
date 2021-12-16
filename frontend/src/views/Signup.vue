@@ -1,30 +1,42 @@
 <template>
-  <div class="login">
-    <h2>Inscription</h2>
-    <form>
-      <ul>
-        <li>
-          <input type="text" v-model="nom" class="input" placeholder="Nom" size="50" required>
-        </li>
-        <li>
-          <input type="text" v-model="prenom" class="input" placeholder="Prénom" size="50" required>
-        </li>
-        <li>
-          <input type="email" v-model="email" class="input" placeholder="Email" size="50" required>
-        </li>
-        <li>
-          <input type="password" v-model="password" class="input" placeholder="Password" size="50" required>
-        </li>
-      </ul>
-    </form>   
-    <button @click="signup()" type="submit">S'inscrire</button>
+  <div>
+    <Header />
+    <div class="signup">
+      <h1>Inscription</h1>
+      <form>
+        <ul>
+          <li>
+            <input type="text" v-model="nom" class="input" placeholder="Nom" size="50" required>
+          </li>
+          <li>
+            <input type="text" v-model="prenom" class="input" placeholder="Prénom" size="50" required>
+          </li>
+          <li>
+            <input type="email" v-model="email" class="input" placeholder="Email" size="50" required>
+          </li>
+          <li>
+            <input type="password" v-model="password" class="input" placeholder="Password" size="50" required>
+          </li>
+        </ul>
+      </form>   
+      <button @click="signup()" type="submit">S'inscrire</button>
+    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default {
+
   name: 'signup',
+  components: {
+    Header,
+    Footer
+  },
+
   data() {
     return {
       nom: '',
@@ -125,7 +137,7 @@ button {
   cursor: pointer;
 }
 
-.login {
+.signup {
   display: flex;
   flex-direction: column;
   align-items: center;

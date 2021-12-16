@@ -1,23 +1,35 @@
 <template>
-  <div class="login">
-    <h2>Se connecter</h2>
-    <form>
-      <ul>
-        <li>
-          <input type="email" v-model="email" class="email" placeholder="Email" size="50" required>
-        </li>
-        <li>
-          <input type="password" v-model="password" class="password" placeholder="Password" size="50" required>
-        </li>
-      </ul>  
-    </form>
-    <button @click="login()" type="submit">Se connecter</button>
+  <div>
+    <Header />
+    <div class="login">
+      <h1>Se connecter</h1>
+      <form>
+        <ul>
+          <li>
+            <input type="email" v-model="email" class="email" placeholder="Email" size="50" required>
+          </li>
+          <li>
+            <input type="password" v-model="password" class="password" placeholder="Password" size="50" required>
+          </li>
+        </ul>  
+      </form>
+      <button @click="login()" type="submit">Se connecter</button>
+    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 export default {
-  name: 'Login',
+  name: 'login',
+  components: {
+    Header,
+    Footer
+  },
+
   data() {
     return {
       email: '',

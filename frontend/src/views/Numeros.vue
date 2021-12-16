@@ -1,42 +1,59 @@
 <template>
-    <div class="numéro">
-        <ul>
-            <li>
-                Accueil : 7000
-            </li>
-            <li>
-                Secrétariat : 7001
-            </li>
-            <li>
-                Poste de secours : 7002
-            </li>
-            <li>
-                Service technique : 7003
-            </li>
-            <li>
-                Service DRH : 7004
-            </li>
-            <li>
-                Service de paie : 7005
-            </li>
-            <li>
-                Service logistique : 7006
-            </li>
-            <li>
-                Service Comité d'Entreprise : 7007
-            </li>
-        </ul>
+    <div>
+        <Header />
+        <div class="numéro">
+            <h1>Numéros utiles :</h1>
+            <ul>
+                <li>
+                    Accueil : 7000
+                </li>
+                <li>
+                    Secrétariat : 7001
+                </li>
+                <li>
+                    Poste de secours : 7002
+                </li>
+                <li>
+                    Service technique : 7003
+                </li>
+                <li>
+                    Service DRH : 7004
+                </li>
+                <li>
+                    Service de paie : 7005
+                </li>
+                <li>
+                    Service logistique : 7006
+                </li>
+                <li>
+                    Service Comité d'Entreprise : 7007
+                </li>
+            </ul>
+        </div>
+        <Footer />
     </div>
 </template>
 
+<script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-
-
-
-
-
+export default {
+  name: 'home',
+  components: {
+    Header,
+    Footer
+  }
+}
+</script>
 
 <style scoped>
+
+h1 {
+    color: #fd2d01;
+    font-size: 1.6rem;
+}
+
 ul {
     display: flex;
     flex-direction: column;
@@ -54,7 +71,8 @@ li {
 
 .numéro {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 </style>
