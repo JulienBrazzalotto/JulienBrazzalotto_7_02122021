@@ -3,6 +3,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 const user = sequelize.define('user', {
 
+    
     nom: {
         type: DataTypes.STRING,
         allowNull: false
@@ -20,10 +21,16 @@ const user = sequelize.define('user', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    image: {
+        type: DataTypes.STRING,
+    },
     role: {
         type: DataTypes.INTEGER,
         defaultValue: 2
-    }
+    }    
+},
+{
+    timestamps: false
 })
 
 module.exports = user;
