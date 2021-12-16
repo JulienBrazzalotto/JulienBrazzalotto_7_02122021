@@ -17,13 +17,14 @@
         </li>
       </ul>
     </form>   
-    <button @click="submit()" type="submit">S'inscrire</button>
+    <button @click="signup()" type="submit">S'inscrire</button>
   </div>
 </template>
 
 <script>
+
 export default {
-  
+  name: 'signup',
   data() {
     return {
       nom: '',
@@ -34,7 +35,7 @@ export default {
   },
 
   methods: {
-    submit() {
+    signup() {
       let data = {
           nom: this.nom,
           prenom: this.prenom,
@@ -64,7 +65,7 @@ export default {
       if (this.password === "") {
           alert("Veuillez remplir votre mot de passe");
       } else if (regexPassword.test(this.password) === false) {
-          alert("Veuillez vérifier l'écriture de votre mot de passe, il doit contenir une majuscule, une minuscule ainsi qu'un chiffre");
+          alert("Veuillez vérifier l'écriture de votre mot de passe, il doit contenir au moins une majuscule, une minuscule ainsi qu'un chiffre");
 
       }else if ((regexText.test(this.nom) === true) || regexText.test(this.prenom) === true || regexEmail.test(this.email) === true || regexPassword.test(this.password) === true ) {
           alert("Votre inscription est bien prise en compte");
@@ -83,6 +84,7 @@ export default {
           .catch(error => console.log(error))
 
           this.$router.push("/login");
+          
 
       }
     }

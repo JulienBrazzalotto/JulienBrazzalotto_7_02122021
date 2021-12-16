@@ -8,7 +8,7 @@
             <a href="/"><img src="../assets/images/icon-above-font.png" alt="Logo Groupomania"></a>
         </li>
         <li>
-            <a href="mailto:admin@groupomania.com"> Contact</a>
+            <a href="mailto:admin@groupomania.com"> Contacter l'administrateur</a>
         </li>
     </ul>
   </footer>

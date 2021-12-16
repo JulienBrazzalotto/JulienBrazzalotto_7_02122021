@@ -11,12 +11,13 @@
         </li>
       </ul>  
     </form>
-    <button @click="submit()" type="submit">Se connecter</button>
+    <button @click="login()" type="submit">Se connecter</button>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Login',
   data() {
     return {
       email: '',
@@ -25,42 +26,42 @@ export default {
   },
 
   methods: {
-    submit() {
+    login() {
         
       let data = {
           email: this.email,
           password: this.password
       };
 
-        fetch("http://localhost:3000/api/auth/login",
-        {
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(data)
-        })
+      fetch("http://localhost:3000/api/auth/login",
+      {
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify(data)
+      })
+      
+      .then(response => {
+        if(response.ok) {
+          return response.json()
+        } else {
+          return response.text()
+          .then((text) => {
+            throw new Error(text)}
+          )
+        }
+      })  
         
-        .then(response => {
-          if(response.ok) {
-           return response.json()
-          } else {
-            return response.text()
-            .then((text) => {
-              throw new Error(text)}
-            )
-          }
-        })  
-          
-        .then((value) => {
-          const user = JSON.stringify(value.token);
-          localStorage.setItem("user", user);
-          this.$router.push("/allposts");
-          }
-        )
+      .then((value) => {
+        const user = JSON.stringify(value.token);
+        localStorage.setItem("user", user);
+        this.$router.push("/allposts");
+        }
+      )
 
-        .catch(alert)
+      .catch(alert)
     }
   }
 }
