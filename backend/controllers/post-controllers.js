@@ -4,7 +4,8 @@ const Post = require('../models/post-models');
 exports.createPost = (req, res, next) => {
     Post.create({
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            user_id: req.body.user_id
         })
         .then(() => res.status(201).json({message: 'Post créé !'}))
         .catch( error => res.status(400).json({error}));
