@@ -1,4 +1,3 @@
-
 const Post = require('../models/post-models');
 
 exports.createPost = (req, res, next) => {

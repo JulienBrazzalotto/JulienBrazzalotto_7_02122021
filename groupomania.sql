@@ -18,7 +18,7 @@ ENGINE=INNODB DEFAULT CHARSET=utf8;
 CREATE TABLE Posts
 (
   id            SMALLINT        UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
-  title         VARCHAR(50)     NOT NULL  UNIQUE,
+  title         VARCHAR(50)     NOT NULL,
   image         VARCHAR(50),
   date          DATETIME        NOT NULL,
   content       TEXT            NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE Comments
 (
   id            SMALLINT        UNSIGNED      PRIMARY KEY   AUTO_INCREMENT,
   content       TEXT            NOT NULL,
-  created_date  DATETIME        NOT NULL,
+  date          DATETIME        NOT NULL,
   post_id       SMALLINT        UNSIGNED      NOT NULL,
   user_id       SMALLINT        UNSIGNED      NOT NULL,
   CONSTRAINT    fk_post_id      FOREIGN KEY   (post_id)     REFERENCES      Posts(id),
