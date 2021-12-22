@@ -67,8 +67,10 @@ export default {
       })  
         
       .then((value) => {
-        const user = JSON.stringify(value.token);
-        localStorage.setItem("user", user);
+        const token = JSON.stringify(value.token);
+        const userId = JSON.stringify(value.userId);
+        localStorage.setItem("userToken", token);
+        localStorage.setItem("userId", userId);
         this.$router.push("/allposts");
         }
       )

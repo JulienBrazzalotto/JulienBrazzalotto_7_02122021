@@ -5,10 +5,29 @@
         </a>
         <nav>
             <router-link to="/profile"><i class="fas fa-user-circle link"></i></router-link>
-            <router-link to="/login" class="link">Se deconnecter</router-link>
+            <a class="link" @click="disconnectUser()">Se deconnecter</a>
         </nav>
     </header>
 </template>
+
+
+<script>
+
+
+export default {
+  name: 'HeaderProfile',
+  
+  methods: {
+    disconnectUser() {
+      localStorage.clear();
+      this.$router.push("/")
+    }
+  }
+}   
+</script>
+
+
+
 
 <style scoped>
 

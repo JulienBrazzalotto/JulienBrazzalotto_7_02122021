@@ -91,4 +91,18 @@ exports.getOneUser = (req, res, next) => {
         .catch(error => res.status(400).json({error}));
 };
 
+exports.modifyUser = (req, res, next) => {
+    
+    const modifyUser = {
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        email: req.body.email,
+    };
+
+    user.update(modifyUser, { where: { id: req.params.id }
+        })
+        .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
+        .catch((error)=> res.status(400).json({error}));
+};
+
 

@@ -8,7 +8,7 @@
           <article v-else v-bind:key="index" v-for="(post, index) in posts">
               <div>
                 <h2>{{ post.title }}</h2>
-                <p>{{ post.user_id.prenom }} {{ post.user_id.nom }}</p>
+                <p>{{ post.user_id.nom }} {{ post }}</p>
                 <p>{{ post.date }}</p>
               </div>
         </article>
@@ -29,7 +29,7 @@ export default {
   },
   data () {
     return {
-      posts: [],
+      posts: []
     }
     
   },
@@ -44,9 +44,8 @@ export default {
   },
   mounted(){
         this.fetchPosts()
-    },
   }
+}
 
-  
 
 </script>
