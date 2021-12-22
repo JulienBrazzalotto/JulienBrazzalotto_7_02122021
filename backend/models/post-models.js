@@ -1,5 +1,6 @@
 const sequelize = require('../config/sequelize');
 const { Sequelize, DataTypes } = require('sequelize');
+const comment = require('./comment-models');
 
 const post = sequelize.define('post', {
 
@@ -28,12 +29,11 @@ const post = sequelize.define('post', {
 {
     timestamps: false
 })
-post.associate = (models) => {
-    post.belongsTo(models.user-models, {
-        foreignKey: {
-            allowNull: true
-        }, onDelete: 'CASCADE'
-    })
-}
+post.hasMany(comment, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+comment.belongsTo(post, { foreignKey: 'post_id' });
 
 module.exports = post;

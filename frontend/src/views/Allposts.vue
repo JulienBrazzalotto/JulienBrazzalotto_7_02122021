@@ -9,7 +9,7 @@
               <div>
                 <h2>{{ post.title }}</h2>
                 <p>Posté par {{ post.user.nom }} {{ post.user.prenom }} {{ post.date }}</p>
-                
+                <p>{{ post.content }}</p>
               </div>
         </article>
       </section>
