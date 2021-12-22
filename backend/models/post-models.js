@@ -28,5 +28,12 @@ const post = sequelize.define('post', {
 {
     timestamps: false
 })
+post.associate = (models) => {
+    post.belongsTo(models.user-models, {
+        foreignKey: {
+            allowNull: true
+        }, onDelete: 'CASCADE'
+    })
+}
 
 module.exports = post;

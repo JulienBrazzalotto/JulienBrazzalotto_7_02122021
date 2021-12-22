@@ -8,8 +8,8 @@
           <article v-else v-bind:key="index" v-for="(post, index) in posts">
               <div>
                 <h2>{{ post.title }}</h2>
-                <p>{{ post.user_id.nom }} {{ post }}</p>
-                <p>{{ post.date }}</p>
+                <p>Posté par {{ post.user.nom }} {{ post.user.prenom }} {{ post.date }}</p>
+                
               </div>
         </article>
       </section>
@@ -29,11 +29,11 @@ export default {
   },
   data () {
     return {
-      posts: []
+      posts: [],
     }
-    
   },
   methods : {
+
     fetchPosts() {
             fetch('http://localhost:3000/api/posts/')
             

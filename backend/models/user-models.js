@@ -1,5 +1,6 @@
 const sequelize = require('../config/sequelize');
 const { Sequelize, DataTypes } = require('sequelize');
+const post = require('./post-models');
 
 const user = sequelize.define('user', {
 
@@ -32,5 +33,12 @@ const user = sequelize.define('user', {
 {
     timestamps: false
 })
+user.hasMany(post, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
+post.belongsTo(user, { foreignKey: 'user_id' });
+
 
 module.exports = user;

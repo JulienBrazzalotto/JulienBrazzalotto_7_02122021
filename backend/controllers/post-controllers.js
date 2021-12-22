@@ -1,4 +1,5 @@
 const Post = require('../models/post-models');
+const User = require('../models/user-models');
 
 exports.createPost = (req, res, next) => {
     Post.create({
@@ -25,7 +26,12 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-    Post.findAll({order: [["id", "DESC"]]})
+    
+    Post.findAll({ 
+        include: [{
+            model : User
+        }],
+        order: [["id", "DESC"]]})
 
     .then( post => res.status(200).json(post))
     .catch( error => res.status(400).json({error}))
