@@ -78,8 +78,7 @@ export default {
           alert("Veuillez remplir votre mot de passe");
       } else if (regexPassword.test(this.password) === false) {
           alert("Veuillez vérifier l'écriture de votre mot de passe, il doit contenir au moins une majuscule, une minuscule ainsi qu'un chiffre");
-
-      }else if ((regexText.test(this.nom) === true) || regexText.test(this.prenom) === true || regexEmail.test(this.email) === true || regexPassword.test(this.password) === true ) {
+      }else if ((regexText.test(this.nom) === true) && regexText.test(this.prenom) === true && regexEmail.test(this.email) === true && regexPassword.test(this.password) === true ) {
           alert("Votre inscription est bien prise en compte");
 
           fetch("http://localhost:3000/api/auth/signup", {
