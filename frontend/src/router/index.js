@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Numeros from '../views/Numeros.vue'
+import Allposts from '../views/Allposts.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ const routes = [
     path: '/numeros',
     name: 'Numeros',
     component: Numeros
+  },
+  {
+    path: '/allposts',
+    name: 'Allposts',
+    component: Allposts
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
   }
 ]
 

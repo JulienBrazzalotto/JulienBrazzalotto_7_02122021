@@ -1,6 +1,23 @@
 <template>
-  <h1>Bienvenue sur le réseau social de l'entreprise <strong>Groupomania</strong></h1>
+  <div>
+    <Header />
+    <h1>Bienvenue sur le réseau social de l'entreprise <strong>Groupomania</strong></h1>
+    <Footer />
+  </div>
 </template>
+
+<script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+export default {
+  name: 'home',
+  components: {
+    Header,
+    Footer
+  }
+}
+</script>
 
 <style scoped>
 h1 {

@@ -1,7 +1,7 @@
 <template>
-  <header>
+  <header class="nav">
     <a href="/">
-      <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
+    <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
     </a>
     <nav>
       <router-link to="/signup" class="link">Inscription</router-link>
@@ -32,6 +32,18 @@ img {
   color: #fd2d01;
 
 }
+.nav {
+  padding: 50px;
+  font-size: 1rem;
+}
 
+.nav a {
+  font-weight: bold;
+  color: #000000;
+}
+
+.nav a.router-link-exact-active {
+  color: #fd2d01;
+}
 
 </style>

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const passwordValidator = require('password-validator');
 const emailValidator = require("email-validator");
 
-const user = require('../models/user');
+const user = require('../models/user-models');
 
 
 const schema = new passwordValidator();
@@ -84,5 +84,31 @@ exports.delete = (req, res, next) => {
         .then(() => res.status(201).json({message: 'Utilisateur supprimé !'}))
         .catch(error => res.status(400).json({error}));
 }
+
+exports.getOneUser = (req, res, next) => {
+    user.findOne({ where: { id: req.params.id } })
+        .then(user => res.status(200).json(user))
+        .catch(error => res.status(400).json({error}));
+};
+
+exports.modifyUser = (req, res, next) => {
+    
+    const modifyUser = {
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        email: req.body.email,
+    };
+
+    user.update(modifyUser, { where: { id: req.params.id }
+        })
+        .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
+        .catch((error)=> res.status(400).json({error}));
+};
+
+exports.getAllUsers = (req, res, next) => {
+    user.findAll()
+    .then((users) => res.status(200).json(users))
+    .catch((error) => res.status(400).json(error))
+};
 
 
