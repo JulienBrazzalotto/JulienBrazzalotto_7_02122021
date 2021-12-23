@@ -51,35 +51,56 @@ export default {
   },
   methods: {
     getUser() {
-      const userId = localStorage.userId;
+      const Id = localStorage.userId;
 
-      fetch(`http://localhost:3000/api/auth/${userId}`) 
+      fetch(`http://localhost:3000/api/auth/${Id}`) 
         .then(response => response.json())
         .then(data => (this.user = data))
       
     },
     updateUser() {
-      const userId = localStorage.userId;
+      const Id = localStorage.userId;
+
+      const regexText = /^[a-zA-Z-\s]+$/;
+      const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/; // eslint-disable-line
       
-      fetch(`http://localhost:3000/api/auth/${userId}`, {
-        method: "PUT",
-              headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(this.user)
-      })
-        .then(response => response.json())
-        .then(data => (this.user = data))
-        .then(() => {
-          alert("Votre modification est bien prise en compte")
-          this.$router.go();
-        })
+
+      if (this.user.nom === "") {
+          alert("Veuillez remplir votre nom");
+      } else if (regexText.test(this.user.nom) === false) {
+          alert("Veuillez vérifier que l'écriture de votre nom soit uniquement en lettre");}
+
+      if (this.user.prenom === "") {
+          alert("Veuillez remplir votre prénom");
+      } else if (regexText.test(this.user.prenom) === false) {
+          alert("Veuillez vérifier que l'écriture de votre prénom soit uniquement en lettre");}
+
+      if (this.user.email === "") {
+          alert("Veuillez remplir votre adresse email");
+      } else if (regexEmail.test(this.user.email) === false) {
+          alert("Veuillez écrire une adresse email valide");
+      } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true) {
+      
+          fetch(`http://localhost:3000/api/auth/${Id}`, {
+            method: "PUT",
+                  headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(this.user)
+          })
+            .then(response => response.json())
+            .then(data => (this.user = data))
+            .then(() => {
+              alert("Votre modification est bien prise en compte")
+              this.$router.go();
+            })
+      }
     },
     deleteUser() {
-      const userId = localStorage.userId;
+      const Id = localStorage.userId;
 
-      fetch(`http://localhost:3000/api/auth/${userId}`, {
+      fetch(`http://localhost:3000/api/auth/${Id}`, {
         method: "DELETE",
               headers: {
               'Accept': 'application/json',
