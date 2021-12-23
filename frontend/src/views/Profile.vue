@@ -99,7 +99,9 @@ export default {
     },
     deleteUser() {
       const Id = localStorage.userId;
+      if (confirm("Voulez-vous vraiment supprimer le compte") == true) {
 
+      
       fetch(`http://localhost:3000/api/auth/${Id}`, {
         method: "DELETE",
               headers: {
@@ -111,7 +113,7 @@ export default {
         .then(response => response.json())
         .then(() => { alert("La suppression du compte est bien prise en compte") })
         .then(this.$router.push("/"))
-        
+      }
     }
   }
 }

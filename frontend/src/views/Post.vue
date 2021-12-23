@@ -6,6 +6,7 @@
                 <h2>{{ post.title }}</h2>
                 <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 <p>{{ post.content }}</p>
+                <p>{{ comment }}</p>
         </article>
       </section>
       <router-link to="/allposts">Retour aux posts</router-link>
@@ -26,7 +27,8 @@ export default {
   data () {
     return {
         id_param: this.$route.params.id,
-        post: [],
+        post: '',
+        comments: ''
     }
   },
   methods : {
@@ -36,6 +38,12 @@ export default {
         
         .then(response => response.json())
         .then(data => (this.post = data))
+    },
+    fetchComments() {
+        fetch(`http://localhost:3000/api/comments/${this.id_param}`)
+        
+        .then(response => response.json())
+        .then(data => (this.comments = data))
     },
     dateFormat(createdDate) {
         const date = new Date(createdDate)
@@ -50,6 +58,7 @@ export default {
   },
   mounted(){
         this.fetchPost()
+        this.fetchComments()
   }
 }
 </script>
