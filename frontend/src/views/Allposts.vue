@@ -29,7 +29,8 @@ export default {
   },
   data () {
     return {
-      posts: [],
+      posts: '',
+      
     }
   },
   methods : {
@@ -49,7 +50,7 @@ export default {
         const hour = new Date(createdHour)
         const options = { hour: 'numeric', minute:'numeric', second:'numeric'};
         return hour.toLocaleTimeString('fr-FR', options);
-    } 
+    }
   },
   mounted(){
         this.fetchPosts()
