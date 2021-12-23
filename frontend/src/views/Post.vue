@@ -2,17 +2,13 @@
   <div>
     <HeaderProfile />
       <section>
-          <article v-if="posts.length == 0">
-            <p>Désolé il n'y a aucune publication pour le moment...</p>
-          </article>
-          <article v-else v-bind:key="index" v-for="(post, index) in posts">
-              <router-link :to="`/post/${post.id}`">
+          <article>
                 <h2>{{ post.title }}</h2>
                 <p>Posté par {{ post.user.nom }} {{ post.user.prenom }} {{ post.date }}</p>
                 <p>{{ post.content }}</p>
-              </router-link>
         </article>
       </section>
+      <router-link to="/allposts">Retour aux posts</router-link>
     <Footer />
   </div>
 </template>
@@ -22,29 +18,28 @@ import HeaderProfile from "../components/HeaderProfile";
 import Footer from "../components/Footer";
 
 export default {
-  name: 'allposts',
+  name: 'Post',
   components: {
     HeaderProfile,
     Footer
   },
   data () {
     return {
-      posts: [],
+        id_param: this.$route.params.id,
+        post: [],
     }
   },
   methods : {
       
-    fetchPosts() {
-        fetch('http://localhost:3000/api/posts/')
+    fetchPost() {
+        fetch(`http://localhost:3000/api/posts/${this.id_param}`)
         
         .then(response => response.json())
-        .then(data => (this.posts = data))
+        .then(data => (this.post = data))
     }
   },
   mounted(){
-        this.fetchPosts()
+        this.fetchPost()
   }
 }
-
-
 </script>

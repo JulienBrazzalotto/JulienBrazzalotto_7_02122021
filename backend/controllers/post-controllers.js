@@ -38,7 +38,11 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, nest) => {
-    Post.findOne({ where: { id: req.params.id }})
+    Post.findOne({
+        include: [{
+            model : User
+        }], 
+        where: { id: req.params.id }})
     .then( post => res.status(200).json(post))
     .catch( error => res.status(400).json({error}))
 }

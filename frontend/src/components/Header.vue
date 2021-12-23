@@ -1,8 +1,8 @@
 <template>
   <header class="nav">
-    <a href="/">
+    <p>
     <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
-    </a>
+    </p>
     <nav>
       <router-link to="/signup" class="link">Inscription</router-link>
       <router-link to="/login" class="link">Se connecter</router-link>
