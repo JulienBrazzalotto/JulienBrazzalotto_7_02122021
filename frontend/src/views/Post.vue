@@ -4,7 +4,7 @@
       <section>
           <article>
                 <h2>{{ post.title }}</h2>
-                <p>Posté par {{ post.user.nom }} {{ post.user.prenom }} {{ post.date }}</p>
+                <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 <p>{{ post.content }}</p>
         </article>
       </section>
@@ -36,6 +36,16 @@ export default {
         
         .then(response => response.json())
         .then(data => (this.post = data))
+    },
+    dateFormat(createdDate) {
+        const date = new Date(createdDate)
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'};
+        return date.toLocaleDateString('fr-FR', options);
+    },
+    hourFormat(createdHour) {
+        const hour = new Date(createdHour)
+        const options = { hour: 'numeric', minute:'numeric', second:'numeric'};
+        return hour.toLocaleTimeString('fr-FR', options);
     }
   },
   mounted(){
