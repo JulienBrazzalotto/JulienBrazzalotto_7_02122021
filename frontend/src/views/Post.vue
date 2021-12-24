@@ -2,12 +2,16 @@
     <div>
         <HeaderProfile />
         <section>
-            <article>
+            <article id="test">
                 <h2>{{ post.title }}</h2>
                 <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 <p>{{ post.content }}</p>
-                <div>
-                    <p>{{ comments }}</p>
+                <button v-if="comments.length != 0" v-on:click="show">Voir les {{ comments.length }} commentaires</button>
+                <div v-if="isDisplay" v-on:click="hide">
+                    <div v-bind:key="index" v-for="(comment, index) in comments">
+                        <p>écrit par {{ comment.user.nom }} {{ comment.user.prenom}} le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b></p>
+                        <p>{{ comment.content }}</p>
+                    </div>
                 </div>
             </article>
         </section>
@@ -29,11 +33,18 @@ export default {
   data () {
     return {
         id_param: this.$route.params.id,
-        post: '',
-        comments: '',
+        post: [],
+        comments: {},
+        isDisplay: false
     }
   },
   methods : {
+    show: function () {
+      return this.isDisplay = true;
+    },
+    hide: function () {
+      return this.isDisplay = false;
+    },
       
     fetchPost() {
         fetch(`http://localhost:3000/api/posts/${this.id_param}`)
