@@ -1,17 +1,19 @@
 <template>
-  <div>
-    <HeaderProfile />
-      <section>
-          <article>
+    <div>
+        <HeaderProfile />
+        <section>
+            <article>
                 <h2>{{ post.title }}</h2>
                 <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 <p>{{ post.content }}</p>
-                <p>{{ comment }}</p>
-        </article>
-      </section>
-      <router-link to="/allposts">Retour aux posts</router-link>
-    <Footer />
-  </div>
+                <div>
+                    <p>{{ comments }}</p>
+                </div>
+            </article>
+        </section>
+        <router-link to="/allposts">Retour aux posts</router-link>
+        <Footer />
+    </div>
 </template>
 
 <script>
@@ -28,7 +30,7 @@ export default {
     return {
         id_param: this.$route.params.id,
         post: '',
-        comments: ''
+        comments: '',
     }
   },
   methods : {
