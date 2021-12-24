@@ -7,7 +7,7 @@ import Numeros from '../views/Numeros.vue'
 import Allposts from '../views/Allposts.vue'
 import Profile from '../views/Profile.vue'
 import Post from '../views/Post.vue'
-
+import Createpost from '../views/Createpost.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +46,11 @@ const routes = [
     path: '/post/:id',
     name: 'Post',
     component: Post
+  },
+  {
+    path: '/createPost',
+    name: 'CreatePost',
+    component: Createpost
   }
 ]
 
