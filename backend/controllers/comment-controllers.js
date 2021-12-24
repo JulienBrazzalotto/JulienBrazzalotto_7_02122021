@@ -1,4 +1,5 @@
 const Comment = require('../models/comment-models');
+const User = require('../models/user-models');
 
 exports.createComment = (req, res, next) => {
     Comment.create({
@@ -25,9 +26,16 @@ exports.deleteComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res, next) => {
-    Comment.findAll({order: [["id", "ASC"]]})
+    Comment.findAll({
+        where: {
+        post_id : req.params.post_id
+    },
+        include: [{
+        model : User,
+    }],
+        order: [["date", "ASC"]]})
 
-    .then( comment => res.status(200).json(comment))
+    .then( comments => res.status(200).json(comments))
     .catch( error => res.status(400).json({error}))
 };
 
