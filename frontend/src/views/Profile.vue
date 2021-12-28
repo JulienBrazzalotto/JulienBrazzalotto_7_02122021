@@ -6,18 +6,21 @@
             <form>
                 <ul>
                     <li>
+                        <label for="nom">Nom</label>
                         <input type="text" v-model="user.nom" placeholder="Nom" size="50" required>
                     </li>
                     <li>
+                        <label for="prenom">Prénom</label>
                         <input type="text" v-model="user.prenom" placeholder="Prenom" size="50" required>
                     </li>
                     <li>
+                        <label for="email">Email</label>
                         <input type="email" v-model="user.email" placeholder="Email" size="50" required>
                     </li>
                 </ul>
                 <div>
-                    <button @click="updateUser()" class="button">Enregistrer les modifications</button>
-                    <button @click="deleteUser()" class="button">Supprimer le compte</button>
+                    <button @click="updateUser()" class="button"><i class="fas fa-edit"></i> Enregistrer les modifications</button>
+                    <button @click="deleteUser()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer le compte</button>
                 </div>
                 
             </form>
@@ -132,11 +135,26 @@ h1 {
 }
 
 ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     list-style: none;
 }
 
+label {
+    font-size: 1.3rem;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 30px;
+}
+
 input {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .button {
@@ -151,8 +169,8 @@ input {
     cursor: pointer;
 }
 
-li {
-    margin-bottom: 30px;
+.espacement {
+    margin-left: 10px;
 }
 
 </style>
