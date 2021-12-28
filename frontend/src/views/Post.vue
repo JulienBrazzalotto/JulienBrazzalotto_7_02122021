@@ -78,12 +78,17 @@ export default {
             return hour.toLocaleTimeString('fr-FR', options);
         },
         deletePost () {
-            fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
-                method: "DELETE",
-            })
-            .then(response => response.json())
-            .then(() => { alert("La suppression du post est bien prise en compte") })
-            .then(this.$router.push("/allposts"))
+
+            if (confirm("Voulez-vous vraiment supprimer le post") == true) {
+
+                fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
+                    method: "DELETE",
+                })
+                .then(response => response.json())
+                .then(() => { 
+                    alert("La suppression du post est bien prise en compte")
+                    this.$router.push("/allposts") })
+            }
         },
         modifyPost () {
             this.$router.push(`/modifypost/${this.id_param}`)
