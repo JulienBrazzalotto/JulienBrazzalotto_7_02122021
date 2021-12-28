@@ -1,6 +1,7 @@
 <template>
     <div>
         <HeaderProfile />
+            <h1>Fil d'actualité</h1>
             <button @click="createPost()" class="button" >Créer un post</button>
             <article v-if="posts.length == 0">
               <p>Désolé il n'y a aucune publication pour le moment...</p>
@@ -65,6 +66,14 @@ export default {
 </script>
 
 <style scoped>
+
+h1 {
+  width: 100%;
+  font-size: 2rem;
+  background: #ffd7d7;
+  border: 2px solid #fd2d01;
+  border-radius: 20px;
+}
 
 h2 {
     font-size: 1.5rem;
