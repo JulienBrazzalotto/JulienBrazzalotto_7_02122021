@@ -28,7 +28,7 @@ import HeaderProfile from "../components/HeaderProfile";
 import Footer from "../components/Footer";
 
 export default {
-    name: 'allposts',
+    name: 'createpost',
     components: {
         HeaderProfile,
         Footer
@@ -79,6 +79,7 @@ li {
     margin: 30px;
     list-style-type: none;
 }
+
 input {
     height: 30px;
     font-size: 1.5rem;
@@ -98,6 +99,7 @@ textarea {
     font-size: 1rem;
     cursor: pointer;
 }
+
 .lien {
     text-decoration: none;
     color: #000000;
