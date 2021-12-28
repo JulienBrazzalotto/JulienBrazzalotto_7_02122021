@@ -8,6 +8,8 @@ import Allposts from '../views/Allposts.vue'
 import Profile from '../views/Profile.vue'
 import Post from '../views/Post.vue'
 import Createpost from '../views/Createpost.vue'
+import Modifypost from '../views/Modifypost.vue'
+
 
 Vue.use(VueRouter)
 
@@ -51,6 +53,11 @@ const routes = [
     path: '/createPost',
     name: 'CreatePost',
     component: Createpost
+  },
+  {
+    path: '/modifypost/:id',
+    name: 'ModifyPost',
+    component: Modifypost
   }
 ]
 

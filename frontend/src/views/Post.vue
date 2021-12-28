@@ -7,6 +7,12 @@
                     <p class="info">Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 </div>
                 <div class="content">
+                    <p class="modif">
+                    <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
+                    <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
+                    </p>
+                    <hr>
+                    <p class="message">Message: </p><br>
                     <p>{{ post.content }}</p>
                 </div>
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir les {{ comments.length }} commentaires</button>
@@ -19,7 +25,6 @@
                 </div>
             </article>
             <router-link to="/allposts" class="button link">Retour aux posts</router-link>
-            <button @click="deletePost()" class="button">Supprimer ce post</button>
         <Footer />
     </div>
 </template>
@@ -79,6 +84,9 @@ export default {
             .then(response => response.json())
             .then(() => { alert("La suppression du post est bien prise en compte") })
             .then(this.$router.push("/allposts"))
+        },
+        modifyPost () {
+            this.$router.push(`/modifypost/${this.id_param}`)
         }
     },
     mounted(){
@@ -109,14 +117,21 @@ h1 {
 
 .info {
     font-size: 0.8rem;
-    padding-bottom: 10px;
+}
+
+.modif {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.message {
+    text-decoration: underline;
 }
 
 .content {
-    height: 100px;
     margin-bottom: 30px;
-    padding: 40px 0 0 0;
 }
+
 
 .button {
     margin: 10px 0 30px 0;
@@ -127,10 +142,16 @@ h1 {
     font-size: 1rem;
     cursor: pointer;
 }
+
+.espacement {
+    margin: 0 0 0 10px;
+}
+
 .link {
     text-decoration: none;
     color: #000000;
 }
+
 .comment-button {
     margin: 10px 0 30px 0;
     padding: 5px 30px ;
