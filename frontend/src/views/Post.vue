@@ -14,15 +14,19 @@
                     <hr>
                     <p class="message">Message: </p><br>
                     <p>{{ post.content }}</p>
+                    <hr>
+                    <button class="button">Ecrire un commentaire</button>
                 </div>
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir les {{ comments.length }} commentaires</button>
-                <div v-if="isDisplay" v-on:click="hide">
+                <div v-if="isDisplay">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <p class="comment-info">écrit par {{ comment.user.nom }} {{ comment.user.prenom}} le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b></p>
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
                     </div>
+                    <button v-on:click="hide" class="comment-button">Cacher les commentaires</button>
                 </div>
+
             </article>
             <router-link to="/allposts" class="button link">Retour aux posts</router-link>
         <Footer />
