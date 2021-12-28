@@ -50,8 +50,11 @@ export default {
 <style scoped>
 
 h1 {
-    color: #fd2d01;
-    font-size: 1.6rem;
+  width: 100%;
+  font-size: 2rem;
+  background: #ffd7d7;
+  border: 2px solid #fd2d01;
+  border-radius: 20px;
 }
 
 ul {

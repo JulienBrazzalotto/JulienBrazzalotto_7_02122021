@@ -6,16 +6,16 @@
       <form>
         <ul>
           <li>
-            <input type="text" v-model="nom" class="input" placeholder="Nom" size="50" required>
+            <input type="text" v-model="nom" placeholder="Nom" size="50" required>
           </li>
           <li>
-            <input type="text" v-model="prenom" class="input" placeholder="Prénom" size="50" required>
+            <input type="text" v-model="prenom" placeholder="Prénom" size="50" required>
           </li>
           <li>
-            <input type="email" v-model="email" class="input" placeholder="Email" size="50" required>
+            <input type="email" v-model="email" placeholder="Email" size="50" required>
           </li>
           <li>
-            <input type="password" v-model="password" class="input" placeholder="Password" size="50" required>
+            <input type="password" v-model="password" placeholder="Password" size="50" required>
           </li>
         </ul>
       </form>   
@@ -107,11 +107,13 @@ export default {
 
 <style scoped>
 
-h2 {
-  width: 30%;
-  border: 2px solid #fd2d01;
-  border-radius: 5px;
-  font-size: 1.5rem;
+h1 {
+    margin: 30px 0 50px 0;
+    width: 100%;
+    font-size: 2rem;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    border-radius: 20px;
 }
 
 ul {
@@ -124,6 +126,10 @@ li {
   flex-direction: column;
   justify-content: flex-start;
   margin-bottom: 30px;
+}
+
+input {
+  font-size: 1.2rem;
 }
 
 button {
