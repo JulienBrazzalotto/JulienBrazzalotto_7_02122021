@@ -21,10 +21,11 @@
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
                         <button class="button-comment"><i class="fas fa-edit"></i></button>
-                        <button @click="deleteComment()" class="button-comment"><i class="far fa-trash-alt"></i></button>
+                        <button @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
                         </p>
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
+                        <p>{{comment.id}}</p>
                     </div>
                     <button v-on:click="hide" class="comment-button">Cacher le(s) commentaire(s)</button>
                 </article>
@@ -142,11 +143,11 @@ export default {
                 .catch(error => console.log(error))
             }
         },
-        deleteComment () {
+        deleteComment (index) {
 
             if (confirm("Voulez-vous vraiment supprimer ce commentaire") == true) {
 
-                fetch(`http://localhost:3000/api/comments/${this.comments.id}`, {
+                fetch(`http://localhost:3000/api/comments/${this.comments[index].id}`, {
                     method: "DELETE",
                 })
                 .then(response => response.json())
