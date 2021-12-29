@@ -30,6 +30,7 @@
                 </li>
             </ul>
         </div>
+        <router-link to="/allposts" class="button lien">Retour aux posts</router-link>
         <Footer />
     </div>
 </template>
@@ -76,6 +77,21 @@ li {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 30px;
+}
+
+.button {
+    padding: 5px 30px ;
+    border: 2px solid #fd2d01;
+    border-radius: 10px;
+    background: #ffd7d7;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.lien {
+    text-decoration: none;
+    color: #000000;
 }
 
 </style>

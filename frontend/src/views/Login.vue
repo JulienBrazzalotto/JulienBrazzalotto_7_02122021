@@ -81,13 +81,7 @@ export default {
 }
 </script>
 
-
-
-
-
-
 <style scoped>
-
 
 h1 {
     margin: 30px 0 50px 0;
