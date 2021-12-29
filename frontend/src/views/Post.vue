@@ -1,12 +1,12 @@
 <template>
     <div>
         <HeaderProfile />
-            <article>
-                <div class="header">
+            <section>
+                <article class="header">
                     <h1>Titre: {{ post.title }}</h1>
                     <p class="info">Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
-                </div>
-                <div class="content">
+                </article>
+                <article class="content">
                     <p class="modif">
                     <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
                     <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
@@ -14,20 +14,29 @@
                     <hr>
                     <p class="message">Message: </p><br>
                     <p>{{ post.content }}</p>
-                    <hr>
-                    <button class="button">Ecrire un commentaire</button>
-                </div>
-                <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir les {{ comments.length }} commentaires</button>
-                <div v-if="isDisplay">
+                </article>
+
+                <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire(s)</button>
+                <article v-if="isDisplay">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
-                        <p class="comment-info">écrit par {{ comment.user.nom }} {{ comment.user.prenom}} le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b></p>
+                        <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
+                        <button class="button-comment"><i class="fas fa-edit"></i></button>
+                        <button @click="deleteComment()" class="button-comment"><i class="far fa-trash-alt"></i></button>
+                        </p>
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
                     </div>
-                    <button v-on:click="hide" class="comment-button">Cacher les commentaires</button>
-                </div>
+                    <button v-on:click="hide" class="comment-button">Cacher le(s) commentaire(s)</button>
+                </article>
 
-            </article>
+                <button v-on:click="show2" class="button">Ecrire un commentaire</button>
+                <article v-if="displaycomment" class="createcomment">
+                    <textarea v-model="commentaire" placeholder="Commentaire" cols="60" rows="5"></textarea>
+                    <button @click="createComment()" class="buttonenvoyer">Envoyer le commentaire</button>
+                    <button v-on:click="hide2" class="buttonannuler">Annuler le commentaire</button>
+                </article>
+
+            </section>
             <router-link to="/allposts" class="button link">Retour aux posts</router-link>
         <Footer />
     </div>
@@ -48,7 +57,9 @@ export default {
             id_param: this.$route.params.id,
             post: [],
             comments: {},
-            isDisplay: false
+            isDisplay: false,
+            displaycomment: false,
+            commentaire:''
         }
     },
     methods : {
@@ -57,6 +68,12 @@ export default {
         },
         hide: function () {
         return this.isDisplay = false;
+        },
+        show2: function () {
+        return this.displaycomment = true;
+        },
+        hide2: function () {
+        return this.displaycomment = false;
         },
         
         fetchPost() {
@@ -96,7 +113,48 @@ export default {
         },
         modifyPost () {
             this.$router.push(`/modifypost/${this.id_param}`)
-        }
+        },
+        createComment () {
+            const Id = localStorage.userId;
+            let data = {
+                content: this.commentaire,
+                post_id: this.id_param,
+                user_id: Id
+            }
+            if( this.commentaire === ""){
+                alert('Veuillez remplir votre commentaire')
+            } else {
+                fetch("http://localhost:3000/api/comments", {
+                    method: "POST",
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    return response.json();
+                })
+                .then(() => {
+                    alert("Votre commentaire est bien pris en compte")
+                    this.$router.go()
+                })
+                .catch(error => console.log(error))
+            }
+        },
+        deleteComment () {
+
+            if (confirm("Voulez-vous vraiment supprimer ce commentaire") == true) {
+
+                fetch(`http://localhost:3000/api/comments/${this.comments.id}`, {
+                    method: "DELETE",
+                })
+                .then(response => response.json())
+                .then(() => { 
+                    alert("La suppression du commentaire est bien prise en compte")
+                    this.$router.go() })
+            }
+        },
     },
     mounted(){
             this.fetchPost ()
@@ -106,7 +164,7 @@ export default {
 </script>
 
 <style scoped>
-article {
+section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,6 +173,10 @@ article {
 h1 {
     font-size: 1.5rem;
     margin: 30px 0 10px 0;
+}
+
+textarea {
+    font-size: 1.2rem;
 }
 
 .header,
@@ -141,10 +203,39 @@ h1 {
     margin-bottom: 30px;
 }
 
+.createcomment {
+    display: flex;
+    flex-direction: column;
+}
 
 .button {
     margin: 10px 0 30px 0;
     padding: 5px 30px ;
+    border: 2px solid #fd2d01;
+    border-radius: 10px;
+    background: #ffd7d7;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.buttonenvoyer,
+.buttonannuler {
+    margin: 10px 0 10px 0;
+    padding: 5px 30px ;
+    border: 2px solid #fd2d01;
+    border-radius: 10px;
+    background: #ffd7d7;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.buttonannuler{
+    margin-bottom: 40px;
+}
+
+.button-comment {
+    margin: 10px 0 10px 10px;
+    padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
