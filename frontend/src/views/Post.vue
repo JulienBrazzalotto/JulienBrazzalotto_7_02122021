@@ -16,7 +16,7 @@
                     <p>{{ post.content }}</p>
                 </article>
 
-                <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire(s)</button>
+                <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
                 <article v-if="isDisplay">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
@@ -25,9 +25,8 @@
                         </p>
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
-                        <p>{{comment.id}}</p>
                     </div>
-                    <button v-on:click="hide" class="comment-button">Cacher le(s) commentaire(s)</button>
+                    <button v-on:click="hide" class="comment-button">Cacher le<span v-if="comments.length >= 2">s</span> commentaire<span v-if="comments.length >= 2">s</span></button>
                 </article>
 
                 <button v-on:click="show2" class="button">Ecrire un commentaire</button>
