@@ -17,10 +17,9 @@
                 </article>
 
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
-                <article v-if="isDisplay">
+                <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
-                        <button class="button-comment"><i class="fas fa-edit"></i></button>
                         <button @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
                         </p>
                         <hr>
@@ -30,7 +29,7 @@
                 </article>
 
                 <button v-on:click="show2" class="button">Ecrire un commentaire</button>
-                <article v-if="displaycomment" class="createcomment">
+                <article v-if="displayCreateComment" class="createcomment">
                     <textarea v-model="commentaire" placeholder="Commentaire" cols="60" rows="5"></textarea>
                     <button @click="createComment()" class="buttonenvoyer">Envoyer le commentaire</button>
                     <button v-on:click="hide2" class="buttonannuler">Annuler le commentaire</button>
@@ -56,24 +55,28 @@ export default {
         return {
             id_param: this.$route.params.id,
             post: [],
-            comments: {},
-            isDisplay: false,
-            displaycomment: false,
+            comments: [],
+            displaycomments: false,
+            displayCreateComment: false,
             commentaire:''
         }
     },
+    mounted(){
+            this.fetchPost ()
+            this.fetchComments ()
+    },
     methods : {
         show: function () {
-        return this.isDisplay = true;
+        return this.displaycomments = true;
         },
         hide: function () {
-        return this.isDisplay = false;
+        return this.displaycomments = false;
         },
         show2: function () {
-        return this.displaycomment = true;
+        return this.displayCreateComment = true;
         },
         hide2: function () {
-        return this.displaycomment = false;
+        return this.displayCreateComment = false;
         },
         
         fetchPost() {
@@ -82,6 +85,7 @@ export default {
             .then (response => response.json())
             .then (data => (this.post = data))
         },
+        
         fetchComments() {
             fetch (`http://localhost:3000/api/comments/${this.id_param}`)
             
@@ -100,7 +104,7 @@ export default {
         },
         deletePost () {
 
-            if (confirm("Voulez-vous vraiment supprimer le post") == true) {
+            if (confirm("Voulez-vous vraiment supprimer le post") === true) {
 
                 fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
                     method: "DELETE",
@@ -144,7 +148,7 @@ export default {
         },
         deleteComment (index) {
 
-            if (confirm("Voulez-vous vraiment supprimer ce commentaire") == true) {
+            if (confirm("Voulez-vous vraiment supprimer ce commentaire") === true) {
 
                 fetch(`http://localhost:3000/api/comments/${this.comments[index].id}`, {
                     method: "DELETE",
@@ -155,10 +159,6 @@ export default {
                     this.$router.go() })
             }
         },
-    },
-    mounted(){
-            this.fetchPost ()
-            this.fetchComments ()
     }
 }
 </script>
