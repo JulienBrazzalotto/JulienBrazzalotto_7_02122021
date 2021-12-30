@@ -1,8 +1,6 @@
 <template>
     <header class="nav">
-        <a href="/">
         <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
-        </a>
         <nav>
             <router-link to="/profile"><i class="fas fa-user-circle link"></i></router-link>
             <a class="link" @click="disconnectUser()">Se deconnecter</a>
@@ -12,7 +10,6 @@
 
 
 <script>
-
 
 export default {
   name: 'HeaderProfile',

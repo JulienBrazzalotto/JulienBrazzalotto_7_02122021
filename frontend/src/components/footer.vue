@@ -7,7 +7,7 @@
             <router-link to="/Numeros">Numéros utiles</router-link>
         </li>
         <li>
-            <a href="/"><img src="../assets/images/icon-above-font.png" alt="Logo Groupomania"></a>
+            <p><img src="../assets/images/icon-above-font.png" alt="Logo Groupomania"></p>
         </li>
         <li>
             <a href="mailto:admin@groupomania.com"> Contacter l'administrateur</a>

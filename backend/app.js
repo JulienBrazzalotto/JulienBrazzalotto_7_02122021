@@ -11,9 +11,9 @@ const commentRoutes = require("./routes/comment-routes");
 const connect = async function () {
   try {
     await sequelize.authenticate();
-    console.log('La connexion a été établie avec succès.');
+    console.log('La connexion a été établie avec succès à SQL.');
   } catch (error) {
-    console.error('Impossible de se connecter à la base de données :', error);
+    console.error('Impossible de se connecter à la base de données SQL:', error);
   }
 };
 connect();
