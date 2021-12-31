@@ -13,6 +13,7 @@
                     <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                   </div>
                   <div class="content">
+                    <p class="message">Message: </p><br>
                     <p>{{ post.content }}</p>
                   </div>
                 </router-link>
@@ -39,7 +40,7 @@ export default {
     },
     methods : {
         
-        fetchPosts() {
+        getPosts() {
           fetch('http://localhost:3000/api/posts/')
           
           .then(response => response.json())
@@ -60,7 +61,7 @@ export default {
         }
     },
     mounted(){
-          this.fetchPosts()
+          this.getPosts()
     }
 }
 </script>
@@ -99,10 +100,12 @@ h2 {
   border-radius: 20px 20px 0 0;
 }
 
+.message {
+    text-decoration: underline;
+}
+
 .content {
-    height: 100px;
     margin-bottom: 30px;
-    padding: 40px 0 0 0;
     border-radius: 0 0 20px 20px;
 }
 

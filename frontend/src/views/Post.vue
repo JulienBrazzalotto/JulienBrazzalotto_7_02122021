@@ -6,6 +6,7 @@
                     <h1>Titre: {{ post.title }}</h1>
                     <p class="info">Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 </article>
+
                 <article class="content">
                     <p class="modif">
                     <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
@@ -54,39 +55,43 @@ export default {
     data () {
         return {
             id_param: this.$route.params.id,
-            post: [],
+            post: {
+                content:'',
+                date:'',
+                id:'',
+                image:'',
+                title:'',
+                user: {},
+                user_id:''
+            },
             comments: [],
             displaycomments: false,
             displayCreateComment: false,
             commentaire:''
         }
     },
-    mounted(){
-            this.fetchPost ()
-            this.fetchComments ()
-    },
     methods : {
         show: function () {
-        return this.displaycomments = true;
+            return this.displaycomments = true;
         },
         hide: function () {
-        return this.displaycomments = false;
+            return this.displaycomments = false;
         },
         show2: function () {
-        return this.displayCreateComment = true;
+            return this.displayCreateComment = true;
         },
         hide2: function () {
-        return this.displayCreateComment = false;
+            return this.displayCreateComment = false;
         },
         
-        fetchPost() {
+        getPost() {
             fetch (`http://localhost:3000/api/posts/${this.id_param}`)
             
             .then (response => response.json())
             .then (data => (this.post = data))
         },
         
-        fetchComments() {
+        getComments() {
             fetch (`http://localhost:3000/api/comments/${this.id_param}`)
             
             .then (response => response.json())
@@ -158,7 +163,11 @@ export default {
                     alert("La suppression du commentaire est bien prise en compte")
                     this.$router.go() })
             }
-        },
+        }
+    },
+    mounted(){
+            this.getPost ()
+            this.getComments ()
     }
 }
 </script>
