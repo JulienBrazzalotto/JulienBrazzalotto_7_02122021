@@ -1,5 +1,6 @@
 const Post = require('../models/post-models');
 const User = require('../models/user-models');
+const fs = require('fs')
 
 exports.createPost = (req, res, next) => {
     if (req.file) {
@@ -36,11 +37,18 @@ exports.modifyPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-    Post.destroy({ where: { id: req.params.id } })
+    Post.findOne({ where: { id: req.params.id }})
+        .then(post => {
+            const filename = post.image.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                Post.destroy({ where: { id: req.params.id } })
 
-        .then(() => res.status(200).json({message : 'Post supprimé !'}))
-        .catch( error => res.status(400).json({error}));
-};
+                .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                .catch( error => res.status(400).json({error}));
+            })
+        }
+        )
+}
 
 exports.getAllPosts = (req, res, next) => {
     
