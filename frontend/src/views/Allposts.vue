@@ -14,6 +14,7 @@
                   </div>
                   <div class="content">
                     <p class="message">Message: </p><br>
+                    <img v-if="post.image" :src="post.image" alt="">
                     <p>{{ post.content }}</p>
                   </div>
                 </router-link>
@@ -35,6 +36,7 @@ export default {
     data () {
         return {
             posts: [],
+            
         
       }
     },

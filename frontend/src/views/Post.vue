@@ -14,6 +14,7 @@
                     </p>
                     <hr>
                     <p class="message">Message: </p><br>
+                    <img v-if="post.image" :src="post.image" :alt="post.title">
                     <p>{{ post.content }}</p>
                 </article>
 

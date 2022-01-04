@@ -7,16 +7,16 @@ const MIME_TYPES = {
     'image/webp': 'webp',
 }
 
-const storage = multer.diskStorage({ //Créé un objet de configuration pour multer pour l'enregistrer sur le disque
-    destination: (req, file, callback) => { //La destination d'enregistrement
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
         callback(null, 'images')
     },
-    filename: (req, file, callback) => { //Nom de fichier utilisé
-        const name = file.originalname.split(' ').join('_'); //Utilise le nom d'origine en remplaçant les espaces par des undescores
-        const extension = MIME_TYPES[file.mimetype]; //Génère l'extension
-        callback(null, name + Date.now() + '.' + extension) //Nom final
+    filename: (req, file, callback) => {
+        const name = file.originalname.split(' ').join('_');
+        const extension = MIME_TYPES[file.mimetype]; 
+        callback(null, name + Date.now()) 
     }
 });
 
 
-module.exports = multer({ storage }).single('image'); //méthode single pour dire que c'est un fichier unique
+module.exports = multer({ storage }).single('image');
