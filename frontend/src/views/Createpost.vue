@@ -8,13 +8,16 @@
                         <li>
                             <input type="text" v-model="titre" placeholder="Titre" size="50" required>
                         </li>
-                        <li v-if="!image" class="file">
-                            <label for="file" class="label-file">Choisir une image</label>
-                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" ref="file" v-on:change="uploadFile" id="file" class="input-file">
+                        <li v-if="image">
+                            <img :src="image" alt="" class="file">
+                            
                         </li>
-                        <li v-else  class="file">
-                            <img :src="image" :alt="titre">
-                            <button @click="deleteFile()" class="button">Supprimer l'image</button>
+                        
+                        <li>
+                            <label v-if="!image" for="file" class="label-file">Choisir une image</label>
+                            <button v-else @click="deletefile()" class="label-file"> Supprimer cette image</button>
+                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" ref="file" v-on:change="uploadFile" id="file" class="input-file">
+
                         </li>
                         <li>
                             <textarea v-model="contenu" placeholder="Contenu" rows="10" cols="60" required></textarea>
@@ -113,9 +116,9 @@ export default {
                 reader.readAsDataURL(e.target.files[0])
             }
         },
-        deleteFile() {
-        this.image = '';
-    }
+        deletefile() {
+            this.image = '';
+        }
     }
 }
 </script>
@@ -144,19 +147,17 @@ input {
     font-size: 1.5rem;
 }
 
-img {
+.file {
     height: 400px;
-    object-fit: cover;
-    overflow: hidden;
+}
+
+.input-file {
+    display: none;
 }
 
 textarea {
     font-size: 1.3rem;
 
-}
-
-.input-file {
-    display: none;
 }
 
 .button,
@@ -168,12 +169,6 @@ textarea {
     background: #ffd7d7;
     font-size: 1rem;
     cursor: pointer;
-}
-
-.file{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .lien {

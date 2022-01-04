@@ -120,4 +120,7 @@ h2 {
     font-size: 1rem;
     cursor: pointer;
 }
+img {
+  width: 100%;
+}
 </style>

@@ -283,4 +283,8 @@ textarea {
     padding: 0 30px 0 30px;
 }
 
+img {
+    width: 100%;
+}
+
 </style>
