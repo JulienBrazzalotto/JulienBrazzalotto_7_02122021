@@ -9,15 +9,12 @@
                             <input type="text" v-model="titre" placeholder="Titre" size="50" required>
                         </li>
                         <li v-if="image">
-                            <img :src="image" alt="" class="file">
-                            
+                            <img :src="image" :alt="titre" class="file">
                         </li>
-                        
                         <li>
                             <label v-if="!image" for="file" class="label-file">Choisir une image</label>
                             <button v-else @click="deletefile()" class="label-file"> Supprimer cette image</button>
                             <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" ref="file" v-on:change="uploadFile" id="file" class="input-file">
-
                         </li>
                         <li>
                             <textarea v-model="contenu" placeholder="Contenu" rows="10" cols="60" required></textarea>
@@ -56,6 +53,7 @@ export default {
         createPost() {
             const Id = localStorage.userId;
             const fileField = document.querySelector('input[type="file"]');
+            
             if (this.titre === '')
                 alert("Veuillez remplir le titre")
             if (this.contenu === '')
