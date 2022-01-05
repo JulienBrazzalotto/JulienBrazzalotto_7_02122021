@@ -87,7 +87,7 @@ export default {
             } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true) {
             
                 fetch(`http://localhost:3000/api/auth/${Id}`, {
-                    ethod: "PUT",
+                    method: "PUT",
                         headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'

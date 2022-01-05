@@ -1,7 +1,6 @@
 const Post = require('../models/post-models');
 const User = require('../models/user-models');
 const fs = require('fs');
-const { post } = require('../routes/post-routes');
 
 exports.createPost = (req, res, next) => {
     if (req.file) {

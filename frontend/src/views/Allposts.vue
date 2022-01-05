@@ -43,10 +43,17 @@ export default {
     methods : {
         
         getPosts() {
-          fetch('http://localhost:3000/api/posts/')
-          
-          .then(response => response.json())
-          .then(data => (this.posts = data))
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch('http://localhost:3000/api/posts/', {
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            
+            .then(response => response.json())
+            .then(data => (this.posts = data))
         },
         dateFormat(createdDate) {
           const date = new Date(createdDate)

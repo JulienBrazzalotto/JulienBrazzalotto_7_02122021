@@ -51,28 +51,27 @@ export default {
     },
     methods: {
         createPost() {
-            const Id = localStorage.userId;
+            const Id = JSON.parse(localStorage.getItem("userId"))
             const fileField = document.querySelector('input[type="file"]');
-            
+            const token = JSON.parse(localStorage.getItem("userToken"))
+            console.log(token)
+
             if (this.titre === '')
                 alert("Veuillez remplir le titre")
             if (this.contenu === '')
                 alert("Veuillez remplir le contenu du message")
             if (this.image === '' && this.titre != '' && this.contenu != '') {
-                let data = {
-                    title: this.titre,
-                    content: this.contenu,
-                    user_id: Id
-                }
-                console.log("this.image : " + this.image)
+                let data = new FormData()
+                data.append('title', this.titre)
+                data.append('content', this.contenu)
+                data.append('user_id', Id)
 
                 fetch("http://localhost:3000/api/posts", {
                     method: "POST",
                     headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify(data)
+                    body: data
                 })
                 .then((response) => {
                     return response.json();
@@ -87,11 +86,12 @@ export default {
                 data.append('title', this.titre)
                 data.append('content', this.contenu)
                 data.append('user_id', Id)
-                console.log(this.image)
-                console.log(data)
 
                 fetch("http://localhost:3000/api/posts", {
                     method: "POST",
+                    headers: {
+                    'authorization': `Bearer ${token}`
+                    },
                     body: data
                 })
                 .then((response) => response.json())

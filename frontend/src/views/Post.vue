@@ -86,8 +86,14 @@ export default {
         },
         
         getPost() {
-            fetch (`http://localhost:3000/api/posts/${this.id_param}`)
-            
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch (`http://localhost:3000/api/posts/${this.id_param}`, {
+                    method: "GET",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    }
+            })
             .then (response => response.json())
             .then (data => (this.post = data))
         },

@@ -52,13 +52,20 @@ export default {
     },
     methods: {
         getPost() {
-            fetch (`http://localhost:3000/api/posts/${this.id_param}`)
-            
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch (`http://localhost:3000/api/posts/${this.id_param}`, {
+                    method: "GET",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    }
+            })
             .then (response => response.json())
             .then (data => (this.post = data))
         },
         modifyPost() {
             const fileField = document.querySelector('input[type="file"]');
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
             if (this.post.title === "")
                 alert("Veuillez remplir le titre");
@@ -66,14 +73,16 @@ export default {
             if (this.post.content === "")
                 alert("Veuillez remplir votre message");
             if (this.post.image === null && this.post.title != "" && this.post.content != "") {
-            
+                let data = new FormData()
+                data.append('title', this.post.tile)
+                data.append('content', this.post.content)
+
                 fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
                     method: "PUT",
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(this.post)
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
+                    body: data
                 })
                     .then(response => response.json())
                     .then(data => (this.post = data))
@@ -89,6 +98,9 @@ export default {
 
                 fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
                     method: "PUT",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
                     body: data
                 })
                 .then((response) => response.json())
