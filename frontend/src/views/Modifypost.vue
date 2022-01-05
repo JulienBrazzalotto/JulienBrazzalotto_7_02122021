@@ -74,7 +74,7 @@ export default {
                 alert("Veuillez remplir votre message");
             if (this.post.image === null && this.post.title != "" && this.post.content != "") {
                 let data = new FormData()
-                data.append('title', this.post.tile)
+                data.append('title', this.post.title)
                 data.append('content', this.post.content)
 
                 fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
@@ -122,7 +122,7 @@ export default {
             }
         },
         deletefile() {
-            this.post.image = '';
+            this.post.image = null;
         }
     },
     mounted () {

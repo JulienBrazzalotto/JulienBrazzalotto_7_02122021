@@ -102,11 +102,3 @@ exports.modifyUser = (req, res, next) => {
         .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
         .catch((error)=> res.status(400).json({error}));
 };
-
-exports.getAllUsers = (req, res, next) => {
-    user.findAll()
-    .then((users) => res.status(200).json(users))
-    .catch((error) => res.status(400).json(error))
-};
-
-

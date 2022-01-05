@@ -54,6 +54,9 @@ export default {
             const Id = JSON.parse(localStorage.getItem("userId"))
             const fileField = document.querySelector('input[type="file"]');
             const token = JSON.parse(localStorage.getItem("userToken"))
+            console.log(this.titre)
+            console.log(this.contenu)
+            console.log(Id)
             console.log(token)
 
             if (this.titre === '')

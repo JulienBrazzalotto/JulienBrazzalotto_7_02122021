@@ -8,11 +8,11 @@
                 </article>
 
                 <article class="content">
-                    <p class="modif">
+                    <p class="modif" v-if="post.user_id === id || post.user.role === 1">
                     <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
                     <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
                     </p>
-                    <hr>
+                    <hr v-if="post.user_id === id || post.user.role === 1">
                     <p class="message">Message: </p><br>
                     <img v-if="post.image" :src="post.image" :alt="post.title">
                     <p>{{ post.content }}</p>
@@ -22,7 +22,7 @@
                 <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
-                        <button @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
+                        <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
                         </p>
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
@@ -68,7 +68,8 @@ export default {
             comments: [],
             displaycomments: false,
             displayCreateComment: false,
-            commentaire:''
+            commentaire:'',
+            id:''
         }
     },
     methods : {
@@ -83,6 +84,9 @@ export default {
         },
         hide2: function () {
             return this.displayCreateComment = false;
+        },
+        idUser() {
+            this.id = JSON.parse(localStorage.getItem("userId"))
         },
         
         getPost() {
@@ -173,8 +177,9 @@ export default {
         }
     },
     mounted(){
-            this.getPost ()
-            this.getComments ()
+        this.idUser()
+        this.getPost ()
+        this.getComments ()
     }
 }
 </script>

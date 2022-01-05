@@ -56,15 +56,23 @@ export default {
     },
     methods: {
         getUser() {
-            const Id = localStorage.userId;
+            const Id = JSON.parse(localStorage.getItem("userId"))
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
-            fetch(`http://localhost:3000/api/auth/${Id}`) 
+            fetch(`http://localhost:3000/api/auth/${Id}`, {
+                method: "GET",
+                headers: {
+                'authorization': `Bearer ${token}`
+                }
+            })
+
                 .then(response => response.json())
                 .then(data => (this.user = data))
         
         },
         updateUser() {
-            const Id = localStorage.userId;
+            const Id = JSON.parse(localStorage.getItem("userId"))
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
             const regexText = /^[a-zA-Z-\s]+$/;
             const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/; // eslint-disable-line
@@ -90,7 +98,8 @@ export default {
                     method: "PUT",
                         headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify(this.user)
                 })
@@ -103,14 +112,17 @@ export default {
             }
         },
         deleteUser() {
-            const Id = localStorage.userId;
+            const Id = JSON.parse(localStorage.getItem("userId"))
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
             if (confirm("Voulez-vous vraiment supprimer le compte") == true) {
 
                 fetch(`http://localhost:3000/api/auth/${Id}`, {
                     method: "DELETE",
                         headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify(this.user)
                 })
