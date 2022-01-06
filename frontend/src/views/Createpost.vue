@@ -14,7 +14,7 @@
                         <li>
                             <label v-if="!image" for="file" class="label-file">Choisir une image</label>
                             <button v-else @click="deletefile()" class="label-file"> Supprimer cette image</button>
-                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" ref="file" v-on:change="uploadFile" id="file" class="input-file">
+                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file">
                         </li>
                         <li>
                             <textarea v-model="contenu" placeholder="Contenu" rows="10" cols="60" required></textarea>
