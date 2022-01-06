@@ -8,7 +8,7 @@ CREATE TABLE Users
   id            SMALLINT      	UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
   nom           VARCHAR(50)   	NOT NULL,
   prenom    	  VARCHAR(50)   	NOT NULL,
-  image         VARCHAR(50),
+  image         VARCHAR(250),
   email         VARCHAR(100)  	NOT NULL  UNIQUE,
   password      VARCHAR(100)  	NOT NULL,
   role          SMALLINT        NOT NULL
@@ -19,11 +19,11 @@ CREATE TABLE Posts
 (
   id            SMALLINT        UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
   title         VARCHAR(50)     NOT NULL,
-  image         VARCHAR(50),
+  image         VARCHAR(250),
   date          DATETIME        NOT NULL,
   content       TEXT            NOT NULL,
   user_id       SMALLINT        UNSIGNED      NOT NULL,
-  CONSTRAINT    fk_user_id_posts      FOREIGN KEY   (user_id)     REFERENCES      Users(id)
+  CONSTRAINT    fk_user_id_posts      FOREIGN KEY   (user_id)     REFERENCES      Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 )
 ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -34,7 +34,7 @@ CREATE TABLE Comments
   date          DATETIME        NOT NULL,
   post_id       SMALLINT        UNSIGNED      NOT NULL,
   user_id       SMALLINT        UNSIGNED      NOT NULL,
-  CONSTRAINT    fk_post_id      FOREIGN KEY   (post_id)     REFERENCES      Posts(id),
-  CONSTRAINT    fk_user_id_comments      FOREIGN KEY   (user_id)     REFERENCES      Users(id)
+  CONSTRAINT    fk_post_id      FOREIGN KEY   (post_id)     REFERENCES      Posts(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT    fk_user_id_comments      FOREIGN KEY   (user_id)     REFERENCES      Users(id)ON UPDATE CASCADE ON DELETE CASCADE
 )
 ENGINE=INNODB DEFAULT CHARSET=utf8;

@@ -62,12 +62,10 @@ exports.login = (req, res, next) => {
 
                     res.status(200).json({
                         userId: user.id,
-                        nom: user.nom,
-                        prenom: user.prenom,
                         image: user.image,
                         role: user.role,
                         token: jwt.sign(
-                            {id: user.id},
+                            {userId: user.id},
                             process.env.TOKEN, 
                             {expiresIn: '24h'} 
                         )
@@ -104,11 +102,3 @@ exports.modifyUser = (req, res, next) => {
         .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
         .catch((error)=> res.status(400).json({error}));
 };
-
-exports.getAllUsers = (req, res, next) => {
-    user.findAll()
-    .then((users) => res.status(200).json(users))
-    .catch((error) => res.status(400).json(error))
-};
-
-

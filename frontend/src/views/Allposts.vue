@@ -13,6 +13,8 @@
                     <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                   </div>
                   <div class="content">
+                    <p class="message">Message: </p><br>
+                    <img v-if="post.image" :src="post.image" alt="">
                     <p>{{ post.content }}</p>
                   </div>
                 </router-link>
@@ -34,16 +36,24 @@ export default {
     data () {
         return {
             posts: [],
+            
         
       }
     },
     methods : {
         
-        fetchPosts() {
-          fetch('http://localhost:3000/api/posts/')
-          
-          .then(response => response.json())
-          .then(data => (this.posts = data))
+        getPosts() {
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch('http://localhost:3000/api/posts/', {
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            
+            .then(response => response.json())
+            .then(data => (this.posts = data))
         },
         dateFormat(createdDate) {
           const date = new Date(createdDate)
@@ -60,7 +70,7 @@ export default {
         }
     },
     mounted(){
-          this.fetchPosts()
+          this.getPosts()
     }
 }
 </script>
@@ -99,10 +109,12 @@ h2 {
   border-radius: 20px 20px 0 0;
 }
 
+.message {
+    text-decoration: underline;
+}
+
 .content {
-    height: 100px;
     margin-bottom: 30px;
-    padding: 40px 0 0 0;
     border-radius: 0 0 20px 20px;
 }
 
@@ -114,5 +126,8 @@ h2 {
     background: #ffd7d7;
     font-size: 1rem;
     cursor: pointer;
+}
+img {
+  height: 400px;
 }
 </style>

@@ -6,22 +6,23 @@
                     <h1>Titre: {{ post.title }}</h1>
                     <p class="info">Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 </article>
+
                 <article class="content">
-                    <p class="modif">
+                    <p class="modif" v-if="post.user_id === id || post.user.role === 1">
                     <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
                     <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
                     </p>
-                    <hr>
+                    <hr v-if="post.user_id === id || post.user.role === 1">
                     <p class="message">Message: </p><br>
+                    <img v-if="post.image" :src="post.image" :alt="post.title">
                     <p>{{ post.content }}</p>
                 </article>
 
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
-                <article v-if="isDisplay">
+                <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
-                        <button class="button-comment"><i class="fas fa-edit"></i></button>
-                        <button @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
+                        <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
                         </p>
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
@@ -30,7 +31,7 @@
                 </article>
 
                 <button v-on:click="show2" class="button">Ecrire un commentaire</button>
-                <article v-if="displaycomment" class="createcomment">
+                <article v-if="displayCreateComment" class="createcomment">
                     <textarea v-model="commentaire" placeholder="Commentaire" cols="60" rows="5"></textarea>
                     <button @click="createComment()" class="buttonenvoyer">Envoyer le commentaire</button>
                     <button v-on:click="hide2" class="buttonannuler">Annuler le commentaire</button>
@@ -55,35 +56,61 @@ export default {
     data () {
         return {
             id_param: this.$route.params.id,
-            post: [],
-            comments: {},
-            isDisplay: false,
-            displaycomment: false,
-            commentaire:''
+            post: {
+                content:'',
+                date:'',
+                id:'',
+                image:'',
+                title:'',
+                user: {},
+                user_id:''
+            },
+            comments: [],
+            displaycomments: false,
+            displayCreateComment: false,
+            commentaire:'',
+            id:''
         }
     },
     methods : {
         show: function () {
-        return this.isDisplay = true;
+            return this.displaycomments = true;
         },
         hide: function () {
-        return this.isDisplay = false;
+            return this.displaycomments = false;
         },
         show2: function () {
-        return this.displaycomment = true;
+            return this.displayCreateComment = true;
         },
         hide2: function () {
-        return this.displaycomment = false;
+            return this.displayCreateComment = false;
+        },
+        idUser() {
+            this.id = JSON.parse(localStorage.getItem("userId"))
         },
         
-        fetchPost() {
-            fetch (`http://localhost:3000/api/posts/${this.id_param}`)
-            
+        getPost() {
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch (`http://localhost:3000/api/posts/${this.id_param}`, {
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
             .then (response => response.json())
             .then (data => (this.post = data))
         },
-        fetchComments() {
-            fetch (`http://localhost:3000/api/comments/${this.id_param}`)
+        
+        getComments() {
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch (`http://localhost:3000/api/comments/${this.id_param}`, {
+                    method: "GET",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    }
+            })
             
             .then (response => response.json())
             .then (data => (this.comments = data))
@@ -99,11 +126,15 @@ export default {
             return hour.toLocaleTimeString('fr-FR', options);
         },
         deletePost () {
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
-            if (confirm("Voulez-vous vraiment supprimer le post") == true) {
+            if (confirm("Voulez-vous vraiment supprimer le post") === true) {
 
                 fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
                     method: "DELETE",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    }
                 })
                 .then(response => response.json())
                 .then(() => { 
@@ -115,20 +146,25 @@ export default {
             this.$router.push(`/modifypost/${this.id_param}`)
         },
         createComment () {
-            const Id = localStorage.userId;
-            let data = {
-                content: this.commentaire,
-                post_id: this.id_param,
-                user_id: Id
-            }
             if( this.commentaire === ""){
                 alert('Veuillez remplir votre commentaire')
+
             } else {
+                const Id = JSON.parse(localStorage.getItem("userId"));
+                const token = JSON.parse(localStorage.getItem("userToken"))
+                
+                let data = {
+                    content: this.commentaire,
+                    post_id: this.id_param,
+                    user_id: Id
+                }
+
                 fetch("http://localhost:3000/api/comments", {
                     method: "POST",
                     headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(data)
                 })
@@ -136,29 +172,33 @@ export default {
                     return response.json();
                 })
                 .then(() => {
-                    alert("Votre commentaire est bien pris en compte")
                     this.$router.go()
                 })
                 .catch(error => console.log(error))
             }
         },
         deleteComment (index) {
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
-            if (confirm("Voulez-vous vraiment supprimer ce commentaire") == true) {
+            if (confirm("Voulez-vous vraiment supprimer ce commentaire") === true) {
 
                 fetch(`http://localhost:3000/api/comments/${this.comments[index].id}`, {
                     method: "DELETE",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
                 })
                 .then(response => response.json())
                 .then(() => { 
                     alert("La suppression du commentaire est bien prise en compte")
                     this.$router.go() })
             }
-        },
+        }
     },
     mounted(){
-            this.fetchPost ()
-            this.fetchComments ()
+        this.idUser()
+        this.getPost ()
+        this.getComments ()
     }
 }
 </script>
@@ -234,7 +274,7 @@ textarea {
 }
 
 .button-comment {
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -271,6 +311,10 @@ textarea {
 .comment-info,
 .comment-content {
     padding: 0 30px 0 30px;
+}
+
+img {
+    width: 100%;
 }
 
 </style>
