@@ -8,7 +8,7 @@ CREATE TABLE Users
   id            SMALLINT      	UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
   nom           VARCHAR(50)   	NOT NULL,
   prenom    	  VARCHAR(50)   	NOT NULL,
-  image         VARCHAR(50),
+  image         VARCHAR(250),
   email         VARCHAR(100)  	NOT NULL  UNIQUE,
   password      VARCHAR(100)  	NOT NULL,
   role          SMALLINT        NOT NULL
@@ -19,7 +19,7 @@ CREATE TABLE Posts
 (
   id            SMALLINT        UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
   title         VARCHAR(50)     NOT NULL,
-  image         VARCHAR(50),
+  image         VARCHAR(250),
   date          DATETIME        NOT NULL,
   content       TEXT            NOT NULL,
   user_id       SMALLINT        UNSIGNED      NOT NULL,
