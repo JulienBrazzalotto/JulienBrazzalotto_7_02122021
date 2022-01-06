@@ -93,17 +93,24 @@ export default {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
             fetch (`http://localhost:3000/api/posts/${this.id_param}`, {
-                    method: "GET",
-                    headers: {
-                        'authorization': `Bearer ${token}`
-                    }
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
             })
             .then (response => response.json())
             .then (data => (this.post = data))
         },
         
         getComments() {
-            fetch (`http://localhost:3000/api/comments/${this.id_param}`)
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch (`http://localhost:3000/api/comments/${this.id_param}`, {
+                    method: "GET",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    }
+            })
             
             .then (response => response.json())
             .then (data => (this.comments = data))
@@ -119,11 +126,15 @@ export default {
             return hour.toLocaleTimeString('fr-FR', options);
         },
         deletePost () {
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
             if (confirm("Voulez-vous vraiment supprimer le post") === true) {
 
                 fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
                     method: "DELETE",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    }
                 })
                 .then(response => response.json())
                 .then(() => { 
@@ -135,20 +146,25 @@ export default {
             this.$router.push(`/modifypost/${this.id_param}`)
         },
         createComment () {
-            const Id = localStorage.userId;
-            let data = {
-                content: this.commentaire,
-                post_id: this.id_param,
-                user_id: Id
-            }
             if( this.commentaire === ""){
                 alert('Veuillez remplir votre commentaire')
+
             } else {
+                const Id = JSON.parse(localStorage.getItem("userId"));
+                const token = JSON.parse(localStorage.getItem("userToken"))
+                
+                let data = {
+                    content: this.commentaire,
+                    post_id: this.id_param,
+                    user_id: Id
+                }
+
                 fetch("http://localhost:3000/api/comments", {
                     method: "POST",
                     headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(data)
                 })
@@ -156,18 +172,21 @@ export default {
                     return response.json();
                 })
                 .then(() => {
-                    alert("Votre commentaire est bien pris en compte")
                     this.$router.go()
                 })
                 .catch(error => console.log(error))
             }
         },
         deleteComment (index) {
+            const token = JSON.parse(localStorage.getItem("userToken"))
 
             if (confirm("Voulez-vous vraiment supprimer ce commentaire") === true) {
 
                 fetch(`http://localhost:3000/api/comments/${this.comments[index].id}`, {
                     method: "DELETE",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
                 })
                 .then(response => response.json())
                 .then(() => { 
