@@ -274,7 +274,7 @@ textarea {
 }
 
 .button-comment {
-    margin: 10px 0 10px 10px;
+    margin: 10px 0 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
