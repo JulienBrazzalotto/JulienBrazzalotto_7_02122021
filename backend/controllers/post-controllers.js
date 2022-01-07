@@ -31,7 +31,7 @@ exports.modifyPost = (req, res, next) => {
         .then(post => {
             if (post.image) {
             const filename = post.image.split('/images/posts/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            fs.unlink(`images/posts/${filename}`, () => {
                 const modifyPost = {
                 title: req.body.title,
                 content: req.body.content,
@@ -60,7 +60,7 @@ exports.modifyPost = (req, res, next) => {
         .then(post => {
             if (post.image) {
                 const filename = post.image.split('/images/posts/')[1];
-                fs.unlink(`images/${filename}`, () => {
+                fs.unlink(`images/posts/${filename}`, () => {
                     const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
@@ -93,7 +93,7 @@ exports.deletePost = (req, res, next) => {
         .then(post => {
             if (post.image != null) {
                 const filename = post.image.split('/images/posts/')[1];
-                fs.unlink(`images/${filename}`, () => {
+                fs.unlink(`images/posts/${filename}`, () => {
                     Post.destroy({ where: { id: req.params.id } })
 
                     .then(() => res.status(200).json({message : 'Post supprimé !'}))
