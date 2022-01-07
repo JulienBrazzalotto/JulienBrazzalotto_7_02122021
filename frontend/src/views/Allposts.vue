@@ -152,5 +152,4 @@ img {
     text-align: center;
 }
 
-
 </style>
