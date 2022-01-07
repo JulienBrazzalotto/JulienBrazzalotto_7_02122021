@@ -8,9 +8,9 @@
                 </article>
 
                 <article class="content">
-                    <p class="modif" v-if="post.user_id === id || post.user.role === 1">
-                    <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
-                    <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
+                    <p class="modif">
+                    <button @click="modifyPost()" v-if="post.user_id === id" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
+                    <button @click="deletePost()" v-if="post.user_id === id || post.user.role === 1" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
                     </p>
                     <hr v-if="post.user_id === id || post.user.role === 1">
                     <p class="message"></p><br>

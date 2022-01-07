@@ -3,10 +3,13 @@
         <HeaderProfile />
             <h1>Fil d'actualité</h1>
             <button @click="createPost()" class="button" >Créer un post</button>
+            <div>
+                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son titre ..." size=50>
+            </div>
             <article v-if="posts.length == 0">
                 <p>Désolé il n'y a aucune publication pour le moment...</p>
             </article>
-            <article v-else v-bind:key="index" v-for="(post, index) in posts">
+            <article v-else v-bind:key="index" v-for="(post, index) in filterList">
                 <router-link :to="`/post/${post.id}`" class="article">
                     <div class="header">
                     <h2>{{ post.title }}</h2>
@@ -36,7 +39,14 @@ export default {
     data () {
         return {
             posts: [],
-        
+            search:''
+        }
+    },
+    computed : {
+        filterList() {
+            return this.posts.filter((post) =>{
+                return post.title.toLowerCase().includes(this.search.toLowerCase());
+            })
         }
     },
     methods : {
@@ -118,7 +128,7 @@ h2 {
 }
 
 .button {
-    margin: 10px 0 50px 0;
+    margin: 10px 0 20px 0;
     padding: 5px 300px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -130,4 +140,17 @@ h2 {
 img {
     height: 400px;
 }
+
+.search {
+    margin-bottom: 50px;
+    height: 30px;
+    border: 2px solid #fd2d01;
+    border-radius: 5px;
+}
+
+::placeholder {
+    text-align: center;
+}
+
+
 </style>

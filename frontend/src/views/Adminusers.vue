@@ -125,6 +125,7 @@ table {
 }
 
 button {
+    margin: 0 5px 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -136,7 +137,7 @@ button {
 }
 
 .button{
-margin: 10px 0 30px 0;
+    margin: 10px 0 30px 0;
     padding: 5px 30px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;

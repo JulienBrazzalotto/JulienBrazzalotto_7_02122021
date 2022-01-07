@@ -10,7 +10,7 @@
                         <th>Titre</th>
                         <th>Message</th>
                     </tr>
-                    <tr v-bind:key="index" v-for="(post, index) in posts" class="decor">
+                    <tr v-bind:key="index" v-for="(post, index) in posts">
                         <td><input type="text" v-model="post.user.nom" placeholder="Nom" required></td>
                         <td><input type="text" v-model="post.user.prenom" placeholder="Prénom" required></td>
                         <td><input type="text" v-model="post.title" placeholder="Titre" required></td>
