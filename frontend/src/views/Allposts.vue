@@ -4,19 +4,19 @@
             <h1>Fil d'actualité</h1>
             <button @click="createPost()" class="button" >Créer un post</button>
             <article v-if="posts.length == 0">
-              <p>Désolé il n'y a aucune publication pour le moment...</p>
+                <p>Désolé il n'y a aucune publication pour le moment...</p>
             </article>
             <article v-else v-bind:key="index" v-for="(post, index) in posts">
                 <router-link :to="`/post/${post.id}`" class="article">
-                  <div class="header">
+                    <div class="header">
                     <h2>Titre: {{ post.title }}</h2>
-                    <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
-                  </div>
-                  <div class="content">
+                    <p>Posté par <b>{{ post.user.nom }} <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
+                    </div>
+                    <div class="content">
                     <p class="message">Message: </p><br>
                     <img v-if="post.image" :src="post.image" alt="">
                     <p>{{ post.content }}</p>
-                  </div>
+                    </div>
                 </router-link>
             </article>
         <Footer />
@@ -36,9 +36,8 @@ export default {
     data () {
         return {
             posts: [],
-            
         
-      }
+        }
     },
     methods : {
         
@@ -56,9 +55,9 @@ export default {
             .then(data => (this.posts = data))
         },
         dateFormat(createdDate) {
-          const date = new Date(createdDate)
-          const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'};
-          return date.toLocaleDateString('fr-FR', options);
+            const date = new Date(createdDate)
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'};
+            return date.toLocaleDateString('fr-FR', options);
         },
         hourFormat(createdHour) {
             const hour = new Date(createdHour)
@@ -70,7 +69,7 @@ export default {
         }
     },
     mounted(){
-          this.getPosts()
+        this.getPosts()
     }
 }
 </script>
@@ -78,11 +77,11 @@ export default {
 <style scoped>
 
 h1 {
-  width: 100%;
-  font-size: 2rem;
-  background: #ffd7d7;
-  border: 2px solid #fd2d01;
-  border-radius: 20px;
+    width: 100%;
+    font-size: 2rem;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    border-radius: 20px;
 }
 
 h2 {
@@ -106,7 +105,7 @@ h2 {
 }
 
 .header {
-  border-radius: 20px 20px 0 0;
+    border-radius: 20px 20px 0 0;
 }
 
 .message {
@@ -127,7 +126,8 @@ h2 {
     font-size: 1rem;
     cursor: pointer;
 }
+
 img {
-  height: 400px;
+    height: 400px;
 }
 </style>

@@ -3,8 +3,8 @@
         <HeaderProfile />
             <section>
                 <article class="header">
-                    <h1>Titre: {{ post.title }}</h1>
-                    <p class="info">Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
+                    <h1>{{ post.title }}</h1>
+                    <p class="info">Posté par <b>{{ post.user.nom }} <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                 </article>
 
                 <article class="content">
@@ -13,7 +13,7 @@
                     <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
                     </p>
                     <hr v-if="post.user_id === id || post.user.role === 1">
-                    <p class="message">Message: </p><br>
+                    <p class="message"></p><br>
                     <img v-if="post.image" :src="post.image" :alt="post.title">
                     <p>{{ post.content }}</p>
                 </article>
@@ -21,7 +21,7 @@
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
                 <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
-                        <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
+                        <p class="comment-info">écrit par <b>{{ comment.user.nom }} <span v-if="post.user.role != 0">{{ comment.user.prenom}}</span></b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
                         <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
                         </p>
                         <hr>

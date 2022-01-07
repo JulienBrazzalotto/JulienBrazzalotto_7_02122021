@@ -1,0 +1,54 @@
+<template>
+    <div class="nav">
+        <h1>Administration</h1>
+        <nav>
+            <router-link to="/admin/users"><i class="fas fa-users-cog link"></i></router-link>
+            <router-link to="/admin/posts"><i class="fas fa-mail-bulk link"></i></router-link>
+            <router-link to="/admin/comments"><i class="fas fa-comments link"></i></router-link>
+        </nav>
+    </div>
+</template>
+
+<style scoped>
+h1{
+    width: 100%;
+    font-size: 2rem;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    border-radius: 20px;
+}
+
+img {
+    height: 5vw;
+}
+
+.link {
+    padding: 0 50px;
+    font-size: 1.5vw;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    color: #fd2d01;
+
+}
+.nav {
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.nav a {
+    font-weight: bold;
+    color: #000000;
+}
+
+.nav a.router-link-exact-active {
+    color: #fd2d01;
+}
+
+i {
+    font-size: 3rem;
+}
+
+</style>
