@@ -3,6 +3,9 @@
         <HeaderProfile />
         <AdminNav />
             <article >
+                <div>
+                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=50>
+                </div>
                 <table>
                     <tr>
                         <th>Nom</th>
@@ -10,7 +13,7 @@
                         <th>Email</th>
                         <th>Role</th>
                     </tr>
-                    <tr v-bind:key="index" v-for="(user, index) in users">
+                    <tr v-bind:key="index" v-for="(user, index) in filterList">
                         <td><input type="text" v-model="user.nom" placeholder="Nom" required></td>
                         <td><input type="text" v-model="user.prenom" placeholder="Prénom" required></td>
                         <td><input type="text" v-model="user.email" placeholder="Email" required></td>
@@ -39,7 +42,15 @@ export default {
     },
     data () {
         return {
-            users: []
+            users: [],
+            search: ''
+        }
+    },
+    computed : {
+        filterList() {
+            return this.users.filter((user) =>{
+                return user.nom.toLowerCase().includes(this.search.toLowerCase());
+            })
         }
     },
     methods : {
@@ -61,7 +72,7 @@ export default {
 
             if (confirm("Voulez-vous vraiment supprimer cet utilisateur") === true) {
 
-                fetch(`http://localhost:3000/api/auth/${this.users[index].id}`, {
+                fetch(`http://localhost:3000/api/auth/${this.filterList[index].id}`, {
                     method: "DELETE",
                     headers: {
                         'authorization': `Bearer ${token}`
@@ -73,23 +84,24 @@ export default {
                     this.$router.go() })
             }
         },
-        modifyUser(index) {
+        modifyUser(index, filterList) {
             const token = JSON.parse(localStorage.getItem("userToken"))
+            console.log(filterList)
 
             if (confirm("Voulez-vous vraiment modifier cet utilisateur") === true) {
                 
 
-                fetch(`http://localhost:3000/api/auth/admin/${this.users[index].id}`, {
+                fetch(`http://localhost:3000/api/auth/admin/${this.filterList[index].id}`, {
                     method: "PUT",
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
                     },
-                    body : JSON.stringify(this.users[index])
+                    body : JSON.stringify(this.filterList[index])
                 })
                 .then(response => response.json())
-                .then(data => (this.users[index] = data))
+                .then(data => (this.filterList[index] = data))
                 .then(() => { 
                     alert("La modification de l'utilisateur est bien prise en compte")
                     this.$router.go() })
@@ -112,6 +124,17 @@ table {
     margin: 0 0 30px 0;
 }
 
+button {
+    padding: 5px 5px ;
+    border: 2px solid #fd2d01;
+    border-radius: 10px;
+    background: #ffd7d7;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000000;
+}
+
 .button{
 margin: 10px 0 30px 0;
     padding: 5px 30px ;
@@ -124,14 +147,8 @@ margin: 10px 0 30px 0;
     color: #000000;
 }
 
-button {
-    padding: 5px 5px ;
+.search {
+    margin-bottom: 30px;
     border: 2px solid #fd2d01;
-    border-radius: 10px;
-    background: #ffd7d7;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    color: #000000;
 }
 </style>
