@@ -7,7 +7,7 @@ exports.createPost = (req, res, next) => {
         Post.create({
             title: req.body.title,
             content: req.body.content,
-            image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
             user_id: req.body.user_id
         })
         .then(() => res.status(201).json({message: 'Post créé !'}))
@@ -30,12 +30,12 @@ exports.modifyPost = (req, res, next) => {
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
             if (post.image) {
-            const filename = post.image.split('/images/')[1];
+            const filename = post.image.split('/images/posts/')[1];
             fs.unlink(`images/${filename}`, () => {
                 const modifyPost = {
                 title: req.body.title,
                 content: req.body.content,
-                image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
     
                 Post.update(modifyPost , { where: { id: req.params.id } })
@@ -46,7 +46,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                 title: req.body.title,
                 content: req.body.content,
-                image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
         
                 Post.update(modifyPost , { where: { id: req.params.id } })
@@ -59,7 +59,7 @@ exports.modifyPost = (req, res, next) => {
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
             if (post.image) {
-                const filename = post.image.split('/images/')[1];
+                const filename = post.image.split('/images/posts/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     const modifyPost = {
                     title: req.body.title,
@@ -92,7 +92,7 @@ exports.deletePost = (req, res, next) => {
     Post.findOne({ where: { id: req.params.id }})
         .then(post => {
             if (post.image != null) {
-                const filename = post.image.split('/images/')[1];
+                const filename = post.image.split('/images/posts/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Post.destroy({ where: { id: req.params.id } })
 
