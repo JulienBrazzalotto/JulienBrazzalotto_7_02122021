@@ -9,11 +9,11 @@
             <article v-else v-bind:key="index" v-for="(post, index) in posts">
                 <router-link :to="`/post/${post.id}`" class="article">
                     <div class="header">
-                    <h2>Titre: {{ post.title }}</h2>
+                    <h2>{{ post.title }}</h2>
                     <p>Posté par <b>{{ post.user.nom }} <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
                     </div>
                     <div class="content">
-                    <p class="message">Message: </p><br>
+                    <p class="message"></p><br>
                     <img v-if="post.image" :src="post.image" alt="">
                     <p>{{ post.content }}</p>
                     </div>

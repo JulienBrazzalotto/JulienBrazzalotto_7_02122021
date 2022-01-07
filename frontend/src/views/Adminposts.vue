@@ -2,10 +2,24 @@
     <div>
         <HeaderProfile />
         <AdminNav />
-        <div>
-            
-        </div>
-        <router-link to="/allposts" class="button">Retour aux posts</router-link>
+            <article >
+                <table>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Titre</th>
+                        <th>Message</th>
+                    </tr>
+                    <tr v-bind:key="index" v-for="(post, index) in posts" class="decor">
+                        <td><input type="text" v-model="post.user.nom" placeholder="Nom" required></td>
+                        <td><input type="text" v-model="post.user.prenom" placeholder="Prénom" required></td>
+                        <td><input type="text" v-model="post.title" placeholder="Titre" required></td>
+                        <td><textarea type="text" v-model="post.content" placeholder="Message" required></textarea></td>
+                        <button @click="deletePost(index)"><i class="far fa-trash-alt"></i></button>
+                    </tr>
+                </table>
+                <router-link to="/allposts" class="button">Retour aux posts</router-link>
+            </article>
         <Footer />
     </div>
 </template>
@@ -16,15 +30,88 @@ import AdminNav from "../components/AdminNav";
 import Footer from "../components/Footer";
 
 export default {
-    name: 'Adminusers',
+    name: 'AdminPosts',
     components: {
         HeaderProfile,
         AdminNav,
         Footer
+    },
+    data () {
+        return {
+            posts: []
+        }
+    },
+    methods : {
+        getPosts() {
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            fetch('http://localhost:3000/api/posts/', {
+                method: "GET",
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+            
+            .then(response => response.json())
+            .then(data => (this.posts = data))
+        },
+        deletePost(index) {
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            if (confirm("Voulez-vous vraiment supprimer le post") === true) {
+
+                fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                    method: "DELETE",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
+                    body : JSON.stringify(this.posts[index])
+                })
+                .then(response => response.json())
+                .then(data => (this.posts[index] = data))
+                .then(() => {
+                    alert("La suppression du post est bien prise en compte")
+                    this.$router.go() })
+            }
+        }
+    },
+    mounted(){
+        this.getPosts()
     }
 }
 </script>
 
 <style scoped>
+table {
+    width: 100%;
+    font-size: 1rem;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    border-radius: 20px;
+    margin: 0 0 30px 0;
+}
+
+.button{
+margin: 10px 0 30px 0;
+    padding: 5px 30px ;
+    border: 2px solid #fd2d01;
+    border-radius: 10px;
+    background: #ffd7d7;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000000;
+}
+
+button {
+    padding: 5px 5px ;
+    border: 2px solid #fd2d01;
+    border-radius: 10px;
+    background: #ffd7d7;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000000;
+}
 
 </style>
