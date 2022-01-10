@@ -155,8 +155,7 @@ export default {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify(this.user)
+                        }
                 })
                     .then(response => response.json())
                     .then(() => { 

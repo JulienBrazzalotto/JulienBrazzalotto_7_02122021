@@ -17,9 +17,9 @@
                             <p>
                                 Posté par 
                                 <b>{{ post.user.nom }} 
+                                <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>
                                 <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
                                 <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
-                                <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> 
                                 le <b>{{ dateFormat(post.date) }}</b>
                                 à <b>{{ hourFormat(post.date) }}</b>
                             </p>

@@ -6,7 +6,6 @@ const fs = require('fs');
 
 const user = require('../models/user-models');
 
-
 const schema = new passwordValidator();
 schema
   .is().min(3)
@@ -78,10 +77,25 @@ exports.login = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    user.destroy({ where: {id: req.params.id} })
+    user.findOne({ where: { id: req.params.id }})
+    .then(User => {
+        if (User.image != null) {
+            const filename = User.image.split('/images/profiles/')[1];
+            fs.unlink(`images/profiles/${filename}`, () => {
+                user.destroy({ where: { id: req.params.id } })
 
-        .then(() => res.status(201).json({message: 'Utilisateur supprimé !'}))
-        .catch(error => res.status(400).json({error}));
+                .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
+                .catch( error => res.status(400).json({error}));
+            })
+        
+    
+        } else {
+            user.destroy({ where: { id: req.params.id } })
+
+            .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
+            .catch( error => res.status(400).json({error}));
+        }
+    })
 }
 
 exports.getOneUser = (req, res, next) => {
@@ -107,7 +121,7 @@ exports.modifyUser = (req, res, next) => {
     
                 user.update(modifyUser , { where: { id: req.params.id } })
             
-                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
                     .catch( error => res.status(400).json({error}));
             })} else {
                 const modifyUser = {
@@ -119,7 +133,7 @@ exports.modifyUser = (req, res, next) => {
         
                 user.update(modifyUser , { where: { id: req.params.id } })
         
-                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
                     .catch( error => res.status(400).json({error}));
             }
         })
@@ -138,7 +152,7 @@ exports.modifyUser = (req, res, next) => {
 
                     user.update(modifyUser , { where: { id: req.params.id } })
 
-                        .then(() => res.status(200).json({message : 'Post modifié !'}))
+                        .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
                         .catch( error => res.status(400).json({error}));
                 })
             } else {
@@ -151,7 +165,7 @@ exports.modifyUser = (req, res, next) => {
         
                 user.update(modifyUser , { where: { id: req.params.id } })
         
-                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
                     .catch( error => res.status(400).json({error}));
             }
         })

@@ -7,9 +7,9 @@
                     <p>
                         Posté par 
                         <b>{{ post.user.nom }} 
+                        <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
                         <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
                         <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
-                        <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> 
                         le <b>{{ dateFormat(post.date) }}</b>
                         à <b>{{ hourFormat(post.date) }}</b>
                     </p>
@@ -18,9 +18,9 @@
                 <article class="content">
                     <p class="modif">
                     <button @click="modifyPost()" v-if="post.user_id === id" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
-                    <button @click="deletePost()" v-if="post.user_id === id || post.user.role === 1" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
+                    <button @click="deletePost()" v-if="post.user_id === id || role === 1" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
                     </p>
-                    <hr v-if="post.user_id === id || post.user.role === 1">
+                    <hr v-if="post.user_id === id || role === 1">
                     <p class="message"></p><br>
                     <img v-if="post.image" :src="post.image" :alt="post.title">
                     <p>{{ post.content }}</p>
@@ -40,7 +40,7 @@
                             à <b>{{ hourFormat(comment.date) }}</b>
                             </p>
                             <p>
-                                <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
+                                <button v-if="comment.user_id === id || role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
                             </p>
                         </div>                        
                         <hr>
@@ -88,7 +88,8 @@ export default {
             displaycomments: false,
             displayCreateComment: false,
             commentaire:'',
-            id:''
+            id:'',
+            role: ''
         }
     },
     methods : {
@@ -104,8 +105,10 @@ export default {
         hide2: function () {
             return this.displayCreateComment = false;
         },
-        idUser() {
+        User() {
             this.id = JSON.parse(localStorage.getItem("userId"))
+            this.role = JSON.parse(localStorage.getItem("role"))
+
         },
         
         getPost() {
@@ -215,7 +218,7 @@ export default {
         }
     },
     mounted(){
-        this.idUser()
+        this.User()
         this.getPost ()
         this.getComments ()
     }
@@ -303,7 +306,7 @@ textarea {
 }
 
 .espacement {
-    margin: 0 0 0 10px;
+    margin: 5px 0 0 10px;
 }
 
 .link {
