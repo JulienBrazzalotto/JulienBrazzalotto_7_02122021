@@ -45,7 +45,7 @@ export default {
     computed : {
         filterList() {
             return this.posts.filter((post) =>{
-                return post.title.toLowerCase().includes(this.search.toLowerCase());
+                return post.user.nom.toLowerCase().includes(this.search.toLowerCase());
             })
         }
     },
