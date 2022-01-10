@@ -7,18 +7,28 @@
                 <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son titre ..." size=50>
             </div>
             <article v-if="posts.length == 0">
-                <p>Désolé il n'y a aucune publication pour le moment...</p>
+                <p>Désolé il n'y a aucune publication...</p>
             </article>
             <article v-else v-bind:key="index" v-for="(post, index) in filterList">
                 <router-link :to="`/post/${post.id}`" class="article">
                     <div class="header">
-                    <h2>{{ post.title }}</h2>
-                    <p>Posté par <b>{{ post.user.nom }} <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
+                        <div>
+                            <h2>{{ post.title }}</h2>
+                            <p>
+                                Posté par 
+                                <b>{{ post.user.nom }} 
+                                <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                                <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> 
+                                le <b>{{ dateFormat(post.date) }}</b>
+                                à <b>{{ hourFormat(post.date) }}</b>
+                            </p>
+                        </div>
                     </div>
                     <div class="content">
-                    <p class="message"></p><br>
-                    <img v-if="post.image" :src="post.image" alt="">
-                    <p>{{ post.content }}</p>
+                        <p class="message"></p><br>
+                        <img class="image" v-if="post.image" :src="post.image" :alt="post.title">
+                        <p>{{ post.content }}</p>
                     </div>
                 </router-link>
             </article>
@@ -99,6 +109,9 @@ h2 {
     margin: 30px 0 10px 0;
 }
 
+.image {
+    height: 400px;
+}
 .article {
     display: flex;
     flex-direction: column;
@@ -137,10 +150,6 @@ h2 {
     cursor: pointer;
 }
 
-img {
-    height: 400px;
-}
-
 .search {
     margin-bottom: 50px;
     height: 30px;
@@ -152,4 +161,7 @@ img {
     text-align: center;
 }
 
+.photo-profil{
+    width: 50px;
+}
 </style>

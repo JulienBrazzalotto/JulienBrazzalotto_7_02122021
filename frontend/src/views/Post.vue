@@ -4,7 +4,15 @@
             <section>
                 <article class="header">
                     <h1>{{ post.title }}</h1>
-                    <p class="info">Posté par <b>{{ post.user.nom }} <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
+                    <p>
+                        Posté par 
+                        <b>{{ post.user.nom }} 
+                        <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                        <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                        <span v-if="post.user.role != 0">{{ post.user.prenom }}</span></b> 
+                        le <b>{{ dateFormat(post.date) }}</b>
+                        à <b>{{ hourFormat(post.date) }}</b>
+                    </p>
                 </article>
 
                 <article class="content">
@@ -21,9 +29,20 @@
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
                 <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
-                        <p class="comment-info">écrit par <b>{{ comment.user.nom }} <span v-if="post.user.role != 0">{{ comment.user.prenom}}</span></b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
-                        <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
-                        </p>
+                        <div>
+                            <p>
+                            Posté par 
+                            <b>{{ comment.user.nom }} 
+                            <span v-if="comment.user.role != 0">{{ comment.user.prenom }} </span></b> 
+                            <img class="photo-profil" v-if="comment.user.image" :src="comment.user.image" alt="photo de profil">
+                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                            le <b>{{ dateFormat(comment.date) }}</b>
+                            à <b>{{ hourFormat(comment.date) }}</b>
+                            </p>
+                            <p>
+                                <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
+                            </p>
+                        </div>                        
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
                     </div>
@@ -315,6 +334,10 @@ textarea {
 
 img {
     width: 100%;
+}
+
+.photo-profil {
+    width: 50px;
 }
 
 </style>

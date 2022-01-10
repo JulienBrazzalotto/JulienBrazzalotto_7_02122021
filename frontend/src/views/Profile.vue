@@ -17,6 +17,14 @@
                         <label for="email">Email</label>
                         <input type="email" v-model="user.email" placeholder="Email" size="50" required>
                     </li>
+                    <li v-if="user.image">
+                        <img :src="user.image" :alt="user.title" class="file">
+                    </li>
+                    <li>
+                        <label v-if="!user.image" for="file" class="label-file">Choisir une photo de profil</label>
+                        <button v-else @click="deletefile()" class="label-file"> Supprimer cette photo de profil</button>
+                        <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file">
+                    </li>
                 </ul>
                 <div>
                     <button @click="updateUser()" class="button"><i class="fas fa-edit"></i> Enregistrer les modifications</button>
@@ -47,7 +55,9 @@ export default {
                 nom: '',
                 prenom: '',
                 email: '',
-            }
+                image:''
+            },
+            preview: null
         
         }
     },
@@ -133,6 +143,19 @@ export default {
                     })
                     .then(this.$router.push("/"))
             }
+        },
+        uploadFile(e) {
+            if (e.target.files) {
+                let reader = new FileReader()
+                reader.onload = (event) => {
+                    this.preview = event.target.result
+                    this.user.image = event.target.result
+                }
+                reader.readAsDataURL(e.target.files[0])
+            }
+        },
+        deletefile() {
+            this.user.image = '';
         }
     }
 }
@@ -172,7 +195,16 @@ input {
     font-size: 1.2rem;
 }
 
-.button {
+.file {
+    height: 400px;
+}
+
+.input-file {
+    display: none;
+}
+
+.button,
+.label-file {
     margin: 10px 0 50px 0;
     padding: 5px 30px ;
     border: 2px solid #fd2d01;
