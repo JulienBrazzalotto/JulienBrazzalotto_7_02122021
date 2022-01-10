@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passwordValidator = require('password-validator');
 const emailValidator = require("email-validator");
+const fs = require('fs');
 
 const user = require('../models/user-models');
 
@@ -90,11 +91,78 @@ exports.getOneUser = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
+    if (req.file) {
+
+        user.findOne({ where: { id: req.params.id }})
+        .then(User => {
+            if (User.image) {
+            const filename = User.image.split('/images/profiles/')[1];
+            fs.unlink(`images/profiles/${filename}`, () => {
+                const modifyUser = {
+                    nom: req.body.nom,
+                    prenom: req.body.prenom,
+                    email: req.body.email,
+                    image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
+                };
+    
+                user.update(modifyUser , { where: { id: req.params.id } })
+            
+                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            })} else {
+                const modifyUser = {
+                    nom: req.body.nom,
+                    prenom: req.body.prenom,
+                    email: req.body.email,
+                    image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
+                };
+        
+                user.update(modifyUser , { where: { id: req.params.id } })
+        
+                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            }
+        })
+    } else {
+        user.findOne({ where: { id: req.params.id }})
+        .then(User => {
+            if (User.image) {
+                const filename = User.image.split('/images/profiles/')[1];
+                fs.unlink(`images/profiles/${filename}`, () => {
+                    const modifyUser = {
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        email: req.body.email,
+                        image: ''
+                    };
+
+                    user.update(modifyUser , { where: { id: req.params.id } })
+
+                        .then(() => res.status(200).json({message : 'Post modifié !'}))
+                        .catch( error => res.status(400).json({error}));
+                })
+            } else {
+                const modifyUser = {
+                    nom: req.body.nom,
+                    prenom: req.body.prenom,
+                    email: req.body.email,
+                    image: ''
+                };
+        
+                user.update(modifyUser , { where: { id: req.params.id } })
+        
+                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            }
+        })
+    
+    }
     
     const modifyUser = {
         nom: req.body.nom,
         prenom: req.body.prenom,
         email: req.body.email,
+        image: req.body.image,
     };
 
     user.update(modifyUser, { where: { id: req.params.id }

@@ -33,9 +33,9 @@ exports.modifyPost = (req, res, next) => {
             const filename = post.image.split('/images/posts/')[1];
             fs.unlink(`images/posts/${filename}`, () => {
                 const modifyPost = {
-                title: req.body.title,
-                content: req.body.content,
-                image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
+                    title: req.body.title,
+                    content: req.body.content,
+                    image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
     
                 Post.update(modifyPost , { where: { id: req.params.id } })
@@ -44,9 +44,9 @@ exports.modifyPost = (req, res, next) => {
                     .catch( error => res.status(400).json({error}));
             })} else {
                 const modifyPost = {
-                title: req.body.title,
-                content: req.body.content,
-                image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
+                    title: req.body.title,
+                    content: req.body.content,
+                    image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
         
                 Post.update(modifyPost , { where: { id: req.params.id } })
@@ -62,9 +62,9 @@ exports.modifyPost = (req, res, next) => {
                 const filename = post.image.split('/images/posts/')[1];
                 fs.unlink(`images/posts/${filename}`, () => {
                     const modifyPost = {
-                    title: req.body.title,
-                    content: req.body.content,
-                    image: ''
+                        title: req.body.title,
+                        content: req.body.content,
+                        image: ''
                     };
 
                     Post.update(modifyPost , { where: { id: req.params.id } })
@@ -74,8 +74,8 @@ exports.modifyPost = (req, res, next) => {
                 })
             } else {
                 const modifyPost = {
-                title: req.body.title,
-                content: req.body.content,
+                    title: req.body.title,
+                    content: req.body.content,
                 };
         
                 Post.update(modifyPost , { where: { id: req.params.id } })

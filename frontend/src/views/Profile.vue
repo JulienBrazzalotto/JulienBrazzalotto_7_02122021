@@ -83,6 +83,7 @@ export default {
         updateUser() {
             const Id = JSON.parse(localStorage.getItem("userId"))
             const token = JSON.parse(localStorage.getItem("userToken"))
+            const fileField = document.querySelector('input[type="file"]');
 
             const regexText = /^[a-zA-Z-\s]+$/;
             const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/; // eslint-disable-line
@@ -102,7 +103,7 @@ export default {
                 alert("Veuillez remplir votre adresse email");
             } else if (regexEmail.test(this.user.email) === false) {
                 alert("Veuillez écrire une adresse email valide");
-            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true) {
+            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image === null) {
             
                 fetch(`http://localhost:3000/api/auth/${Id}`, {
                     method: "PUT",
@@ -119,6 +120,27 @@ export default {
                         alert("Votre modification est bien prise en compte")
                         this.$router.go();
                     })
+            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != null) {
+                let data = new FormData()
+                data.append('nom', this.user.nom)
+                data.append('prenom', this.user.prenom)
+                data.append('email', this.user.email)
+                data.append('image', fileField.files[0])
+
+
+                fetch(`http://localhost:3000/api/auth/${Id}`, {
+                    method: "PUT",
+                        headers: {
+                        'authorization': `Bearer ${token}`
+                        },
+                        body: data
+                })
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log('Success:', result);
+                    this.$router.go();
+                })
+                .catch(error => console.log(error))
             }
         },
         deleteUser() {
