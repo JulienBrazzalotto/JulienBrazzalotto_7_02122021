@@ -142,7 +142,7 @@ h2 {
 
 .button {
     margin: 10px 0 20px 0;
-    padding: 5px 300px ;
+    padding: 5px 40% ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
@@ -152,6 +152,7 @@ h2 {
 
 .search {
     margin-bottom: 50px;
+    width: 30vw;
     height: 30px;
     border: 2px solid #fd2d01;
     border-radius: 5px;
