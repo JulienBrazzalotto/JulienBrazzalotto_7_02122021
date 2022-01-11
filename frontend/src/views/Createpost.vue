@@ -139,7 +139,7 @@ ul {
 }
 
 li {
-    margin: 30px;
+    margin: 30px 0;
     list-style-type: none;
 }
 
@@ -175,5 +175,51 @@ textarea {
 .lien {
     text-decoration: none;
     color: #000000;
+}
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    input {
+        font-size: 1rem;
+    }
+
+    textarea {
+        font-size: 1rem;
+    }
+
+    ::placeholder {
+        font-size: 1.5rem;
+    }
+
+    .file {
+    height: 300px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    input {
+        font-size: 0.6rem;
+    }
+
+    textarea {
+        font-size: 0.6rem;
+    }
+
+    .file {
+    height: 200px;
+    }
+
+    ::placeholder {
+        font-size: 1.2rem;
+    }
 }
 </style>
