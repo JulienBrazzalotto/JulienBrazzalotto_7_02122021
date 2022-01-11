@@ -26,11 +26,10 @@
                         <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file">
                     </li>
                 </ul>
-                <div>
+                <div class="submit">
                     <button @click="updateUser()" class="button"><i class="fas fa-edit"></i> Enregistrer les modifications</button>
                     <button @click="deleteUser()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer le compte</button>
                 </div>
-                
             </form>
         </div>
         <router-link to="/allposts" class="button">Retour aux posts</router-link>
@@ -185,7 +184,7 @@ export default {
 <style scoped>
 
 h1 {
-    margin: 30px 0 50px 0;
+    margin: 30px 0 30px 0;
     width: 100%;
     font-size: 2rem;
     background: #ffd7d7;
@@ -198,6 +197,7 @@ ul {
     flex-direction: column;
     align-items: center;
     list-style: none;
+    padding: 0;
 }
 
 label {
@@ -209,7 +209,6 @@ li {
     flex-direction: column;
     align-items: center;
     width: 50%;
-    margin-bottom: 30px;
 }
 
 input {
@@ -217,6 +216,7 @@ input {
 }
 
 .file {
+    margin-top: 10px;
     height: 400px;
 }
 
@@ -226,7 +226,7 @@ input {
 
 .button,
 .label-file {
-    margin: 10px 0 50px 0;
+    margin: 20px 0 0 0;
     padding: 5px 30px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -239,6 +239,51 @@ input {
 
 .espacement {
     margin-left: 10px;
+}
+
+.submit {
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    input,
+    label {
+        font-size: 1rem;
+    }
+
+
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    input,
+    label {
+        font-size: 0.8rem;
+    }
+
+    .submit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button {
+        width: 50%;
+        margin-bottom: 0;
+    }
+
+    .espacement {
+        margin-left: 0;
+    }
 }
 
 </style>
