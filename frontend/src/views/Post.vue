@@ -2,7 +2,7 @@
     <div>
         <HeaderProfile />
             <section>
-                <article class="header">
+                <div class="header">
                     <h1>{{ post.title }}</h1>
                     <p>
                         Posté par 
@@ -13,9 +13,9 @@
                         le <b>{{ dateFormat(post.date) }}</b>
                         à <b>{{ hourFormat(post.date) }}</b>
                     </p>
-                </article>
+                </div>
 
-                <article class="content">
+                <div class="content">
                     <p class="modif">
                     <button @click="modifyPost()" v-if="post.user_id === id" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
                     <button @click="deletePost()" v-if="post.user_id === id || role === 1" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
@@ -24,7 +24,7 @@
                     <p class="message"></p><br>
                     <img v-if="post.image" :src="post.image" :alt="post.title">
                     <p>{{ post.content }}</p>
-                </article>
+                </div>
 
                 <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
                 <article v-if="displaycomments">
@@ -248,6 +248,14 @@ textarea {
     border: 2px solid #fd2d01;
 }
 
+.header {
+    border-radius: 20px 20px 0 0;
+}
+
+.content {
+    border-radius: 0 0 20px 20px;
+}
+
 .info {
     font-size: 0.8rem;
 }
@@ -272,7 +280,7 @@ textarea {
 
 .button {
     margin: 10px 0 30px 0;
-    padding: 5px 30px ;
+    padding: 5px 25px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
@@ -341,6 +349,45 @@ img {
 
 .photo-profil {
     width: 50px;
+}
+
+
+@media screen and (max-width:1024px) {
+
+    
+    .header,
+    .content {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width:768px) {
+
+    
+    .header,
+    .content {
+        width: 100%;
+    }
+
+    .modif{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .espacement{
+        margin: 0;
+    }
+
+    .button {
+        width: 50%;
+    }
+
+    .createcomment {
+        width: 100%;
+    }
+
 }
 
 </style>
