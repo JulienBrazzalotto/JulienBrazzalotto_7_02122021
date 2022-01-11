@@ -114,7 +114,7 @@ h2 {
 }
 
 .image {
-    height: 25vw;
+    height: 15vw;
 }
 .article {
     display: flex;
@@ -164,7 +164,7 @@ h2 {
 }
 
 .photo-profil{
-    width: 3vw;
+    width: 2vw;
 }
 
 .text {
