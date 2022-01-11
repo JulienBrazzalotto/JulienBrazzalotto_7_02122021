@@ -4,7 +4,7 @@
             <h1>Fil d'actualité</h1>
             <button @click="createPost()" class="button" >Créer un post</button>
             <div>
-                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son auteur ..." size=50>
+                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son auteur ..." size=50 aria-label="Barre de recherche d'un post avec le nom">
             </div>
             <article v-if="posts.length == 0">
                 <p>Désolé il n'y a aucune publication...</p>
