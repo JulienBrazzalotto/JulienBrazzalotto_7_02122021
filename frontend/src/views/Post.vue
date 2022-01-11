@@ -4,7 +4,7 @@
             <section>
                 <div class="header">
                     <h1>{{ post.title }}</h1>
-                    <p>
+                    <p class="info">
                         Posté par 
                         <b>{{ post.user.nom }} 
                         <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
@@ -30,14 +30,14 @@
                 <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <div>
-                            <p>
-                            Posté par 
-                            <b>{{ comment.user.nom }} 
-                            <span v-if="comment.user.role != 0">{{ comment.user.prenom }} </span></b> 
-                            <img class="photo-profil" v-if="comment.user.image" :src="comment.user.image" alt="photo de profil">
-                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
-                            le <b>{{ dateFormat(comment.date) }}</b>
-                            à <b>{{ hourFormat(comment.date) }}</b>
+                            <p class="info">
+                                Posté par 
+                                <b>{{ comment.user.nom }} 
+                                <span v-if="comment.user.role != 0">{{ comment.user.prenom }} </span></b> 
+                                <img class="photo-profil" v-if="comment.user.image" :src="comment.user.image" alt="photo de profil">
+                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                                le <b>{{ dateFormat(comment.date) }}</b>
+                                à <b>{{ hourFormat(comment.date) }}</b>
                             </p>
                             <p>
                                 <button v-if="comment.user_id === id || role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>

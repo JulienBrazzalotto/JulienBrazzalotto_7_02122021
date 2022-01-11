@@ -33,7 +33,7 @@ img {
 
 }
 .nav {
-  padding: 5vw;
+  padding: 20px 5vw;
   font-size: 1vw;
 }
 

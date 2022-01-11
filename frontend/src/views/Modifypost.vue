@@ -168,7 +168,6 @@ input {
 
 textarea {
     font-size: 1.3rem;
-
 }
 
 .input-file {
@@ -194,5 +193,46 @@ textarea {
 img {
     height: 400px;
 }
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    input {
+        font-size: 1rem;
+    }
+
+    textarea {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    input {
+        font-size: 0.8rem;
+    }
+
+    textarea {
+        font-size: 0.6rem;
+    }
+
+    img {
+    height: 200px;
+}
+}
+
+
+
+
+
+
+
 
 </style>
