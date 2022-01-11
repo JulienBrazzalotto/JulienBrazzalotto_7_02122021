@@ -152,4 +152,31 @@ button {
   text-align: center;
 }
 
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    input,
+    ::placeholder {
+        font-size: 1rem;
+    }
+
+
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    input,
+    ::placeholder {
+        font-size: 0.8rem;
+    }
+}
+
 </style>
