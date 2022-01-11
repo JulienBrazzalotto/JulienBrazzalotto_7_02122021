@@ -209,7 +209,7 @@ img {
     }
 }
 
-@media screen and (max-width:1024px) {
+@media screen and (max-width:768px) {
 
     h1 {
         font-size: 1.2rem;
@@ -225,14 +225,6 @@ img {
 
     img {
     height: 200px;
+    }
 }
-}
-
-
-
-
-
-
-
-
 </style>
