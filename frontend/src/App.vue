@@ -14,7 +14,7 @@
   color: #000000;
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width:1024px) {
   .app {
     padding: 0;
   }

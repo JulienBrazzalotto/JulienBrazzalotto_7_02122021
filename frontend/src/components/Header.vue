@@ -72,7 +72,7 @@ img {
 
   .link {
     padding: 0 30px;
-    font-size: 0.8rem;
+    font-size: 15px;
   }
 }
 

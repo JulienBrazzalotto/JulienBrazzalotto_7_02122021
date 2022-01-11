@@ -84,20 +84,20 @@ export default {
 <style scoped>
 table {
     width: 100%;
-    font-size: 1rem;
+    font-size: 1vw;
     background: #ffd7d7;
     border: 2px solid #fd2d01;
     border-radius: 20px;
     margin: 0 0 30px 0;
 }
 
-.button{
-margin: 10px 0 30px 0;
-    padding: 5px 30px ;
+.button {
+    margin: 10px 0 30px 0;
+    padding: 5px 3vw ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
-    font-size: 1rem;
+    font-size: 1vw;
     cursor: pointer;
     text-decoration: none;
     color: #000000;
@@ -108,10 +108,56 @@ button {
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
-    font-size: 1rem;
+    font-size: 1vw;
     cursor: pointer;
     text-decoration: none;
     color: #000000;
+}
+
+input,
+textarea {
+        font-size: 1vw;
+}
+
+@media screen and (max-width:1024px) {
+
+    input {
+    font-size: 1.5vw;
+    }
+}
+@media screen and (max-width:768px) {
+
+    input,
+    textarea {
+        width: 85vw;
+        height: 5vw;
+        font-size: 0.9rem;
+    }
+
+    button {
+        width: 20%;
+        margin: 0 0 5px 0;
+        padding: 5px 10px;
+    }
+
+    i {
+        font-size: 1rem;
+    }
+
+    th {
+        display: none;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button {
+        margin-bottom: 50px;
+        font-size: 0.8rem;
+    }
 }
 
 </style>

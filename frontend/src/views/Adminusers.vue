@@ -16,7 +16,7 @@
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
                         <td><input type="text" v-model="user.nom" placeholder="Nom" required></td>
                         <td><input type="text" v-model="user.prenom" placeholder="Prénom" required></td>
-                        <td><input type="text" v-model="user.email" placeholder="Email" required></td>
+                        <td><input type="text" v-model="user.email" placeholder="Email" required class="email"></td>
                         <td><input type="text" v-model="user.role" placeholder="Role" required></td>
                         <button @click="modifyUser(index)"><i class="fas fa-edit"></i></button>
                         <button @click="deleteUser(index)"><i class="far fa-trash-alt"></i></button>
@@ -117,7 +117,7 @@ export default {
 <style scoped>
 table {
     width: 100%;
-    font-size: 1rem;
+    font-size: 1vw;
     background: #ffd7d7;
     border: 2px solid #fd2d01;
     border-radius: 20px;
@@ -130,7 +130,7 @@ button {
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
-    font-size: 1rem;
+    font-size: 1vw;
     cursor: pointer;
     text-decoration: none;
     color: #000000;
@@ -138,11 +138,11 @@ button {
 
 .button{
     margin: 10px 0 30px 0;
-    padding: 5px 30px ;
+    padding: 5px 3vw ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
-    font-size: 1rem;
+    font-size: 1vw;
     cursor: pointer;
     text-decoration: none;
     color: #000000;
@@ -151,5 +151,64 @@ button {
 .search {
     margin-bottom: 30px;
     border: 2px solid #fd2d01;
+    font-size: 1.5vw;
+}
+
+input {
+    font-size: 1vw;
+}
+
+hr {
+    background-color: #fd2d01;
+}
+
+@media screen and (max-width:1024px) {
+
+    input {
+        font-size: 1vw;
+    }
+
+    .search{
+        font-size: 1rem;
+        height: 30px;
+    }
+}
+@media screen and (max-width:768px) {
+
+    input:not(.search) {
+        width: 85vw;
+        height: 5vw;
+        font-size: 0.9rem;
+    }
+
+    button {
+        width: 20%;
+        margin: 0 0 5px 0;
+        padding: 5px 10px;
+    }
+
+    i {
+        font-size: 1rem;
+    }
+
+    .search{
+        font-size: 3vw;
+        height: 30px;
+    }
+
+    th {
+        display: none;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button {
+        margin-bottom: 50px;
+        font-size: 0.8rem;
+    }
 }
 </style>

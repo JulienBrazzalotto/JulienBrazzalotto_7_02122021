@@ -53,7 +53,7 @@ img {
   }
   
   li {
-    width: 80px;
+    width: 150px;
   }
 
   img {

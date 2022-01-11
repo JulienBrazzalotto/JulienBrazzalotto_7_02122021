@@ -110,5 +110,12 @@ li {
     color: #000000;
 }
 
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+}
+
 </style>
 

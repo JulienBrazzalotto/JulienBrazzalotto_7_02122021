@@ -46,12 +46,12 @@ header {
 }
 
 img {
-  height: 60px;
+  height: 90px;
 }
 
 .link {
-  padding-left: 5vw;
-  font-size: 1rem;
+  padding-left: 30px;
+  font-size: 1.1rem;
   text-decoration: none;
   cursor: pointer;
 }
@@ -89,6 +89,7 @@ i {
 
   .link {
     padding: 0 30px;
+    font-size: 20px;
   }
 }
 
@@ -100,12 +101,12 @@ i {
 
   img {
     margin-bottom: 4vw;
-    height: 50px;
+    height: 60px;
   }
 
   .link {
     padding: 0 20px;
-    font-size: 2.5vw;
+    font-size: 15px;
   }
 }
 </style>

@@ -23,8 +23,8 @@ img {
 }
 
 .link {
-    padding: 0 50px;
-    font-size: 1.5vw;
+    padding: 0 5vw;
+    font-size: 20px;
     text-decoration: none;
     cursor: pointer;
 }
@@ -47,8 +47,19 @@ img {
     color: #fd2d01;
 }
 
-i {
-    font-size: 3rem;
-}
+@media screen and (max-width:768px) {
 
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .nav {
+        margin-bottom: 10px;
+    }
+
+    .link {
+        
+        font-size: 15px;
+    }
+}
 </style>

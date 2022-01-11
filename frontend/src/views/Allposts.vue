@@ -4,7 +4,7 @@
             <h1>Fil d'actualité</h1>
             <button @click="createPost()" class="button" >Créer un post</button>
             <div>
-                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son titre ..." size=50>
+                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son auteur ..." size=50>
             </div>
             <article v-if="posts.length == 0">
                 <p>Désolé il n'y a aucune publication...</p>
@@ -14,7 +14,7 @@
                     <div class="header">
                         <div>
                             <h2>{{ post.title }}</h2>
-                            <p>
+                            <p class="info">
                                 Posté par 
                                 <b>{{ post.user.nom }} 
                                 <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>
@@ -28,7 +28,7 @@
                     <div class="content">
                         <p class="message"></p><br>
                         <img class="image" v-if="post.image" :src="post.image" :alt="post.title">
-                        <p>{{ post.content }}</p>
+                        <p class="text">{{ post.content }}</p>
                     </div>
                 </router-link>
             </article>
@@ -98,19 +98,23 @@ export default {
 
 h1 {
     width: 100%;
-    font-size: 2rem;
+    font-size: 2vw;
     background: #ffd7d7;
     border: 2px solid #fd2d01;
     border-radius: 20px;
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     margin: 30px 0 10px 0;
 }
 
+.info {
+    font-size: 1vw;
+}
+
 .image {
-    height: 400px;
+    height: 25vw;
 }
 .article {
     display: flex;
@@ -131,10 +135,6 @@ h2 {
     border-radius: 20px 20px 0 0;
 }
 
-.message {
-    text-decoration: underline;
-}
-
 .content {
     margin-bottom: 30px;
     border-radius: 0 0 20px 20px;
@@ -146,23 +146,108 @@ h2 {
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
-    font-size: 1rem;
+    font-size: 15px;
     cursor: pointer;
 }
 
 .search {
     margin-bottom: 50px;
     width: 30vw;
-    height: 30px;
+    height: 2vw;
     border: 2px solid #fd2d01;
     border-radius: 5px;
 }
 
 ::placeholder {
     text-align: center;
+    font-size: 1.3vw;
 }
 
 .photo-profil{
-    width: 50px;
+    width: 3vw;
+}
+
+.text {
+    font-size: 1.4vw;
+}
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin: 20px 0 10px 0;
+    }
+
+    .info {
+        font-size: 1rem;
+    }
+
+    .image {
+        height: 40vw;
+    }
+
+    .header,
+    .content {
+        width: 90%;
+    }
+
+    .text {
+        font-size: 2.5vw;
+    }
+
+    .search {
+        width: 70%;
+        height: 30px;
+        margin-bottom: 50px;
+    }
+
+    ::placeholder {
+        font-size: 20px;
+    }
+
+    .article {
+        width: 100%;
+    }
+
+    .photo-profil{
+        width: 50px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .button {
+        font-size: 10px;
+    }
+
+    .header,
+    .content {
+        width: 100%;
+    }
+
+    .text {
+        font-size: 1.4rem;
+    }
+
+    .image {
+        height: 50vw;
+    }
+
+    .search{
+        width: 85%;
+        height: 30px;
+        font-size: 3vw;
+    }
+    ::placeholder {
+        font-size: 1rem;
+    }
 }
 </style>
