@@ -93,19 +93,19 @@ i {
 }
 
 @media screen and (max-width:768px) {
+
   header {
     flex-direction: column;
   }
 
   img {
-    margin-bottom: 30px;
+    margin-bottom: 4vw;
     height: 50px;
   }
 
   .link {
     padding: 0 20px;
-    font-size: 2vw;
+    font-size: 2.5vw;
   }
-
 }
 </style>
