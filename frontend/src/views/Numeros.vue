@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Header />
+        <Header v-if="id === null " />
+        <HeaderProfile v-else/>
         <div class="numéro">
             <h1>Numéros utiles :</h1>
             <ul>
@@ -30,21 +31,36 @@
                 </li>
             </ul>
         </div>
-        <router-link to="/allposts" class="button lien">Retour aux posts</router-link>
+        <router-link to="/allposts" class="button lien" v-if="id != null ">Retour aux posts</router-link>
         <Footer />
     </div>
 </template>
 
 <script>
 import Header from "../components/Header";
+import HeaderProfile from "../components/HeaderProfile";
 import Footer from "../components/Footer";
 
 export default {
-  name: 'home',
-  components: {
-    Header,
-    Footer
-  }
+    name: 'home',
+    components: {
+        Header,
+        HeaderProfile,
+        Footer
+    },
+    data () {
+        return {
+            id: null
+        }
+    },
+    methods : {
+        User() {
+            this.id = JSON.parse(localStorage.getItem("userId"))
+        }
+    },
+    mounted() {
+        this.User()
+    }
 }
 </script>
 
