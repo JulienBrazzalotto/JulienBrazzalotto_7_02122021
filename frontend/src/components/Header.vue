@@ -19,12 +19,12 @@ header {
 }
 
 img {
-  height: 5vw;
+  height: 60px;
 }
 
 .link {
-  padding-left: 50px;
-  font-size: 1.5vw;
+  padding-left: 5vw;
+  font-size: 1rem;
   text-decoration: none;
 }
 
@@ -33,8 +33,8 @@ img {
 
 }
 .nav {
-  padding: 50px;
-  font-size: 1rem;
+  padding: 5vw;
+  font-size: 1vw;
 }
 
 .nav a {
@@ -44,6 +44,36 @@ img {
 
 .nav a.router-link-exact-active {
   color: #fd2d01;
+}
+
+@media screen and (max-width:1024px) {
+  header {
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 30px;
+  }
+
+  .link {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  header {
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 30px;
+    height: 50px;
+  }
+
+  .link {
+    padding: 0 30px;
+    font-size: 0.8rem;
+  }
 }
 
 </style>

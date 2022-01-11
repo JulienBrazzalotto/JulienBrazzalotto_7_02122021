@@ -4,7 +4,7 @@
         <nav>
             <router-link to="/admin/users" v-if="id === 1" ><i class="fas fa-user-lock link"></i></router-link>
             <router-link to="/profile"><i class="fas fa-user-circle link"></i></router-link>
-            <a class="link" @click="disconnectUser()">Se deconnecter</a>
+            <a class="link disconnect" @click="disconnectUser()">Se deconnecter</a>
         </nav>
     </header>
 </template>
@@ -46,12 +46,12 @@ header {
 }
 
 img {
-  height: 5vw;
+  height: 60px;
 }
 
 .link {
-  padding-left: 50px;
-  font-size: 1.5vw;
+  padding-left: 5vw;
+  font-size: 1rem;
   text-decoration: none;
   cursor: pointer;
 }
@@ -61,8 +61,8 @@ img {
 
 }
 .nav {
-  padding: 50px;
-  font-size: 1rem;
+  padding: 5vw;
+  font-size: 1vw;
 }
 
 .nav a {
@@ -76,5 +76,36 @@ img {
 
 i {
     font-size: 3rem;
+}
+
+@media screen and (max-width:1024px) {
+  header {
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 30px;
+  }
+
+  .link {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  header {
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 30px;
+    height: 50px;
+  }
+
+  .link {
+    padding: 0 20px;
+    font-size: 2vw;
+  }
+
 }
 </style>
