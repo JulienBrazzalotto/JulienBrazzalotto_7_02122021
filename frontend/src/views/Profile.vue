@@ -56,7 +56,8 @@ export default {
                 email: '',
                 image:''
             },
-            preview: null
+            preview: null,
+            posts: []
         
         }
     },
@@ -143,25 +144,52 @@ export default {
             }
         },
         deleteUser() {
-            const Id = JSON.parse(localStorage.getItem("userId"))
-            const token = JSON.parse(localStorage.getItem("userToken"))
-
             if (confirm("Voulez-vous vraiment supprimer le compte") == true) {
+                const Id = JSON.parse(localStorage.getItem("userId"))
+                const token = JSON.parse(localStorage.getItem("userToken"))
 
-                fetch(`http://localhost:3000/api/auth/${Id}`, {
-                    method: "DELETE",
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
+                fetch(`http://localhost:3000/api/posts/${Id}/posts`, {
+                    method: "GET",
+                    headers: {
                         'authorization': `Bearer ${token}`
-                        }
+                    },
                 })
-                    .then(response => response.json())
-                    .then(() => { 
-                        alert("La suppression du compte est bien prise en compte")
-                        localStorage.clear();
+
+                .then(response => response.json())
+                .then(data => (this.posts = data))
+                .then (() => {
+                    let pub = this.posts
+
+                    for ( let i = 0 ; i < pub.length ; i++) {
+                        if (pub[i].image) {
+                        fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
+                            method: "DELETE",
+                            headers: {
+                                'authorization': `Bearer ${token}`
+                            },
+                        })
+                            .then(response => response.json())
+                            .catch(error => console.log(error))
+                        }
+                    }
+                })
+                .then(() => {
+                    fetch(`http://localhost:3000/api/auth/${Id}`, {
+                        method: "DELETE",
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'authorization': `Bearer ${token}`
+                            }
                     })
-                    .then(this.$router.push("/"))
+                        .then(response => response.json())
+                        .then(() => { 
+                            alert("La suppression du compte est bien prise en compte")
+                            localStorage.clear();
+                        })
+                        .then(this.$router.push("/"))
+                })
+                .catch(error => console.log(error))
             }
         },
         uploadFile(e) {

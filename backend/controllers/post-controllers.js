@@ -132,3 +132,16 @@ exports.getOnePost = (req, res, nest) => {
     .catch( error => res.status(400).json({error}))
 }
 
+exports.getPostsUser = (req, res, next) => {
+    Post.findAll({
+        where: {
+            user_id : req.params.user_id
+        },
+            include: [{
+            model : User,
+        }],
+            order: [["date", "ASC"]]})
+
+    .then( posts => res.status(200).json(posts))
+    .catch( error => res.status(400).json({error}))
+};

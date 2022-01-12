@@ -12,6 +12,6 @@ router.delete('/:id', auth, multerProfile, userCtrl.delete);
 router.get('/:id', auth, userCtrl.getOneUser);
 router.put('/:id',auth, multerProfile, userCtrl.modifyUser);
 router.put('/admin/:id',auth, userCtrl.AdminModifyUser)
-router.get('/', userCtrl.getAllUsers);
+router.get('/',auth, userCtrl.getAllUsers);
 
 module.exports = router;
