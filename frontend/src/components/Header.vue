@@ -24,7 +24,7 @@ img {
 
 .link {
   padding-left: 5vw;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-decoration: none;
 }
 

@@ -10,13 +10,13 @@
                         <th>Commentaire</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(comment, index) in comments">
-                        <td><input type="text" v-model="comment.user.nom" placeholder="Nom" required></td>
-                        <td><input type="text" v-model="comment.user.prenom" placeholder="Prénom" required></td>
-                        <td><textarea type="text" v-model="comment.content" rows="3" cols="50" placeholder="Message" required></textarea></td>
-                        <button @click="deletePost(index)"><i class="far fa-trash-alt"></i></button>
+                        <td><input type="text" v-model="comment.user.nom" placeholder="Nom" required aria-label="Nom de l'auteur du commentaire"></td>
+                        <td><input type="text" v-model="comment.user.prenom" placeholder="Prénom" required aria-label="Prénom de l'auteur du commentaire"></td>
+                        <td><textarea type="text" v-model="comment.content" rows="3" cols="50" placeholder="Message" required aria-label="Commentaire"></textarea></td>
+                        <button @click="deletePost(index)" aria-label="Supprimer ce commentaire"><i class="far fa-trash-alt"></i></button>
                     </tr>
                 </table>
-                <router-link to="/allposts" class="button">Retour aux posts</router-link>
+                <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
             </article>
         <Footer />
     </div>

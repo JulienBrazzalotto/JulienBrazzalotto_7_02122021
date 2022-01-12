@@ -6,28 +6,28 @@
                 <form>
                     <ul>
                         <li>
-                            <label for="titre">Titre</label>
-                            <input type="text" v-model="post.title" placeholder="Titre" size="50" required>
+                            <label for="titre"  aria-label="Titre">Titre</label>
+                            <input type="text" v-model="post.title" placeholder="Titre" size="50" required aria-label="Titre du post">
                         </li>
                         <li v-if="post.image">
-                            <img :src="post.image" :alt="post.titre" class="file">
+                            <img :src="post.image" alt="Image du post" class="file">
                         </li>
                         <li>
-                            <label v-if="!post.image " for="file" class="label-file">Choisir une image</label>
-                            <button v-else @click="deletefile()" class="label-file"> Supprimer cette image</button>
+                            <label v-if="!post.image " for="file" class="label-file" aria-label="Choisir une photo pour ce post">Choisir une image</label>
+                            <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer cette photo du post"> Supprimer cette image</button>
                             
-                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file">
+                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Image du post">
                         </li>
                         <li>
-                            <label for="message">Message</label>
-                            <textarea v-model="post.content" placeholder="Contenu" rows="10" cols="60" required></textarea>
+                            <label for="message" aria-label="Message">Message</label>
+                            <textarea v-model="post.content" placeholder="Contenu" rows="10" cols="60" required aria-label="Message du post"></textarea>
                         </li>
                     </ul>
                 </form>
-                <button @click="modifyPost()" class="button">Modifier le post</button>
+                <button @click="modifyPost()" class="button" aria-label="Modifier ce post">Modifier le post</button>
             </section>
             <div>
-            <router-link :to="`/post/${this.id_param}`" class="button lien">Retour au post</router-link>
+            <router-link :to="`/post/${this.id_param}`" class="button lien" aria-label="Retour au fil d'actualité">Retour au post</router-link>
             </div>
         <Footer />
     </div>

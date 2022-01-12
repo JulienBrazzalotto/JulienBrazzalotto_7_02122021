@@ -4,7 +4,7 @@
         <AdminNav />
             <article >
                 <div>
-                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=50>
+                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=50 aria-label=" Barre de recherche d'un utilisateur avec son Nom">
                 </div>
                 <table>
                     <tr>
@@ -14,15 +14,15 @@
                         <th>Role</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
-                        <td><input type="text" v-model="user.nom" placeholder="Nom" required></td>
-                        <td><input type="text" v-model="user.prenom" placeholder="Prénom" required></td>
-                        <td><input type="text" v-model="user.email" placeholder="Email" required class="email"></td>
-                        <td><input type="text" v-model="user.role" placeholder="Role" required></td>
-                        <button @click="modifyUser(index)"><i class="fas fa-edit"></i></button>
-                        <button @click="deleteUser(index)"><i class="far fa-trash-alt"></i></button>
+                        <td><input type="text" v-model="user.nom" placeholder="Nom" required aria-label="Nom"></td>
+                        <td><input type="text" v-model="user.prenom" placeholder="Prénom" required aria-label="Prénom"></td>
+                        <td><input type="text" v-model="user.email" placeholder="Email" required class="email" aria-label="Email"></td>
+                        <td><input type="text" v-model="user.role" placeholder="Role" required aria-label="Rôle"></td>
+                        <button @click="modifyUser(index)" aria-label="Modifier cet utilisateur"><i class="fas fa-edit"></i></button>
+                        <button @click="deleteUser(index)" aria-label="Supprimer cet utilisateur"><i class="far fa-trash-alt"></i></button>
                     </tr>
                 </table>
-                <router-link to="/allposts" class="button">Retour aux posts</router-link>
+                <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
             </article>
         <Footer />
     </div>

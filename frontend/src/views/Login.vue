@@ -6,14 +6,14 @@
       <form>
         <ul>
           <li>
-            <input type="email" v-model="email" placeholder="Email" size="50" required>
+            <input type="email" v-model="email" placeholder="Email" size="50" required aria-label="Email de connection">
           </li>
           <li>
-            <input type="password" v-model="password" placeholder="Password" size="50" required>
+            <input type="password" v-model="password" placeholder="Password" size="50" required aria-label="Mot de passe de connection">
           </li>
         </ul>  
       </form>
-      <button @click="login()" type="submit">Se connecter</button>
+      <button @click="login()" type="submit" aria-label="Se connecter">Se connecter</button>
     </div>
     <Footer />
   </div>

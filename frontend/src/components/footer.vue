@@ -3,13 +3,13 @@
   <footer>
     <ul>
         <li>
-            <router-link to="/Numeros">Numéros utiles</router-link>
+            <router-link to="/Numeros" aria-label="Numéros utiles">Numéros utiles</router-link>
         </li>
         <li>
             <p><img src="../assets/images/icon-above-font.png" alt="Logo Groupomania"></p>
         </li>
         <li>
-            <a href="mailto:admin@groupomania.com"> Contacter l'administrateur</a>
+            <a href="mailto:admin@groupomania.com" aria-label="Envoyer un mail à l'administrateur" > Contacter l'administrateur</a>
         </li>
     </ul>
   </footer>

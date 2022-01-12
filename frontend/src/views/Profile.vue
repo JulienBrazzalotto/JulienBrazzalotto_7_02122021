@@ -7,32 +7,32 @@
                 <ul>
                     <li>
                         <label for="nom">Nom</label>
-                        <input type="text" v-model="user.nom" placeholder="Nom" size="50" required>
+                        <input type="text" v-model="user.nom" placeholder="Nom" size="50" required aria-label="Nom de l'utilisateur">
                     </li>
                     <li>
                         <label for="prenom">Prénom</label>
-                        <input type="text" v-model="user.prenom" placeholder="Prenom" size="50" required>
+                        <input type="text" v-model="user.prenom" placeholder="Prenom" size="50" required aria-label="Prénom de l'utilisateur">
                     </li>
                     <li>
                         <label for="email">Email</label>
-                        <input type="email" v-model="user.email" placeholder="Email" size="50" required>
+                        <input type="email" v-model="user.email" placeholder="Email" size="50" required aria-label="Email de l'utilisateur">
                     </li>
                     <li v-if="user.image">
-                        <img :src="user.image" :alt="user.title" class="file">
+                        <img :src="user.image" alt="Photo de profil" class="file">
                     </li>
                     <li>
-                        <label v-if="!user.image" for="file" class="label-file">Choisir une photo de profil</label>
-                        <button v-else @click="deletefile()" class="label-file"> Supprimer cette photo de profil</button>
-                        <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file">
+                        <label v-if="!user.image" for="file" class="label-file" aria-label="Choisir la photo de profil">Choisir une photo de profil</label>
+                        <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer la photo de profil"> Supprimer cette photo de profil</button>
+                        <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Photo de profil">
                     </li>
                 </ul>
                 <div class="submit">
-                    <button @click="updateUser()" class="button"><i class="fas fa-edit"></i> Enregistrer les modifications</button>
-                    <button @click="deleteUser()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer le compte</button>
+                    <button @click="updateUser()" class="button" aria-label="Modifier le compte de cet utilisateur"><i class="fas fa-edit"></i> Enregistrer les modifications</button>
+                    <button @click="deleteUser()" class="button espacement" aria-label="Supprimer le compte de cet utilisateur"><i class="far fa-trash-alt"></i> Supprimer le compte</button>
                 </div>
             </form>
         </div>
-        <router-link to="/allposts" class="button">Retour aux posts</router-link>
+        <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
         <Footer />
     </div>
 </template>

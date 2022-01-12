@@ -6,24 +6,24 @@
                 <form>
                     <ul>
                         <li>
-                            <input type="text" v-model="titre" placeholder="Titre" size="50" required>
+                            <input type="text" v-model="titre" placeholder="Titre" size="50" required aria-label="Titre du post">
                         </li>
                         <li v-if="image">
-                            <img :src="image" :alt="titre" class="file">
+                            <img :src="image" alt="Image du post" class="file">
                         </li>
                         <li>
-                            <label v-if="!image" for="file" class="label-file">Choisir une image</label>
-                            <button v-else @click="deletefile()" class="label-file"> Supprimer cette image</button>
-                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file">
+                            <label v-if="!image" for="file" class="label-file" aria-label="Choisir une photo pour ce post">Choisir une image</label>
+                            <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer cette photo du post"> Supprimer cette image</button>
+                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Image du post">
                         </li>
                         <li>
-                            <textarea v-model="contenu" placeholder="Contenu" rows="10" cols="60" required></textarea>
+                            <textarea v-model="contenu" placeholder="Contenu" rows="10" cols="60" required aria-label="Message du post"></textarea>
                         </li>
                     </ul>
                 </form>
-                <button @click="createPost()" class="button">Créer le post</button>
+                <button @click="createPost()" class="button" aria-label="Créer ce post">Créer le post</button>
                 <div>
-                <router-link to="/allposts" class="button lien">Retour aux posts</router-link>
+                <router-link to="/allposts" class="button lien" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
                 </div>
             </section>
         <Footer />

@@ -11,14 +11,14 @@
                         <th>Message</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(post, index) in posts">
-                        <td><input type="text" v-model="post.user.nom" placeholder="Nom" required></td>
-                        <td><input type="text" v-model="post.user.prenom" placeholder="Prénom" required></td>
-                        <td><input type="text" v-model="post.title" placeholder="Titre" required></td>
-                        <td><textarea type="text" v-model="post.content" placeholder="Message" required></textarea></td>
-                        <button @click="deletePost(index)"><i class="far fa-trash-alt"></i></button>
+                        <td><input type="text" v-model="post.user.nom" placeholder="Nom" required aria-label="Nom de l'auteur du post"></td>
+                        <td><input type="text" v-model="post.user.prenom" placeholder="Prénom" required aria-label="Prénom de l'auteur du post"></td>
+                        <td><input type="text" v-model="post.title" placeholder="Titre" required aria-label="Titre du post"></td>
+                        <td><textarea type="text" v-model="post.content" placeholder="Message" required aria-label="Message du post"></textarea></td>
+                        <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="far fa-trash-alt"></i></button>
                     </tr>
                 </table>
-                <router-link to="/allposts" class="button">Retour aux posts</router-link>
+                <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
             </article>
         <Footer />
     </div>
