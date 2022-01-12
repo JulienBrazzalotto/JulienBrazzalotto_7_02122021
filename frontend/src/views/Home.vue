@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     getmeteo() {
-      fetch('http://api.weatherapi.com/v1/current.json?key=8cc98bd06d7b457a98c115731221201&q=aubiet&aqi=no&lang=fr')
+      fetch('http://api.weatherapi.com/v1/current.json?key='+`${process.env.VUE_APP_METEO}`+'&q=aubiet&aqi=no&lang=fr')
 
         .then (response => response.json())
         .then (data => (this.meteo = data))
