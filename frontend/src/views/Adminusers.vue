@@ -43,7 +43,8 @@ export default {
     data () {
         return {
             users: [],
-            search: ''
+            search: '',
+            posts: []
         }
     },
     computed : {
@@ -72,7 +73,33 @@ export default {
 
             if (confirm("Voulez-vous vraiment supprimer cet utilisateur") === true) {
 
-                fetch(`http://localhost:3000/api/auth/${this.filterList[index].id}`, {
+                fetch(`http://localhost:3000/api/posts/${this.filterList[index].id}/posts`, {
+                    method: "GET",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
+                })
+
+                .then(response => response.json())
+                .then(data => (this.posts = data))
+                .then (() => {
+                    let pub = this.posts
+
+                    for ( let i = 0 ; i < pub.length ; i++) {
+                        if (pub[i].image) {
+                        fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
+                            method: "DELETE",
+                            headers: {
+                                'authorization': `Bearer ${token}`
+                            },
+                        })
+                            .then(response => response.json())
+                            .catch(error => console.log(error))
+                        }
+                    }
+                })
+                .then(() => {
+                    fetch(`http://localhost:3000/api/auth/${this.filterList[index].id}`, {
                     method: "DELETE",
                     headers: {
                         'authorization': `Bearer ${token}`
@@ -82,6 +109,7 @@ export default {
                 .then(() => { 
                     alert("La suppression de l'utilisateur est bien prise en compte")
                     this.$router.go() })
+                })
             }
         },
         modifyUser(index, filterList) {
