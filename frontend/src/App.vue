@@ -13,4 +13,10 @@
   text-align: center;
   color: #000000;
 }
+
+@media screen and (max-width:1024px) {
+  .app {
+    padding: 0;
+  }
+}
 </style>

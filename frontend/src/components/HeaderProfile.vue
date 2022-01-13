@@ -2,8 +2,9 @@
     <header class="nav">
         <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
         <nav>
-            <router-link to="/profile"><i class="fas fa-user-circle link"></i></router-link>
-            <a class="link" @click="disconnectUser()">Se deconnecter</a>
+            <router-link to="/admin/users" v-if="id === 1" aria-label="Administration"><i class="fas fa-user-lock link"></i></router-link>
+            <router-link to="/profile" aria-label="Profil"><i class="fas fa-user-circle link"></i></router-link>
+            <a class="link disconnect" @click="disconnectUser()">Se deconnecter</a>
         </nav>
     </header>
 </template>
@@ -12,14 +13,24 @@
 <script>
 
 export default {
-  name: 'HeaderProfile',
-  
-  methods: {
-    disconnectUser() {
-      localStorage.clear();
-      this.$router.push("/")
-    }
-  }
+name: 'HeaderProfile',
+data () {
+	return {
+		id:''
+	}
+},
+methods: {
+	disconnectUser() {
+		localStorage.clear();
+		this.$router.push("/")
+	},
+	idUser() {
+		this.id = JSON.parse(localStorage.getItem("userId"))
+	}
+},
+mounted(){
+    this.idUser()
+}
 }   
 </script>
 
@@ -35,12 +46,12 @@ header {
 }
 
 img {
-  height: 5vw;
+  height: 90px;
 }
 
 .link {
-  padding-left: 50px;
-  font-size: 1.5vw;
+  padding-left: 30px;
+  font-size: 1.1rem;
   text-decoration: none;
   cursor: pointer;
 }
@@ -50,8 +61,8 @@ img {
 
 }
 .nav {
-  padding: 50px;
-  font-size: 1rem;
+  padding: 20px 5vw;
+  font-size: 1vw;
 }
 
 .nav a {
@@ -65,5 +76,37 @@ img {
 
 i {
     font-size: 3rem;
+}
+
+@media screen and (max-width:1024px) {
+  header {
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 30px;
+  }
+
+  .link {
+    padding: 0 30px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width:768px) {
+
+  header {
+    flex-direction: column;
+  }
+
+  img {
+    margin-bottom: 4vw;
+    height: 60px;
+  }
+
+  .link {
+    padding: 0 20px;
+    font-size: 15px;
+  }
 }
 </style>

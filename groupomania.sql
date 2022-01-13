@@ -38,3 +38,5 @@ CREATE TABLE Comments
   CONSTRAINT    fk_user_id_comments      FOREIGN KEY   (user_id)     REFERENCES      Users(id)ON UPDATE CASCADE ON DELETE CASCADE
 )
 ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Users` VALUES (1,'Admin','Admin', NULL, 'admin@groupomania.com', '$2b$10$tG8.lNoNGJEnNVIVSb1Ck.od4w7kXs.E7idkQvGmP/IW9pBeZgdxq', 0)

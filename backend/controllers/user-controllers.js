@@ -2,9 +2,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passwordValidator = require('password-validator');
 const emailValidator = require("email-validator");
+const fs = require('fs');
 
 const user = require('../models/user-models');
-
 
 const schema = new passwordValidator();
 schema
@@ -77,10 +77,25 @@ exports.login = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    user.destroy({ where: {id: req.params.id} })
+    user.findOne({ where: { id: req.params.id }})
+    .then(User => {
+        if (User.image != null) {
+            const filename = User.image.split('/images/profiles/')[1];
+            fs.unlink(`images/profiles/${filename}`, () => {
+                user.destroy({ where: { id: req.params.id } })
 
-        .then(() => res.status(201).json({message: 'Utilisateur supprimé !'}))
-        .catch(error => res.status(400).json({error}));
+                .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
+                .catch( error => res.status(400).json({error}));
+            })
+        
+    
+        } else {
+            user.destroy({ where: { id: req.params.id } })
+
+            .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
+            .catch( error => res.status(400).json({error}));
+        }
+    })
 }
 
 exports.getOneUser = (req, res, next) => {
@@ -90,15 +105,103 @@ exports.getOneUser = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
+    if (req.file) {
+
+        user.findOne({ where: { id: req.params.id }})
+        .then(User => {
+            if (User.image) {
+            const filename = User.image.split('/images/profiles/')[1];
+            fs.unlink(`images/profiles/${filename}`, () => {
+                const modifyUser = {
+                    nom: req.body.nom,
+                    prenom: req.body.prenom,
+                    email: req.body.email,
+                    image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
+                };
+    
+                user.update(modifyUser , { where: { id: req.params.id } })
+            
+                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            })} else {
+                const modifyUser = {
+                    nom: req.body.nom,
+                    prenom: req.body.prenom,
+                    email: req.body.email,
+                    image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
+                };
+        
+                user.update(modifyUser , { where: { id: req.params.id } })
+        
+                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            }
+        })
+    } else {
+        user.findOne({ where: { id: req.params.id }})
+        .then(User => {
+            if (User.image) {
+                const filename = User.image.split('/images/profiles/')[1];
+                fs.unlink(`images/profiles/${filename}`, () => {
+                    const modifyUser = {
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        email: req.body.email,
+                        image: ''
+                    };
+
+                    user.update(modifyUser , { where: { id: req.params.id } })
+
+                        .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                        .catch( error => res.status(400).json({error}));
+                })
+            } else {
+                const modifyUser = {
+                    nom: req.body.nom,
+                    prenom: req.body.prenom,
+                    email: req.body.email,
+                    image: ''
+                };
+        
+                user.update(modifyUser , { where: { id: req.params.id } })
+        
+                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            }
+        })
+    
+    }
     
     const modifyUser = {
         nom: req.body.nom,
         prenom: req.body.prenom,
         email: req.body.email,
+        image: req.body.image,
     };
 
     user.update(modifyUser, { where: { id: req.params.id }
         })
         .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
         .catch((error)=> res.status(400).json({error}));
+};
+
+exports.AdminModifyUser = (req, res, next) => {
+    
+    const modifyUser = {
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        email: req.body.email,
+        role: req.body.role
+    };
+
+    user.update(modifyUser, { where: { id: req.params.id }
+        })
+        .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
+        .catch((error)=> res.status(400).json({error}));
+};
+
+exports.getAllUsers = (req, res, next) => {
+    user.findAll()
+    .then((users) => res.status(200).json(users))
+    .catch((error) => res.status(400).json(error))
 };

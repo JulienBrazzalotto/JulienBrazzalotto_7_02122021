@@ -7,7 +7,7 @@ exports.createPost = (req, res, next) => {
         Post.create({
             title: req.body.title,
             content: req.body.content,
-            image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`,
             user_id: req.body.user_id
         })
         .then(() => res.status(201).json({message: 'Post créé !'}))
@@ -26,41 +26,74 @@ exports.createPost = (req, res, next) => {
 
 exports.modifyPost = (req, res, next) => {
     if (req.file) {
+
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
-            const filename = post.image.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            if (post.image) {
+            const filename = post.image.split('/images/posts/')[1];
+            fs.unlink(`images/posts/${filename}`, () => {
                 const modifyPost = {
-                title: req.body.title,
-                content: req.body.content,
-                image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-            };
+                    title: req.body.title,
+                    content: req.body.content,
+                    image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
+                };
     
                 Post.update(modifyPost , { where: { id: req.params.id } })
             
                     .then(() => res.status(200).json({message : 'Post modifié !'}))
                     .catch( error => res.status(400).json({error}));
-        })})
+            })} else {
+                const modifyPost = {
+                    title: req.body.title,
+                    content: req.body.content,
+                    image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
+                };
+        
+                Post.update(modifyPost , { where: { id: req.params.id } })
+        
+                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            }
+        })
     } else {
-        const modifyPost = {
-        title: req.body.title,
-        content: req.body.content,
-        };
+        Post.findOne({ where: { id: req.params.id }})
+        .then(post => {
+            if (post.image) {
+                const filename = post.image.split('/images/posts/')[1];
+                fs.unlink(`images/posts/${filename}`, () => {
+                    const modifyPost = {
+                        title: req.body.title,
+                        content: req.body.content,
+                        image: ''
+                    };
 
-        Post.update(modifyPost , { where: { id: req.params.id } })
+                    Post.update(modifyPost , { where: { id: req.params.id } })
 
-            .then(() => res.status(200).json({message : 'Post modifié !'}))
-            .catch( error => res.status(400).json({error}));
+                        .then(() => res.status(200).json({message : 'Post modifié !'}))
+                        .catch( error => res.status(400).json({error}));
+                })
+            } else {
+                const modifyPost = {
+                    title: req.body.title,
+                    content: req.body.content,
+                };
+        
+                Post.update(modifyPost , { where: { id: req.params.id } })
+        
+                    .then(() => res.status(200).json({message : 'Post modifié !'}))
+                    .catch( error => res.status(400).json({error}));
+            }
+        })
     }
-    
-};
+}
+
 
 exports.deletePost = (req, res, next) => {
     Post.findOne({ where: { id: req.params.id }})
         .then(post => {
             if (post.image != null) {
-                const filename = post.image.split('/images/')[1];
-                fs.unlink(`images/${filename}`, () => {
+                const filename = post.image.split('/images/posts/')[1];
+                fs.unlink(`images/posts/${filename}`, () => {
                     Post.destroy({ where: { id: req.params.id } })
 
                     .then(() => res.status(200).json({message : 'Post supprimé !'}))
@@ -99,3 +132,16 @@ exports.getOnePost = (req, res, nest) => {
     .catch( error => res.status(400).json({error}))
 }
 
+exports.getPostsUser = (req, res, next) => {
+    Post.findAll({
+        where: {
+            user_id : req.params.user_id
+        },
+            include: [{
+            model : User,
+        }],
+            order: [["date", "ASC"]]})
+
+    .then( posts => res.status(200).json(posts))
+    .catch( error => res.status(400).json({error}))
+};

@@ -3,20 +3,33 @@
         <HeaderProfile />
             <h1>Fil d'actualité</h1>
             <button @click="createPost()" class="button" >Créer un post</button>
+            <div>
+                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son auteur ..." size=50 aria-label="Barre de recherche d'un post avec le nom">
+            </div>
             <article v-if="posts.length == 0">
-              <p>Désolé il n'y a aucune publication pour le moment...</p>
+                <p>Désolé il n'y a aucune publication...</p>
             </article>
-            <article v-else v-bind:key="index" v-for="(post, index) in posts">
+            <article v-else v-bind:key="index" v-for="(post, index) in filterList">
                 <router-link :to="`/post/${post.id}`" class="article">
-                  <div class="header">
-                    <h2>Titre: {{ post.title }}</h2>
-                    <p>Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
-                  </div>
-                  <div class="content">
-                    <p class="message">Message: </p><br>
-                    <img v-if="post.image" :src="post.image" alt="">
-                    <p>{{ post.content }}</p>
-                  </div>
+                    <div class="header">
+                        <div>
+                            <h2>{{ post.title }}</h2>
+                            <p class="info">
+                                Posté par 
+                                <b>{{ post.user.nom }} 
+                                <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>
+                                <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                                le <b>{{ dateFormat(post.date) }}</b>
+                                à <b>{{ hourFormat(post.date) }}</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p class="message"></p><br>
+                        <img class="image" v-if="post.image" :src="post.image" :alt="post.title">
+                        <p class="text">{{ post.content }}</p>
+                    </div>
                 </router-link>
             </article>
         <Footer />
@@ -36,9 +49,15 @@ export default {
     data () {
         return {
             posts: [],
-            
-        
-      }
+            search:''
+        }
+    },
+    computed : {
+        filterList() {
+            return this.posts.filter((post) =>{
+                return post.user.nom.toLowerCase().includes(this.search.toLowerCase());
+            })
+        }
     },
     methods : {
         
@@ -56,9 +75,9 @@ export default {
             .then(data => (this.posts = data))
         },
         dateFormat(createdDate) {
-          const date = new Date(createdDate)
-          const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'};
-          return date.toLocaleDateString('fr-FR', options);
+            const date = new Date(createdDate)
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'};
+            return date.toLocaleDateString('fr-FR', options);
         },
         hourFormat(createdHour) {
             const hour = new Date(createdHour)
@@ -70,7 +89,7 @@ export default {
         }
     },
     mounted(){
-          this.getPosts()
+        this.getPosts()
     }
 }
 </script>
@@ -78,18 +97,25 @@ export default {
 <style scoped>
 
 h1 {
-  width: 100%;
-  font-size: 2rem;
-  background: #ffd7d7;
-  border: 2px solid #fd2d01;
-  border-radius: 20px;
+    width: 100%;
+    font-size: 2vw;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    border-radius: 20px;
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     margin: 30px 0 10px 0;
 }
 
+.info {
+    font-size: 1vw;
+}
+
+.image {
+    height: 15vw;
+}
 .article {
     display: flex;
     flex-direction: column;
@@ -106,11 +132,7 @@ h2 {
 }
 
 .header {
-  border-radius: 20px 20px 0 0;
-}
-
-.message {
-    text-decoration: underline;
+    border-radius: 20px 20px 0 0;
 }
 
 .content {
@@ -119,15 +141,113 @@ h2 {
 }
 
 .button {
-    margin: 10px 0 50px 0;
-    padding: 5px 300px ;
+    margin: 10px 0 20px 0;
+    padding: 5px 40% ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
-    font-size: 1rem;
+    font-size: 15px;
     cursor: pointer;
 }
-img {
-  height: 400px;
+
+.search {
+    margin-bottom: 50px;
+    width: 30vw;
+    height: 2vw;
+    border: 2px solid #fd2d01;
+    border-radius: 5px;
+}
+
+::placeholder {
+    text-align: center;
+    font-size: 1.3vw;
+}
+
+.photo-profil{
+    width: 2vw;
+}
+
+.text {
+    font-size: 1.4vw;
+}
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin: 20px 0 10px 0;
+    }
+
+    .info {
+        font-size: 0.9rem;
+    }
+
+    .image {
+        height: 40vw;
+    }
+
+    .header,
+    .content {
+        width: 90%;
+    }
+
+    .text {
+        font-size: 2.5vw;
+    }
+
+    .search {
+        width: 70%;
+        height: 30px;
+        margin-bottom: 50px;
+    }
+
+    ::placeholder {
+        font-size: 20px;
+    }
+
+    .article {
+        width: 100%;
+    }
+
+    .photo-profil{
+        width: 50px;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .button {
+        font-size: 10px;
+    }
+
+    .header,
+    .content {
+        width: 100%;
+    }
+
+    .text {
+        font-size: 1.4rem;
+    }
+
+    .image {
+        height: 50vw;
+    }
+
+    .search{
+        width: 85%;
+        height: 30px;
+        font-size: 3vw;
+    }
+    ::placeholder {
+        font-size: 1rem;
+    }
 }
 </style>

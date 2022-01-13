@@ -6,14 +6,14 @@
       <form>
         <ul>
           <li>
-            <input type="email" v-model="email" placeholder="Email" size="50" required>
+            <input type="email" v-model="email" placeholder="Email" size="50" required aria-label="Email de connection">
           </li>
           <li>
-            <input type="password" v-model="password" placeholder="Password" size="50" required>
+            <input type="password" v-model="password" placeholder="Password" size="50" required aria-label="Mot de passe de connection">
           </li>
         </ul>  
       </form>
-      <button @click="login()" type="submit">Se connecter</button>
+      <button @click="login()" type="submit" aria-label="Se connecter">Se connecter</button>
     </div>
     <Footer />
   </div>
@@ -69,8 +69,10 @@ export default {
       .then((value) => {
         const token = JSON.stringify(value.token);
         const userId = JSON.stringify(value.userId);
+        const role = JSON.stringify(value.role);
         localStorage.setItem("userToken", token);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("role", role);
         this.$router.push("/allposts");
         }
       )
@@ -126,5 +128,31 @@ input {
 
 ::placeholder {
   text-align: center;
+}
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    input,
+    ::placeholder {
+        font-size: 1rem;
+    }
+
+
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    input,
+    ::placeholder {
+        font-size: 0.8rem;
+    }
 }
 </style>

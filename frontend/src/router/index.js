@@ -9,6 +9,11 @@ import Profile from '../views/Profile.vue'
 import Post from '../views/Post.vue'
 import Createpost from '../views/Createpost.vue'
 import Modifypost from '../views/Modifypost.vue'
+import Adminusers from '../views/Adminusers.vue'
+import Adminposts from '../views/Adminposts.vue'
+import Admincomments from '../views/Admincomments.vue'
+
+
 
 
 Vue.use(VueRouter)
@@ -58,6 +63,21 @@ const routes = [
     path: '/modifypost/:id',
     name: 'ModifyPost',
     component: Modifypost
+  },
+  {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    component: Adminusers
+  },
+  {
+    path: '/admin/posts',
+    name: 'AdminPosts',
+    component: Adminposts
+  },
+  {
+    path: '/admin/comments',
+    name: 'Admincomments',
+    component: Admincomments
   }
 ]
 

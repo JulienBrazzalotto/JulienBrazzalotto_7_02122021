@@ -2,43 +2,61 @@
     <div>
         <HeaderProfile />
             <section>
-                <article class="header">
-                    <h1>Titre: {{ post.title }}</h1>
-                    <p class="info">Posté par <b>{{ post.user.nom }} {{ post.user.prenom }}</b> le <b>{{ dateFormat(post.date) }} à {{ hourFormat(post.date) }}</b></p>
-                </article>
-
-                <article class="content">
-                    <p class="modif" v-if="post.user_id === id || post.user.role === 1">
-                    <button @click="modifyPost()" class="button"><i class="fas fa-edit"></i> Modifier ce post</button>
-                    <button @click="deletePost()" class="button espacement"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
+                <div class="header">
+                    <h1>{{ post.title }}</h1>
+                    <p class="info">
+                        Posté par 
+                        <b>{{ post.user.nom }} 
+                        <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
+                        <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                        <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                        le <b>{{ dateFormat(post.date) }}</b>
+                        à <b>{{ hourFormat(post.date) }}</b>
                     </p>
-                    <hr v-if="post.user_id === id || post.user.role === 1">
-                    <p class="message">Message: </p><br>
-                    <img v-if="post.image" :src="post.image" :alt="post.title">
-                    <p>{{ post.content }}</p>
-                </article>
+                </div>
 
-                <button v-if="comments.length != 0" v-on:click="show" class="comment-button">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
+                <div class="content">
+                    <p class="modif">
+                    <button @click="modifyPost()" v-if="post.user_id === id" class="button" aria-label="Modifier ce post"><i class="fas fa-edit"></i> Modifier ce post</button>
+                    <button @click="deletePost()" v-if="post.user_id === id || role === 1" class="button espacement" aria-label="Supprimer ce post"><i class="far fa-trash-alt"></i> Supprimer ce post</button>
+                    </p>
+                    <hr v-if="post.user_id === id || role === 1">
+                    <img v-if="post.image" :src="post.image" alt="Image du post">
+                    <p>{{ post.content }}</p>
+                </div>
+
+                <button v-if="comments.length != 0" v-on:click="show" class="comment-button" aria-label="Voir commentaire">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
                 <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
-                        <p class="comment-info">écrit par <b>{{ comment.user.nom }} {{ comment.user.prenom}}</b> le <b>{{ dateFormat(comment.date) }} à {{ hourFormat(comment.date) }}</b><br>
-                        <button v-if="comment.user_id === id || post.user.role === 1" @click="deleteComment(index)" class="button-comment"><i class="far fa-trash-alt"></i></button>
-                        </p>
+                        <div>
+                            <p class="info">
+                                Posté par 
+                                <b>{{ comment.user.nom }} 
+                                <span v-if="comment.user.role != 0">{{ comment.user.prenom }} </span></b> 
+                                <img class="photo-profil" v-if="comment.user.image" :src="comment.user.image" alt="photo de profil">
+                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                                le <b>{{ dateFormat(comment.date) }}</b>
+                                à <b>{{ hourFormat(comment.date) }}</b>
+                            </p>
+                            <p>
+                                <button v-if="comment.user_id === id || role === 1" @click="deleteComment(index)" class="button-comment" aria-label="Supprimer ce commentaire"><i class="far fa-trash-alt"></i></button>
+                            </p>
+                        </div>                        
                         <hr>
                         <p class="comment-content">{{ comment.content }}</p>
                     </div>
-                    <button v-on:click="hide" class="comment-button">Cacher le<span v-if="comments.length >= 2">s</span> commentaire<span v-if="comments.length >= 2">s</span></button>
+                    <button v-on:click="hide" class="comment-button" aria-label="Cacher commentaire">Cacher le<span v-if="comments.length >= 2">s</span> commentaire<span v-if="comments.length >= 2">s</span></button>
                 </article>
 
-                <button v-on:click="show2" class="button">Ecrire un commentaire</button>
+                <button v-on:click="show2" class="button" aria-label="Ecrire un commentaire">Ecrire un commentaire</button>
                 <article v-if="displayCreateComment" class="createcomment">
-                    <textarea v-model="commentaire" placeholder="Commentaire" cols="60" rows="5"></textarea>
-                    <button @click="createComment()" class="buttonenvoyer">Envoyer le commentaire</button>
-                    <button v-on:click="hide2" class="buttonannuler">Annuler le commentaire</button>
+                    <textarea v-model="commentaire" placeholder="Commentaire" cols="60" rows="5" aria-label="Message du commentaire"></textarea>
+                    <button @click="createComment()" class="buttonenvoyer" aria-label="Envoyer le commentaire">Envoyer le commentaire</button>
+                    <button v-on:click="hide2" class="buttonannuler" aria-label="Annuler le commentaire">Annuler le commentaire</button>
                 </article>
 
             </section>
-            <router-link to="/allposts" class="button link">Retour aux posts</router-link>
+            <router-link to="/allposts" class="button link" aria-label="Retour au post">Retour aux posts</router-link>
         <Footer />
     </div>
 </template>
@@ -69,7 +87,8 @@ export default {
             displaycomments: false,
             displayCreateComment: false,
             commentaire:'',
-            id:''
+            id:'',
+            role: ''
         }
     },
     methods : {
@@ -85,8 +104,10 @@ export default {
         hide2: function () {
             return this.displayCreateComment = false;
         },
-        idUser() {
+        User() {
             this.id = JSON.parse(localStorage.getItem("userId"))
+            this.role = JSON.parse(localStorage.getItem("role"))
+
         },
         
         getPost() {
@@ -196,7 +217,7 @@ export default {
         }
     },
     mounted(){
-        this.idUser()
+        this.User()
         this.getPost ()
         this.getComments ()
     }
@@ -226,6 +247,14 @@ textarea {
     border: 2px solid #fd2d01;
 }
 
+.header {
+    border-radius: 20px 20px 0 0;
+}
+
+.content {
+    border-radius: 0 0 20px 20px;
+}
+
 .info {
     font-size: 0.8rem;
 }
@@ -233,10 +262,6 @@ textarea {
 .modif {
     vertical-align: middle;
     margin: 0;
-}
-
-.message {
-    text-decoration: underline;
 }
 
 .content {
@@ -250,7 +275,7 @@ textarea {
 
 .button {
     margin: 10px 0 30px 0;
-    padding: 5px 30px ;
+    padding: 5px 25px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
     background: #ffd7d7;
@@ -284,7 +309,7 @@ textarea {
 }
 
 .espacement {
-    margin: 0 0 0 10px;
+    margin: 5px 0 0 10px;
 }
 
 .link {
@@ -315,6 +340,49 @@ textarea {
 
 img {
     width: 100%;
+}
+
+.photo-profil {
+    width: 50px;
+}
+
+
+@media screen and (max-width:1024px) {
+
+    
+    .header,
+    .content {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width:768px) {
+
+    
+    .header,
+    .content {
+        width: 100%;
+    }
+
+    .modif{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .espacement{
+        margin: 0;
+    }
+
+    .button {
+        width: 50%;
+    }
+
+    .createcomment {
+        width: 100%;
+    }
+
 }
 
 </style>

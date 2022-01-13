@@ -6,20 +6,20 @@
       <form>
         <ul>
           <li>
-            <input type="text" v-model="nom" placeholder="Nom" size="50" required>
+            <input type="text" v-model="nom" placeholder="Nom" size="50" required aria-label="Nom">
           </li>
           <li>
-            <input type="text" v-model="prenom" placeholder="Prénom" size="50" required>
+            <input type="text" v-model="prenom" placeholder="Prénom" size="50" required aria-label="Prénom">
           </li>
           <li>
-            <input type="email" v-model="email" placeholder="Email" size="50" required>
+            <input type="email" v-model="email" placeholder="Email" size="50" required aria-label="Email">
           </li>
           <li>
-            <input type="password" v-model="password" placeholder="Password" size="50" required>
+            <input type="password" v-model="password" placeholder="Password" size="50" required aria-label="Mot de passe">
           </li>
         </ul>
       </form>   
-      <button @click="signup()" type="submit">S'inscrire</button>
+      <button @click="signup()" type="submit" aria-label="S'inscrire">S'inscrire</button>
     </div>
     <Footer />
   </div>
@@ -150,6 +150,33 @@ button {
 
 ::placeholder {
   text-align: center;
+}
+
+
+@media screen and (max-width:1024px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    input,
+    ::placeholder {
+        font-size: 1rem;
+    }
+
+
+}
+
+@media screen and (max-width:768px) {
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    input,
+    ::placeholder {
+        font-size: 0.8rem;
+    }
 }
 
 </style>

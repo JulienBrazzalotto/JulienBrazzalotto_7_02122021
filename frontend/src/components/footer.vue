@@ -1,24 +1,19 @@
-<!-- COMPONENT - FOOTER -->
 
 <template>
   <footer>
     <ul>
         <li>
-            <router-link to="/Numeros">Numéros utiles</router-link>
+            <router-link to="/Numeros" aria-label="Numéros utiles">Numéros utiles</router-link>
         </li>
         <li>
             <p><img src="../assets/images/icon-above-font.png" alt="Logo Groupomania"></p>
         </li>
         <li>
-            <a href="mailto:admin@groupomania.com"> Contacter l'administrateur</a>
+            <a href="mailto:admin@groupomania.com" aria-label="Envoyer un mail à l'administrateur" > Contacter l'administrateur</a>
         </li>
     </ul>
   </footer>
 </template>
-
-<!-- ------------------------------------- -->
-<!-- --------------- STYLE --------------- -->
-<!-- ------------------------------------- -->
 
 <style scoped>
 ul {
@@ -35,7 +30,7 @@ li {
 }
 
 a {
-  font-size: 1.5vw;
+  font-size: 1.2rem;
   color: #000000;
   text-decoration: none;
 }
@@ -45,7 +40,25 @@ a:hover {
 }
 
 img {
-    height: 200px;
+    height: 150px;
+}
+
+@media screen and (max-width:768px) {
+  a {
+    font-size: 0.7rem;
+  }
+
+  ul {
+    margin: 0
+  }
+  
+  li {
+    width: 150px;
+  }
+
+  img {
+    height: 15vw;
+  }
 }
 
 </style>
