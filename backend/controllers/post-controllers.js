@@ -60,21 +60,34 @@ exports.modifyPost = (req, res, next) => {
     } else {
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
-            if (post.image) {
-                const filename = post.image.split('/images/posts/')[1];
-                fs.unlink(`images/posts/${filename}`, () => {
+            if (post.moderate === true) {
+                if (post.image) {
+                    const filename = post.image.split('/images/posts/')[1];
+                    fs.unlink(`images/posts/${filename}`, () => {
+                        const modifyPost = {
+                            title: req.body.title,
+                            content: req.body.content,
+                            moderate: req.body.moderate,
+                            image: ''
+                        };
+
+                        Post.update(modifyPost , { where: { id: req.params.id } })
+
+                            .then(() => res.status(200).json({message : 'Post modifié !'}))
+                            .catch( error => res.status(400).json({error}));
+                    })
+                } else {
                     const modifyPost = {
                         title: req.body.title,
                         content: req.body.content,
                         moderate: req.body.moderate,
-                        image: ''
                     };
-
+            
                     Post.update(modifyPost , { where: { id: req.params.id } })
-
+            
                         .then(() => res.status(200).json({message : 'Post modifié !'}))
                         .catch( error => res.status(400).json({error}));
-                })
+                }
             } else {
                 const modifyPost = {
                     title: req.body.title,
@@ -87,6 +100,7 @@ exports.modifyPost = (req, res, next) => {
                     .then(() => res.status(200).json({message : 'Post modifié !'}))
                     .catch( error => res.status(400).json({error}));
             }
+            
         })
     }
 }
