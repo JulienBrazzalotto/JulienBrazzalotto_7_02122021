@@ -64,15 +64,18 @@ export default {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
             if (confirm("Voulez-vous vraiment valider ce commentaire") === true) {
-                let data = new FormData ()
-                    data.append('moderate', true)
+                let data = {
+                    moderate: true
+                }
                 
                 fetch(`http://localhost:3000/api/comments/${this.comments[index].id}`, {
                     method: "PUT",
                     headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
                     },
-                    body: data
+                    body: JSON.stringify(data) 
                 })
                 .then((response) => response.json())
                 .then(data => (this.comments[index] = data))
