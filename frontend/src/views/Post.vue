@@ -3,16 +3,20 @@
         <HeaderProfile />
             <section>
                 <div class="header">
-                    <h1>{{ post.title }}</h1>
-                    <p class="info">
-                        Posté par 
-                        <b>{{ post.user.nom }} 
-                        <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
-                        <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
-                        <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
-                        le <b>{{ dateFormat(post.date) }}</b>
-                        à <b>{{ hourFormat(post.date) }}</b>
-                    </p>
+                    <div>
+                        <h1>{{ post.title }}</h1>
+                    </div>
+                    <div>
+                        <p class="info">
+                            Posté par 
+                            <b>{{ post.user.nom }} 
+                            <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
+                            <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                            le <b>{{ dateFormat(post.date) }}</b>
+                            à <b>{{ hourFormat(post.date) }}</b>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="content">
@@ -248,6 +252,9 @@ textarea {
 }
 
 .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border-radius: 20px 20px 0 0;
 }
 
@@ -260,7 +267,6 @@ textarea {
 }
 
 .modif {
-    vertical-align: middle;
     margin: 0;
 }
 
@@ -339,11 +345,20 @@ textarea {
 }
 
 img {
-    width: 100%;
+    width: 98%;
+    border-radius: 30px;
+}
+
+.content img {
+    margin-top: 10px;
+
 }
 
 .photo-profil {
     width: 50px;
+    height: 50px;
+    border: 2px solid #fd2d01;
+    border-radius: 30px;
 }
 
 
@@ -362,7 +377,7 @@ img {
     
     .header,
     .content {
-        width: 100%;
+        width: 98%;
     }
 
     .modif{

@@ -149,7 +149,12 @@ input {
 }
 
 .file {
-    height: 400px;
+    width: 300px;
+    height: 300px;
+    margin-top: 10px;
+    border: 2px solid #fd2d01;
+    border-radius: 30px;
+    padding: 5px;
 }
 
 .input-file {

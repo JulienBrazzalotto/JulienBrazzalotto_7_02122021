@@ -115,6 +115,7 @@ h2 {
 
 .image {
     height: 15vw;
+    border-radius: 30px;
 }
 .article {
     display: flex;
@@ -163,8 +164,11 @@ h2 {
     font-size: 1.3vw;
 }
 
-.photo-profil{
-    width: 2vw;
+.photo-profil {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #fd2d01;
+    border-radius: 30px;
 }
 
 .text {
@@ -230,7 +234,7 @@ h2 {
 
     .header,
     .content {
-        width: 100%;
+        width: 98%;
     }
 
     .text {

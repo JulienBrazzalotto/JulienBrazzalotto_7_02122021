@@ -18,7 +18,7 @@
                         <input type="email" v-model="user.email" placeholder="Email" size="50" required aria-label="Email de l'utilisateur">
                     </li>
                     <li v-if="user.image">
-                        <img :src="user.image" alt="Photo de profil" class="file">
+                        <img :src="user.image" alt="Photo de profil" class="file" width="200px" height="200px">
                     </li>
                     <li>
                         <label v-if="!user.image" for="file" class="label-file" aria-label="Choisir la photo de profil">Choisir une photo de profil</label>
@@ -244,8 +244,11 @@ input {
 }
 
 .file {
+    width: 200px;
+    height: 200px;
     margin-top: 10px;
-    height: 400px;
+    border: 2px solid #fd2d01;
+    border-radius: 100px;
 }
 
 .input-file {
