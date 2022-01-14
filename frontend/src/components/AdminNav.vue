@@ -3,8 +3,10 @@
         <h1>Administration</h1>
         <nav>
             <router-link to="/admin/users" aria-label="Administration des utilisateurs" v-if="role === 0"><i class="fas fa-users link"></i></router-link>
-            <router-link to="/admin/posts" aria-label="Administration des posts"><i class="fas fa-mail-bulk link"></i></router-link>
-            <router-link to="/admin/comments" aria-label="Administration des commentaires"><i class="fas fa-comments link"></i></router-link>
+            <router-link to="/admin/posts" aria-label="Administration des posts" v-if="role === 0"><i class="fas fa-mail-bulk link"></i></router-link>
+            <router-link to="/moderate/posts" aria-label="Administration des posts" v-else><i class="fas fa-mail-bulk link"></i></router-link>
+            <router-link to="/admin/comments" aria-label="Administration des commentaires" v-if="role === 0"><i class="fas fa-comments link"></i></router-link>
+            <router-link to="/moderate/comments" aria-label="Administration des commentaires" v-else><i class="fas fa-comments link"></i></router-link>
         </nav>
     </div>
 </template>

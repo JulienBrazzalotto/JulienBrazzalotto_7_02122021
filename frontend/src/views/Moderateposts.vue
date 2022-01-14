@@ -65,26 +65,50 @@ export default {
         moderatePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
-
             if (confirm("Voulez-vous vraiment valider ce post") === true) {
-                let data = new FormData ()
-                    data.append('moderate', true)
-                
-                fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
-                    method: "PUT",
-                    headers: {
-                        'authorization': `Bearer ${token}`
-                    },
-                    body: data
-                })
-                .then((response) => response.json())
-                .then(data => (this.posts[index] = data))
-                .then(() => {
-                    alert("La moderation du post est bien prise en compte")
-                    this.$router.go() })
-                .catch(error => console.log(error))
-            }
+                if (this.posts[index].image === null && this.posts[index].title != "" && this.posts[index].content != "") {
 
+                    let data = new FormData ()
+                        data.append('title', this.posts[index].title)
+                        data.append('content', this.posts[index].content)
+                        data.append('moderate', true)
+                    
+                    fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                        method: "PUT",
+                        headers: {
+                            'authorization': `Bearer ${token}`
+                        },
+                        body: data
+                    })
+                    .then((response) => response.json())
+                    .then(data => (this.posts[index] = data))
+                    .then(() => {
+                        alert("La moderation du post est bien prise en compte")
+                        this.$router.go() })
+                    .catch(error => console.log(error))
+
+                } else if (this.posts[index].title != "" && this.posts[index].content != "") {
+                    let data = new FormData()
+                        data.append('image', this.posts[index].image)
+                        data.append('title', this.posts[index].title)
+                        data.append('content', this.posts[index].content)
+                        data.append('moderate', true)
+
+                    fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                        method: "PUT",
+                        headers: {
+                            'authorization': `Bearer ${token}`
+                        },
+                        body: data
+                    })
+                    .then((response) => response.json())
+                    .then(data => (this.posts[index] = data))
+                    .then(() => {
+                        alert("La moderation du post est bien prise en compte")
+                        this.$router.go() })
+                    .catch(error => console.log(error))
+                }
+            }
         },
         deletePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
