@@ -137,10 +137,10 @@ exports.getPostsUser = (req, res, next) => {
         where: {
             user_id : req.params.user_id
         },
-            include: [{
+        include: [{
             model : User,
         }],
-            order: [["date", "ASC"]]})
+        order: [["date", "ASC"]]})
 
     .then( posts => res.status(200).json(posts))
     .catch( error => res.status(400).json({error}))
