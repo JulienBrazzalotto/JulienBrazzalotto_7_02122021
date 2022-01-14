@@ -22,6 +22,7 @@ CREATE TABLE Posts
   image         VARCHAR(250),
   date          DATETIME        NOT NULL,
   content       TEXT            NOT NULL,
+  moderate      BOOLEAN         NOT NULL,
   user_id       SMALLINT        UNSIGNED      NOT NULL,
   CONSTRAINT    fk_user_id_posts      FOREIGN KEY   (user_id)     REFERENCES      Users(id) ON UPDATE CASCADE ON DELETE CASCADE
 )

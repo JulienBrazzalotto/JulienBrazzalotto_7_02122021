@@ -7,12 +7,14 @@
                     <tr>
                         <th>Nom</th>
                         <th>Prénom</th>
+                        <th>Titre du post</th>
                         <th>Commentaire</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(comment, index) in comments">
-                        <td><input type="text" v-model="comment.user.nom" placeholder="Nom" required aria-label="Nom de l'auteur du commentaire"></td>
-                        <td><input type="text" v-model="comment.user.prenom" placeholder="Prénom" required aria-label="Prénom de l'auteur du commentaire"></td>
-                        <td><textarea type="text" v-model="comment.content" rows="3" cols="50" placeholder="Message" required aria-label="Commentaire"></textarea></td>
+                        <td><input type="text" v-model="comment.user.nom" required aria-label="Nom de l'auteur du commentaire"></td>
+                        <td><input type="text" v-model="comment.user.prenom" required aria-label="Prénom de l'auteur du commentaire"></td>
+                        <td><input type="text" v-model="comment.post.title" required aria-label="Titre du post"></td>
+                        <td><textarea type="text" v-model="comment.content" rows="3" cols="50" required aria-label="Commentaire"></textarea></td>
                         <button @click="deletePost(index)" aria-label="Supprimer ce commentaire"><i class="far fa-trash-alt"></i></button>
                     </tr>
                 </table>
@@ -36,7 +38,7 @@ export default {
     },
     data () {
         return {
-            comments: []
+            comments: [],
         }
     },
     methods : {
@@ -56,19 +58,19 @@ export default {
         deletePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
-            if (confirm("Voulez-vous vraiment supprimer le post") === true) {
+            if (confirm("Voulez-vous vraiment supprimer le commentaire") === true) {
 
-                fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                fetch(`http://localhost:3000/api/comments/${this.comments[index].id}`, {
                     method: "DELETE",
                     headers: {
                         'authorization': `Bearer ${token}`
                     },
-                    body : JSON.stringify(this.posts[index])
+                    body : JSON.stringify(this.comments[index])
                 })
                 .then(response => response.json())
-                .then(data => (this.posts[index] = data))
+                .then(data => (this.comments[index] = data))
                 .then(() => {
-                    alert("La suppression du post est bien prise en compte")
+                    alert("La suppression du commentaire est bien prise en compte")
                     this.$router.go() })
             }
         }
@@ -102,6 +104,7 @@ table {
 }
 
 button {
+    margin-top: 10px;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;

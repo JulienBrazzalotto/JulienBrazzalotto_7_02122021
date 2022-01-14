@@ -10,14 +10,18 @@
                         <th>Titre du post</th>
                         <th>Message du post</th>
                         <th>Image du post</th>
+                        <th>Moderation</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(post, index) in posts">
-                        <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
-                        <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
-                        <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
-                        <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
-                        <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
-                        <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="far fa-trash-alt"></i></button>
+                            <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
+                            <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
+                            <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
+                            <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
+                            <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
+                            <td>
+                                <button @click="moderatePost(index)" aria-label="Moderer ce post" v-if="post.moderate === false"><i class="fas fa-check"></i></button>
+                                <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="fas fa-times"></i></button>
+                            </td>
                     </tr>
                 </table>
                 <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
@@ -58,10 +62,34 @@ export default {
             .then(response => response.json())
             .then(data => (this.posts = data))
         },
+        moderatePost(index) {
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+
+            if (confirm("Voulez-vous vraiment valider ce post") === true) {
+                let data = new FormData ()
+                    data.append('moderate', true)
+                
+                fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                    method: "PUT",
+                    headers: {
+                        'authorization': `Bearer ${token}`
+                    },
+                    body: data
+                })
+                .then((response) => response.json())
+                .then(data => (this.posts[index] = data))
+                .then(() => {
+                    alert("La moderation du post est bien prise en compte")
+                    this.$router.go() })
+                .catch(error => console.log(error))
+            }
+
+        },
         deletePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
-            if (confirm("Voulez-vous vraiment supprimer le post") === true) {
+            if (confirm("Voulez-vous vraiment modérer ce post et donc le supprimer") === true) {
 
                 fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
                     method: "DELETE",

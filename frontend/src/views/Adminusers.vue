@@ -11,14 +11,13 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
-                        <th>Photo de profil</th>
                         <th>Role</th>
+                        <th>Photo de profil</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
-                        <td><input type="text" v-model="user.nom" placeholder="Nom" required aria-label="Nom"></td>
-                        <td><input type="text" v-model="user.prenom" placeholder="Prénom" required aria-label="Prénom"></td>
-                        <td><input type="text" v-model="user.email" placeholder="Email" required class="email" aria-label="Email"></td>
-                        <td><img v-if="user.image" :src="user.image" alt="photo de profil"></td>
+                        <td><input type="text" v-model="user.nom" required aria-label="Nom"></td>
+                        <td><input type="text" v-model="user.prenom" required aria-label="Prénom"></td>
+                        <td><input type="text" v-model="user.email" required class="email" aria-label="Email"></td>
                         <td>
                             <select v-model="user.role" name="role" id="role-select">
                                 <option value="0">Admin</option>
@@ -26,6 +25,7 @@
                                 <option value="2">Utilisateur</option>
                             </select>
                         </td>
+                        <td><img v-if="user.image" :src="user.image" alt="photo de profil"></td>
                         <button @click="modifyUser(index)" aria-label="Modifier cet utilisateur"><i class="fas fa-edit"></i></button>
                         <button @click="deleteUser(index)" aria-label="Supprimer cet utilisateur"><i class="far fa-trash-alt"></i></button>
                     </tr>
@@ -161,7 +161,7 @@ table {
 }
 
 button {
-    margin: 0 5px 0 0;
+    margin: 10px 5px 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -203,6 +203,10 @@ img {
     height: 50px;
     border: 2px solid #fd2d01;
     border-radius: 30px;
+}
+
+select {
+    background-color: white;
 }
 
 @media screen and (max-width:1024px) {

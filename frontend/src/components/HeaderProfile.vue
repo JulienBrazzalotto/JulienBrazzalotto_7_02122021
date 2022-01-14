@@ -2,7 +2,8 @@
     <header class="nav">
         <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
         <nav>
-            <router-link to="/admin/users" v-if="id === 1" aria-label="Administration"><i class="fas fa-user-lock link"></i></router-link>
+            <router-link to="/admin/users" v-if="role === 0" aria-label="Administration"><i class="fas fa-user-lock link"></i></router-link>
+            <router-link to="/moderate/posts" v-else-if="role === 1" aria-label="Administration"><i class="fas fa-user-lock link"></i></router-link>
             <router-link to="/profile" aria-label="Profil"><i class="fas fa-user-circle link"></i></router-link>
             <a class="link disconnect" @click="disconnectUser()">Se deconnecter</a>
         </nav>
@@ -16,7 +17,7 @@ export default {
 name: 'HeaderProfile',
 data () {
 	return {
-		id:''
+		role:''
 	}
 },
 methods: {
@@ -24,17 +25,15 @@ methods: {
 		localStorage.clear();
 		this.$router.push("/")
 	},
-	idUser() {
-		this.id = JSON.parse(localStorage.getItem("userId"))
+	roleUser() {
+		this.role = JSON.parse(localStorage.getItem("role"))
 	}
 },
 mounted(){
-    this.idUser()
+    this.roleUser()
 }
 }   
 </script>
-
-
 
 
 <style scoped>

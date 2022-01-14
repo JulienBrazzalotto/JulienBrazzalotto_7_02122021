@@ -1,4 +1,5 @@
 const Comment = require('../models/comment-models');
+const Post = require('../models/post-models');
 const User = require('../models/user-models');
 
 exports.createComment = (req, res, next) => {
@@ -35,9 +36,12 @@ exports.getPostComments = (req, res, next) => {
 exports.getAllComments = (req, res, next) => {
     Comment.findAll({
         include: [{
-        model : User,
-    }],
-        order: [["date", "ASC"]]})
+            model : User
+        },{
+            model : Post
+        }],
+        order: [["date", "ASC"]]
+    })
 
     .then( comments => res.status(200).json(comments))
     .catch( error => res.status(400).json({error}))
