@@ -11,13 +11,21 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
+                        <th>Photo de profil</th>
                         <th>Role</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
                         <td><input type="text" v-model="user.nom" placeholder="Nom" required aria-label="Nom"></td>
                         <td><input type="text" v-model="user.prenom" placeholder="Prénom" required aria-label="Prénom"></td>
                         <td><input type="text" v-model="user.email" placeholder="Email" required class="email" aria-label="Email"></td>
-                        <td><input type="text" v-model="user.role" placeholder="Role" required aria-label="Rôle"></td>
+                        <td><img v-if="user.image" :src="user.image" alt="photo de profil"></td>
+                        <td>
+                            <select v-model="user.role" name="role" id="role-select">
+                                <option value="0">Admin</option>
+                                <option value="1">Modérateur</option>
+                                <option value="2">Utilisateur</option>
+                            </select>
+                        </td>
                         <button @click="modifyUser(index)" aria-label="Modifier cet utilisateur"><i class="fas fa-edit"></i></button>
                         <button @click="deleteUser(index)" aria-label="Supprimer cet utilisateur"><i class="far fa-trash-alt"></i></button>
                     </tr>
@@ -190,6 +198,13 @@ hr {
     background-color: #fd2d01;
 }
 
+img {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #fd2d01;
+    border-radius: 30px;
+}
+
 @media screen and (max-width:1024px) {
 
     input {
@@ -205,6 +220,11 @@ hr {
 
     input:not(.search) {
         width: 85vw;
+        height: 5vw;
+        font-size: 0.9rem;
+    }
+    select {
+        width: 86vw;
         height: 5vw;
         font-size: 0.9rem;
     }
