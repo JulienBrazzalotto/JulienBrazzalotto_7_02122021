@@ -35,7 +35,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
-                    moderate: req.body.moderate,
+                    moderate: false,
                     image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
     
@@ -47,7 +47,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
-                    moderate: req.body.moderate,
+                    moderate: false,
                     image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
         
@@ -67,7 +67,7 @@ exports.modifyPost = (req, res, next) => {
                         const modifyPost = {
                             title: req.body.title,
                             content: req.body.content,
-                            moderate: req.body.moderate,
+                            moderate: false,
                             image: ''
                         };
 
@@ -80,7 +80,7 @@ exports.modifyPost = (req, res, next) => {
                     const modifyPost = {
                         title: req.body.title,
                         content: req.body.content,
-                        moderate: req.body.moderate,
+                        moderate: false,
                     };
             
                     Post.update(modifyPost , { where: { id: req.params.id } })
