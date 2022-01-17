@@ -13,7 +13,7 @@
           <p>Température: {{meteo.current.temp_c}} °C</p>
         </div>
         <div class="meteo_dem">
-          <h3>demain</h3>
+          <h3>Demain</h3>
           <img :src="meteo.forecast.forecastday[1].day.condition.icon" alt="Icone météo">
           <p>{{meteo.forecast.forecastday[1].day.condition.text}}</p>
           <p>Température maximale: {{meteo.forecast.forecastday[1].day.maxtemp_c}} °C</p>
