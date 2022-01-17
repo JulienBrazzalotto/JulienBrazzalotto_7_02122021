@@ -54,10 +54,6 @@ export default {
             const Id = JSON.parse(localStorage.getItem("userId"))
             const fileField = document.querySelector('input[type="file"]');
             const token = JSON.parse(localStorage.getItem("userToken"))
-            console.log(this.titre)
-            console.log(this.contenu)
-            console.log(Id)
-            console.log(token)
 
             if (this.titre === '')
                 alert("Veuillez remplir le titre")
@@ -79,10 +75,11 @@ export default {
                 .then((response) => {
                     return response.json();
                 })
+                .then(() => {
+                    this.$router.push("/allposts");
+                    this.$router.go() })
                 .catch(error => console.log(error))
 
-                this.$router.push("/allposts");
-                this.$router.go()
             } else if (this.titre != '' && this.contenu != '') {
                 let data = new FormData()
                 data.append('image', fileField.files[0])
@@ -98,13 +95,11 @@ export default {
                     body: data
                 })
                 .then((response) => response.json())
-                .then((result) => {
-                    console.log('Success:', result);
+                .then(() => {
+                    this.$router.push("/allposts");
+                    this.$router.go()
                 })
                 .catch(error => console.log(error))
-
-                this.$router.push("/allposts");
-                this.$router.go()
             }
         },
         uploadFile(e) {
