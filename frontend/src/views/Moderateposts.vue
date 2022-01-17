@@ -3,6 +3,11 @@
         <HeaderProfile />
         <AdminNav />
             <article >
+                <div class="filter">
+                    <label for="moderate" v-if="moderate === false">Cochez pour voir les posts non modérés</label>
+                    <label for="moderate" v-if="moderate === true">Décochez pour voir tous les posts</label><br>
+                    <input v-model="moderate" type="checkbox" id="moderate" class="moderate" name="moderate">
+                </div>
                 <table>
                     <tr>
                         <th>Nom</th>
@@ -12,14 +17,14 @@
                         <th>Image du post</th>
                         <th>Modération</th>
                     </tr>
-                    <tr v-bind:key="index" v-for="(post, index) in posts">
+                    <tr v-bind:key="index" v-for="(post, index) in filterList">
                             <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
                             <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
                             <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
                             <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
                             <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
                             <td>
-                                <button @click="moderatePost(index)" aria-label="Moderer ce post" v-if="post.moderate === false"><i class="fas fa-check"></i></button>
+                                <button @click="moderatePost(index)" aria-label="Modérer ce post" v-if="post.moderate === false"><i class="fas fa-check"></i></button>
                                 <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="fas fa-times"></i></button>
                             </td>
                     </tr>
@@ -45,6 +50,18 @@ export default {
     data () {
         return {
             posts: [],
+            moderate: true
+        }
+    },
+    computed : {
+        filterList() {
+            return this.posts.filter((post) =>{
+                if (post.moderate === true) {
+                    return post.moderate != this.moderate;
+                } else {
+                    return post
+                }
+            })
         }
     },
     methods : {
@@ -66,10 +83,11 @@ export default {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
             if (confirm("Voulez-vous vraiment valider ce post") === true) {
+                
                 let data = new FormData()
                     data.append('moderate', true)
 
-                fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                fetch(`http://localhost:3000/api/posts/${this.filterList[index].id}`, {
                     method: "PUT",
                     headers: {
                         'authorization': `Bearer ${token}`
@@ -77,9 +95,8 @@ export default {
                     body: data
                 })
                 .then((response) => response.json())
-                .then(data => (this.posts[index] = data))
+                .then(data => (this.filterList[index] = data))
                 .then(() => {
-                    alert("La moderation du post est bien prise en compte")
                     this.$router.go() })
                 .catch(error => console.log(error))
                 
@@ -88,9 +105,9 @@ export default {
         deletePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
-            if (confirm("Voulez-vous vraiment modérer ce post et donc le supprimer") === true) {
+            if (confirm("Voulez-vous vraiment supprimer ce post") === true) {
 
-                fetch(`http://localhost:3000/api/posts/${this.posts[index].id}`, {
+                fetch(`http://localhost:3000/api/posts/${this.filterList[index].id}`, {
                     method: "DELETE",
                     headers: {
                         'authorization': `Bearer ${token}`
@@ -98,9 +115,8 @@ export default {
                     body : JSON.stringify(this.posts[index])
                 })
                 .then(response => response.json())
-                .then(data => (this.posts[index] = data))
+                .then(data => (this.filterList[index] = data))
                 .then(() => {
-                    alert("La suppression du post est bien prise en compte")
                     this.$router.go() })
             }
         }
@@ -134,7 +150,7 @@ table {
 }
 
 button {
-    margin-top: 25px;
+    margin: 0 5px 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -160,6 +176,31 @@ tr {
     padding-bottom: 80px;
 }
 
+.filter {
+    margin: 30px 0 30px 0;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    border-radius: 20px;
+    font-size: 1.3rem;
+}
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    border-radius: 6px;
+    margin: 5px 0;
+    height: 20px;
+    width: 20px;
+    background: #ffd7d7;
+    border: 2px solid #fd2d01;
+    
+}
+
+input[type="checkbox"]:checked {
+    background: #fd2d01 ;
+}
+
 @media screen and (max-width:1024px) {
 
     input {
@@ -176,8 +217,8 @@ tr {
     }
 
     button {
-        width: 20%;
-        margin: 0 0 50px 0;
+        width: 100%;
+        margin: 0 0 5px 0;
         padding: 5px 10px;
     }
 
