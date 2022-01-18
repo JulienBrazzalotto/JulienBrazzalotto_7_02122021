@@ -78,7 +78,7 @@ export default {
                 .then(() => {
                     this.$router.push("/allposts");
                     this.$router.go() })
-                .catch(error => console.log(error))
+                .catch(alert)
 
             } else if (this.titre != '' && this.contenu != '') {
                 let data = new FormData()
@@ -99,7 +99,7 @@ export default {
                     this.$router.push("/allposts");
                     this.$router.go()
                 })
-                .catch(error => console.log(error))
+                .catch(alert)
             }
         },
         uploadFile(e) {

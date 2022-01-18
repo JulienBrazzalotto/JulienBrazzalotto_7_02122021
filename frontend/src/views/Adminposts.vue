@@ -57,6 +57,7 @@ export default {
             
             .then(response => response.json())
             .then(data => (this.posts = data))
+            .catch(alert)
         },
         deletePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -73,8 +74,9 @@ export default {
                 .then(response => response.json())
                 .then(data => (this.posts[index] = data))
                 .then(() => {
-                    alert("La suppression du post est bien prise en compte")
-                    this.$router.go() })
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         }
     },

@@ -75,6 +75,7 @@ export default {
             
             .then(response => response.json())
             .then(data => (this.users = data))
+            .catch(alert)
         },
         deleteUser(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -87,42 +88,42 @@ export default {
                         'authorization': `Bearer ${token}`
                     },
                 })
-
                 .then(response => response.json())
                 .then(data => (this.posts = data))
                 .then (() => {
-                    let pub = this.posts
+                    let publication = this.posts
 
-                    for ( let i = 0 ; i < pub.length ; i++) {
-                        if (pub[i].image) {
-                        fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
-                            method: "DELETE",
-                            headers: {
-                                'authorization': `Bearer ${token}`
-                            },
-                        })
+                    for ( let i = 0 ; i < publication.length ; i++) {
+                        if (publication[i].image) {
+                            fetch(`http://localhost:3000/api/posts/${publication[i].id}`, {
+                                method: "DELETE",
+                                headers: {
+                                    'authorization': `Bearer ${token}`
+                                },
+                            })
                             .then(response => response.json())
-                            .catch(error => console.log(error))
+                            .catch(alert)
                         }
                     }
                 })
                 .then(() => {
                     fetch(`http://localhost:3000/api/auth/${this.filterList[index].id}`, {
-                    method: "DELETE",
-                    headers: {
-                        'authorization': `Bearer ${token}`
-                    }
+                        method: "DELETE",
+                        headers: {
+                            'authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(() => { 
+                        this.$router.go()
+                        })
+                    .catch(alert)
                 })
-                .then(response => response.json())
-                .then(() => { 
-                    alert("La suppression de l'utilisateur est bien prise en compte")
-                    this.$router.go() })
-                })
+                .catch(alert)
             }
         },
-        modifyUser(index, filterList) {
+        modifyUser(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
-            console.log(filterList)
 
             if (confirm("Voulez-vous vraiment modifier cet utilisateur") === true) {
                 
@@ -139,8 +140,9 @@ export default {
                 .then(response => response.json())
                 .then(data => (this.filterList[index] = data))
                 .then(() => { 
-                    alert("La modification de l'utilisateur est bien prise en compte")
-                    this.$router.go() })
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         }
     },

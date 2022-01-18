@@ -61,7 +61,7 @@ export default {
 
         .then (response => response.json())
         .then (data => (this.meteo = data))
-        .catch(error => console.log(error))
+        .catch(alert)
     }
   },
   mounted() {

@@ -40,7 +40,7 @@ import AdminNav from "../components/AdminNav";
 import Footer from "../components/Footer";
 
 export default {
-    name: 'AdminComments',
+    name: 'ModerateComments',
     components: {
         HeaderProfile,
         AdminNav,
@@ -76,6 +76,7 @@ export default {
             
             .then (response => response.json())
             .then (data => (this.comments = data))
+            .catch(alert)
         },
         moderateComments(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -97,8 +98,9 @@ export default {
                 .then((response) => response.json())
                 .then(data => (this.filterList[index] = data))
                 .then(() => {
-                    this.$router.go() })
-                .catch(error => console.log(error))
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         },
         deleteComments(index) {
@@ -116,7 +118,9 @@ export default {
                 .then(response => response.json())
                 .then(data => (this.filterList[index] = data))
                 .then(() => {
-                    this.$router.go() })
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         }
     },

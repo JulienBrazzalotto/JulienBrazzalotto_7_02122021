@@ -125,6 +125,7 @@ export default {
             })
             .then (response => response.json())
             .then (data => (this.post = data))
+            .catch(alert)
         },
         
         getComments() {
@@ -139,6 +140,7 @@ export default {
             
             .then (response => response.json())
             .then (data => (this.comments = data))
+            .catch(alert)
         },
         dateFormat (createdDate) {
             const date = new Date(createdDate)
@@ -165,6 +167,7 @@ export default {
                 .then(() => { 
                     alert("La suppression du post est bien prise en compte")
                     this.$router.push("/allposts") })
+                .catch(alert)
             }
         },
         modifyPost () {
@@ -199,7 +202,7 @@ export default {
                 .then(() => {
                     this.$router.go()
                 })
-                .catch(error => console.log(error))
+                .catch(alert)
             }
         },
         deleteComment (index) {
@@ -217,6 +220,7 @@ export default {
                 .then(() => { 
                     alert("La suppression du commentaire est bien prise en compte")
                     this.$router.go() })
+                .catch(alert)
             }
         }
     },

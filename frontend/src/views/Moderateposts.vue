@@ -41,7 +41,7 @@ import AdminNav from "../components/AdminNav";
 import Footer from "../components/Footer";
 
 export default {
-    name: 'AdminPosts',
+    name: 'ModeratePosts',
     components: {
         HeaderProfile,
         AdminNav,
@@ -78,6 +78,7 @@ export default {
             
             .then(response => response.json())
             .then(data => (this.posts = data))
+            .catch(alert)
         },
         moderatePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -97,9 +98,9 @@ export default {
                 .then((response) => response.json())
                 .then(data => (this.filterList[index] = data))
                 .then(() => {
-                    this.$router.go() })
-                .catch(error => console.log(error))
-                
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         },
         deletePost(index) {
@@ -117,7 +118,9 @@ export default {
                 .then(response => response.json())
                 .then(data => (this.filterList[index] = data))
                 .then(() => {
-                    this.$router.go() })
+                    this.$router.go() 
+                })
+                .catch(alert)
             }
         }
     },

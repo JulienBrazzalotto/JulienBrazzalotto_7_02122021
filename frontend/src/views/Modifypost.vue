@@ -62,6 +62,7 @@ export default {
             })
             .then (response => response.json())
             .then (data => (this.post = data))
+            .catch(alert)
         },
         modifyPost() {
             const fileField = document.querySelector('input[type="file"]');
@@ -87,10 +88,13 @@ export default {
                     .then(response => response.json())
                     .then(data => (this.post = data))
                     .then(() => {
-                    alert("Votre modification est bien prise en compte")
-                    this.$router.push(`/post/${this.id_param}`);
+                        alert("Votre modification est bien prise en compte")
+                        this.$router.push(`/post/${this.id_param}`);
                     })
+                .catch(alert)
+
             } else if (this.post.title != "" && this.post.content != "") {
+
                 let data = new FormData()
                 data.append('image', fileField.files[0])
                 data.append('title', this.post.title)
@@ -104,11 +108,10 @@ export default {
                     body: data
                 })
                 .then((response) => response.json())
-                .then((result) => {
-                    console.log('Success:', result);
+                .then(() => {
                     this.$router.push(`/post/${this.id_param}`);
                 })
-                .catch(error => console.log(error))
+                .catch(alert)
             }
         },
         uploadFile(e) {
