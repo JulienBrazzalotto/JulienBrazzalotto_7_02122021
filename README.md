@@ -13,16 +13,20 @@ You will need to have SQL, Node and `npm` installed locally on your machine.
 -   Create a "groupomania" database and import the file groupomania.sql
     -  Email : admin@groupomania.com
     -  Password : Azerty32
+
 If you wish you can change the email and password of the administrator directly in the file groupomania.sql
 
 -   From within the project folder, run `npm install`.
+
 Create an .env file in the root of the backend folder with the database configuration information and the token.
 You can then run the server with `nodemon server`. 
 The server should run on `localhost` with default port `3000`.
 If the server runs on another port for any reason, this is printed to the console when the server starts, e.g. `Listening on port 3001`.
 
 -   Finally on the frontend folder, run `npm install`.
+
 Create an .env file in the root of the frontend folder with the configuration information of the weather key.
 You can then run the server with `npm run serve`.
+
 App running at:
   - Local:   http://localhost:8080/
