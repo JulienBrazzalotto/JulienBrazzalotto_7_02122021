@@ -70,6 +70,14 @@ img {
     color: #fd2d01;
 }
 
+@media screen and (max-width:1024px) {
+
+    h1 {
+        width: 98%;
+        margin-left: 5px;
+    }
+}
+
 @media screen and (max-width:768px) {
 
     h1 {

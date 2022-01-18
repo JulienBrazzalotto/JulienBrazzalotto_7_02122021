@@ -4,14 +4,14 @@
         <AdminNav />
             <article >
                 <div>
-                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=50 aria-label=" Barre de recherche d'un utilisateur avec son Nom">
+                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=40 aria-label=" Barre de recherche d'un utilisateur avec son Nom">
                 </div>
                 <table>
                     <tr>
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
-                        <th>Role</th>
+                        <th>Rôle</th>
                         <th>Photo de profil</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">

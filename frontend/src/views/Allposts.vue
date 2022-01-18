@@ -1,37 +1,37 @@
 <template>
     <div>
         <HeaderProfile />
-            <h1>Fil d'actualité</h1>
-            <button @click="createPost()" class="button" >Créer un post</button>
-            <div>
-                <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son auteur ..." size=50 aria-label="Barre de recherche d'un post avec le nom">
-            </div>
-            <article v-if="posts.length == 0">
-                <p>Désolé il n'y a aucune publication...</p>
-            </article>
-            <article v-else v-bind:key="index" v-for="(post, index) in filterList">
-                <router-link :to="`/post/${post.id}`" class="article">
-                    <div class="header">
-                        <div>
-                            <h2>{{ post.title }}</h2>
-                            <p class="info">
-                                Posté par 
-                                <b>{{ post.user.nom }} 
-                                <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>
-                                <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
-                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
-                                le <b>{{ dateFormat(post.date) }}</b>
-                                à <b>{{ hourFormat(post.date) }}</b>
-                            </p>
-                        </div>
+        <h1>Fil d'actualité</h1>
+        <button @click="createPost()" class="button" >Créer un post</button>
+        <div>
+            <input v-model="search" class="search" type="search" placeholder="Rechercher un post avec son auteur ..." size=50 aria-label="Barre de recherche d'un post avec le nom">
+        </div>
+        <article v-if="posts.length == 0">
+            <p>Désolé il n'y a aucune publication...</p>
+        </article>
+        <article v-else v-bind:key="index" v-for="(post, index) in filterList">
+            <router-link :to="`/post/${post.id}`" class="article">
+                <div class="header">
+                    <div>
+                        <h2>{{ post.title }}</h2>
+                        <p class="info">
+                            Posté par 
+                            <b>{{ post.user.nom }} 
+                            <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>
+                            <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                            le <b>{{ dateFormat(post.date) }}</b>
+                            à <b>{{ hourFormat(post.date) }}</b>
+                        </p>
                     </div>
-                    <div class="content">
-                        <p class="message"></p><br>
-                        <img class="image" v-if="post.image" :src="post.image" :alt="post.title">
-                        <p class="text">{{ post.content }}</p>
-                    </div>
-                </router-link>
-            </article>
+                </div>
+                <div class="content">
+                    <p class="message"></p><br>
+                    <img class="image" v-if="post.image" :src="post.image" :alt="post.title">
+                    <p class="text">{{ post.content }}</p>
+                </div>
+            </router-link>
+        </article>
         <Footer />
     </div>
 </template>
@@ -98,20 +98,21 @@ export default {
 <style scoped>
 
 h1 {
-    width: 100%;
-    font-size: 2vw;
+    width: 98%;
+    margin: 20px 0 20px 5px;
+    font-size: 1.7vw;
     background: #ffd7d7;
     border: 2px solid #fd2d01;
     border-radius: 20px;
 }
 
 h2 {
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     margin: 30px 0 10px 0;
 }
 
 .info {
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 
 .image {
@@ -128,7 +129,7 @@ h2 {
 
 .header,
 .content {
-    width: 50%;
+    width: 40%;
     background: #ffd7d7;
     border: 2px solid #fd2d01;
 }
@@ -154,7 +155,7 @@ h2 {
 
 .search {
     margin-bottom: 50px;
-    width: 30vw;
+    width: 25vw;
     height: 2vw;
     border: 2px solid #fd2d01;
     border-radius: 5px;
@@ -173,13 +174,13 @@ h2 {
 }
 
 .text {
-    font-size: 1.4vw;
+    font-size: 1vw;
 }
 
 @media screen and (max-width:1024px) {
 
     h1 {
-        font-size: 2rem;
+        font-size: 1.7rem;
     }
 
     h2 {
@@ -197,7 +198,7 @@ h2 {
 
     .header,
     .content {
-        width: 90%;
+        width: 70%;
     }
 
     .text {
@@ -205,7 +206,7 @@ h2 {
     }
 
     .search {
-        width: 70%;
+        width: 50%;
         height: 30px;
         margin-bottom: 50px;
     }
@@ -226,6 +227,8 @@ h2 {
 @media screen and (max-width:768px) {
 
     h1 {
+        width: 98%;
+        margin-left: 5px;
         font-size: 1.2rem;
     }
 
@@ -247,7 +250,7 @@ h2 {
     }
 
     .search{
-        width: 85%;
+        width: 50%;
         height: 30px;
         font-size: 3vw;
     }

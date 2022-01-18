@@ -2,35 +2,35 @@
     <div>
         <HeaderProfile />
         <AdminNav />
-            <article >
-                <div class="filter">
-                    <label for="moderate" v-if="moderate === false">Cochez pour voir les posts non modérés</label>
-                    <label for="moderate" v-if="moderate === true">Décochez pour voir tous les posts</label><br>
-                    <input v-model="moderate" type="checkbox" id="moderate" class="moderate" name="moderate">
-                </div>
-                <table>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Titre du post</th>
-                        <th>Message du post</th>
-                        <th>Image du post</th>
-                        <th>Modération</th>
-                    </tr>
-                    <tr v-bind:key="index" v-for="(post, index) in filterList">
-                            <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
-                            <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
-                            <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
-                            <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
-                            <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
-                            <td>
-                                <button @click="moderatePost(index)" aria-label="Modérer ce post" v-if="post.moderate === false"><i class="fas fa-check"></i></button>
-                                <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="fas fa-times"></i></button>
-                            </td>
-                    </tr>
-                </table>
-                <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
-            </article>
+        <article >
+            <div class="filter">
+                <label for="moderate" v-if="moderate === false">Cochez pour afficher les posts non modérés</label>
+                <label for="moderate" v-if="moderate === true">Décochez pour afficher tous les posts</label><br>
+                <input v-model="moderate" type="checkbox" id="moderate" class="moderate" name="moderate">
+            </div>
+            <table>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Titre du post</th>
+                    <th>Message du post</th>
+                    <th>Image du post</th>
+                    <th>Modération</th>
+                </tr>
+                <tr v-bind:key="index" v-for="(post, index) in filterList">
+                        <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
+                        <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
+                        <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
+                        <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
+                        <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
+                        <td>
+                            <button @click="moderatePost(index)" aria-label="Modérer ce post" v-if="post.moderate === false"><i class="fas fa-check"></i></button>
+                            <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="fas fa-times"></i></button>
+                        </td>
+                </tr>
+            </table>
+            <router-link to="/allposts" class="button" aria-label="Retour au fil d'actualité">Retour aux posts</router-link>
+        </article>
         <Footer />
     </div>
 </template>
@@ -131,6 +131,7 @@ export default {
 </script>
 
 <style scoped>
+
 table {
     width: 100%;
     font-size: 1vw;
@@ -205,6 +206,12 @@ input[type="checkbox"]:checked {
 }
 
 @media screen and (max-width:1024px) {
+
+    table,
+    .filter {
+        width: 98%;
+        margin-left: 5px;
+    }
 
     input {
     font-size: 1.5vw;

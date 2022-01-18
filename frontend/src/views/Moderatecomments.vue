@@ -4,8 +4,8 @@
         <AdminNav />
             <article >
                 <div class="filter">
-                    <label for="moderate" v-if="moderate === false">Cochez pour voir les commentaires non modérés</label>
-                    <label for="moderate" v-if="moderate === true">Décochez pour voir tous les commentaires</label><br>
+                    <label for="moderate" v-if="moderate === false">Cochez pour afficher les commentaires non modérés</label>
+                    <label for="moderate" v-if="moderate === true">Décochez pour afficher tous les commentaires</label><br>
                     <input v-model="moderate" type="checkbox" id="moderate" class="moderate" name="moderate">
                 </div>
                 <table>
@@ -195,6 +195,12 @@ input[type="checkbox"]:checked {
 }
 
 @media screen and (max-width:1024px) {
+
+    table,
+    .filter {
+        width: 98%;
+        margin-left: 5px;
+    }
 
     input {
     font-size: 1.5vw;

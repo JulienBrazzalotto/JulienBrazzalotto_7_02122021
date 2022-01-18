@@ -137,7 +137,8 @@ export default {
 <style scoped>
 
 h1 {
-    width: 100%;
+    width: 97%;
+    margin: 15px 10px;
     font-size: 2rem;
     background: #ffd7d7;
     border: 2px solid #fd2d01;

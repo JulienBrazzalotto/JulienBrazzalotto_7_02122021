@@ -84,7 +84,7 @@ export default {
 
 h1 {
     margin: 30px 0 50px 0;
-    width: 100%;
+    width: 98%;
     font-size: 2rem;
     background: #ffd7d7;
     border: 2px solid #fd2d01;

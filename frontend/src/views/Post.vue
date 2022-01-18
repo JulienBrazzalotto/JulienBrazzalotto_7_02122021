@@ -349,7 +349,7 @@ textarea {
 }
 
 img {
-    width: 98%;
+    width: 70%;
     border-radius: 30px;
 }
 
