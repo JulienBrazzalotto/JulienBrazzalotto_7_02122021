@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/780ffb6498dc457bb4595a229a9b2b9b)](https://www.codacy.com/gh/JulienBrazzalotto/JulienBrazzalotto_7_02122021/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JulienBrazzalotto/JulienBrazzalotto_7_02122021&amp;utm_campaign=Badge_Grade)
+
 # Projet 7 Groupomania #
 
 ## Prerequisites ##
