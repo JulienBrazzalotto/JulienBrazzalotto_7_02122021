@@ -1,4 +1,5 @@
 const Comment = require('../models/comment-models');
+const Post = require('../models/post-models');
 const User = require('../models/user-models');
 
 exports.createComment = (req, res, next) => {
@@ -35,10 +36,28 @@ exports.getPostComments = (req, res, next) => {
 exports.getAllComments = (req, res, next) => {
     Comment.findAll({
         include: [{
-        model : User,
-    }],
-        order: [["date", "ASC"]]})
+            model : User
+        },{
+            model : Post
+        }],
+        order: [["date", "ASC"]]
+    })
 
     .then( comments => res.status(200).json(comments))
     .catch( error => res.status(400).json({error}))
+};
+
+exports.modifyComment = (req, res, next) => {
+    Comment.findOne({ where: { id: req.params.id }})
+        .then(() => {
+            const modifyComment = {
+                moderate: req.body.moderate
+            };
+
+            Comment.update(modifyComment , { where: { id: req.params.id } })
+
+            .then(() => res.status(200).json({message : 'Commentaire modifié !'}))
+            .catch( error => res.status(400).json({error}));
+        })
+    
 };

@@ -18,7 +18,7 @@
                         <input type="email" v-model="user.email" placeholder="Email" size="50" required aria-label="Email de l'utilisateur">
                     </li>
                     <li v-if="user.image">
-                        <img :src="user.image" alt="Photo de profil" class="file">
+                        <img :src="user.image" alt="Photo de profil" class="file" width="200px" height="200px">
                     </li>
                     <li>
                         <label v-if="!user.image" for="file" class="label-file" aria-label="Choisir la photo de profil">Choisir une photo de profil</label>
@@ -76,9 +76,9 @@ export default {
                 }
             })
 
-                .then(response => response.json())
-                .then(data => (this.user = data))
-        
+            .then(response => response.json())
+            .then(data => (this.user = data))
+            .catch(alert)
         },
         updateUser() {
             const Id = JSON.parse(localStorage.getItem("userId"))
@@ -114,12 +114,14 @@ export default {
                         },
                         body: JSON.stringify(this.user)
                 })
-                    .then(response => response.json())
-                    .then(data => (this.user = data))
-                    .then(() => {
-                        alert("Votre modification est bien prise en compte")
-                        this.$router.go();
-                    })
+                .then(response => response.json())
+                .then(data => (this.user = data))
+                .then(() => {
+                    alert("Votre modification est bien prise en compte")
+                    this.$router.go();
+                })
+                .catch(alert)
+        
             } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != null) {
                 let data = new FormData()
                 data.append('nom', this.user.nom)
@@ -136,11 +138,10 @@ export default {
                         body: data
                 })
                 .then((response) => response.json())
-                .then((result) => {
-                    console.log('Success:', result);
+                .then(() => {
                     this.$router.go();
                 })
-                .catch(error => console.log(error))
+                .catch(alert)
             }
         },
         deleteUser() {
@@ -169,7 +170,7 @@ export default {
                             },
                         })
                             .then(response => response.json())
-                            .catch(error => console.log(error))
+                            .catch(alert)
                         }
                     }
                 })
@@ -189,7 +190,7 @@ export default {
                         })
                         .then(this.$router.push("/"))
                 })
-                .catch(error => console.log(error))
+                .catch(alert)
             }
         },
         uploadFile(e) {
@@ -244,8 +245,11 @@ input {
 }
 
 .file {
+    width: 200px;
+    height: 200px;
     margin-top: 10px;
-    height: 400px;
+    border: 2px solid #fd2d01;
+    border-radius: 100px;
 }
 
 .input-file {

@@ -79,7 +79,6 @@ export default {
       } else if (regexPassword.test(this.password) === false) {
           alert("Veuillez vérifier l'écriture de votre mot de passe, il doit contenir au moins une majuscule, une minuscule ainsi qu'un chiffre");
       }else if ((regexText.test(this.nom) === true) && regexText.test(this.prenom) === true && regexEmail.test(this.email) === true && regexPassword.test(this.password) === true ) {
-          alert("Votre inscription est bien prise en compte");
 
           fetch("http://localhost:3000/api/auth/signup", {
               method: "POST",
@@ -89,14 +88,21 @@ export default {
               },
               body: JSON.stringify(data)
           })
-          .then((response) => {
-              return response.json();
+          .then(response => {
+            if(response.ok) {
+              return response.json()
+            } else {
+              return response.text()
+              .then((text) => {
+                throw new Error(text)}
+              )
+            }
+          })  
+          .then(() => {
+              alert("Votre inscription est bien prise en compte");
+              this.$router.push("/login");
           })
-          .catch(error => console.log(error))
-
-          this.$router.push("/login");
-          
-
+          .catch(alert)
       }
     }
   }
@@ -109,7 +115,7 @@ export default {
 
 h1 {
     margin: 30px 0 50px 0;
-    width: 100%;
+    width: 98%;
     font-size: 2rem;
     background: #ffd7d7;
     border: 2px solid #fd2d01;

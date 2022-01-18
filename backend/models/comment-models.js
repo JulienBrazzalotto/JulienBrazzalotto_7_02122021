@@ -19,6 +19,10 @@ const comment = sequelize.define('comment', {
     post_id: {
         type: DataTypes.SMALLINT,
         allowNull: false
+    },
+    moderate: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 },
 {

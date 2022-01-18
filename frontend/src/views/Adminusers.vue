@@ -4,20 +4,28 @@
         <AdminNav />
             <article >
                 <div>
-                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=50 aria-label=" Barre de recherche d'un utilisateur avec son Nom">
+                    <input v-model="search" class="search" type="search" placeholder="Rechercher un utilisateur avec son Nom ..." size=40 aria-label=" Barre de recherche d'un utilisateur avec son Nom">
                 </div>
                 <table>
                     <tr>
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
-                        <th>Role</th>
+                        <th>Rôle</th>
+                        <th>Photo de profil</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
-                        <td><input type="text" v-model="user.nom" placeholder="Nom" required aria-label="Nom"></td>
-                        <td><input type="text" v-model="user.prenom" placeholder="Prénom" required aria-label="Prénom"></td>
-                        <td><input type="text" v-model="user.email" placeholder="Email" required class="email" aria-label="Email"></td>
-                        <td><input type="text" v-model="user.role" placeholder="Role" required aria-label="Rôle"></td>
+                        <td><input type="text" v-model="user.nom" required aria-label="Nom"></td>
+                        <td><input type="text" v-model="user.prenom" required aria-label="Prénom"></td>
+                        <td><input type="text" v-model="user.email" required class="email" aria-label="Email"></td>
+                        <td>
+                            <select v-model="user.role" name="role" id="role-select">
+                                <option value="0">Admin</option>
+                                <option value="1">Modérateur</option>
+                                <option value="2">Utilisateur</option>
+                            </select>
+                        </td>
+                        <td><img v-if="user.image" :src="user.image" alt="photo de profil"></td>
                         <button @click="modifyUser(index)" aria-label="Modifier cet utilisateur"><i class="fas fa-edit"></i></button>
                         <button @click="deleteUser(index)" aria-label="Supprimer cet utilisateur"><i class="far fa-trash-alt"></i></button>
                     </tr>
@@ -67,6 +75,7 @@ export default {
             
             .then(response => response.json())
             .then(data => (this.users = data))
+            .catch(alert)
         },
         deleteUser(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -79,42 +88,42 @@ export default {
                         'authorization': `Bearer ${token}`
                     },
                 })
-
                 .then(response => response.json())
                 .then(data => (this.posts = data))
                 .then (() => {
-                    let pub = this.posts
+                    let publication = this.posts
 
-                    for ( let i = 0 ; i < pub.length ; i++) {
-                        if (pub[i].image) {
-                        fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
-                            method: "DELETE",
-                            headers: {
-                                'authorization': `Bearer ${token}`
-                            },
-                        })
+                    for ( let i = 0 ; i < publication.length ; i++) {
+                        if (publication[i].image) {
+                            fetch(`http://localhost:3000/api/posts/${publication[i].id}`, {
+                                method: "DELETE",
+                                headers: {
+                                    'authorization': `Bearer ${token}`
+                                },
+                            })
                             .then(response => response.json())
-                            .catch(error => console.log(error))
+                            .catch(alert)
                         }
                     }
                 })
                 .then(() => {
                     fetch(`http://localhost:3000/api/auth/${this.filterList[index].id}`, {
-                    method: "DELETE",
-                    headers: {
-                        'authorization': `Bearer ${token}`
-                    }
+                        method: "DELETE",
+                        headers: {
+                            'authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(() => { 
+                        this.$router.go()
+                        })
+                    .catch(alert)
                 })
-                .then(response => response.json())
-                .then(() => { 
-                    alert("La suppression de l'utilisateur est bien prise en compte")
-                    this.$router.go() })
-                })
+                .catch(alert)
             }
         },
-        modifyUser(index, filterList) {
+        modifyUser(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
-            console.log(filterList)
 
             if (confirm("Voulez-vous vraiment modifier cet utilisateur") === true) {
                 
@@ -131,8 +140,9 @@ export default {
                 .then(response => response.json())
                 .then(data => (this.filterList[index] = data))
                 .then(() => { 
-                    alert("La modification de l'utilisateur est bien prise en compte")
-                    this.$router.go() })
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         }
     },
@@ -153,7 +163,7 @@ table {
 }
 
 button {
-    margin: 0 5px 0 0;
+    margin: 10px 5px 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -190,6 +200,17 @@ hr {
     background-color: #fd2d01;
 }
 
+img {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #fd2d01;
+    border-radius: 30px;
+}
+
+select {
+    background-color: white;
+}
+
 @media screen and (max-width:1024px) {
 
     input {
@@ -205,6 +226,11 @@ hr {
 
     input:not(.search) {
         width: 85vw;
+        height: 5vw;
+        font-size: 0.9rem;
+    }
+    select {
+        width: 86vw;
         height: 5vw;
         font-size: 0.9rem;
     }

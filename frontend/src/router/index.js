@@ -12,8 +12,8 @@ import Modifypost from '../views/Modifypost.vue'
 import Adminusers from '../views/Adminusers.vue'
 import Adminposts from '../views/Adminposts.vue'
 import Admincomments from '../views/Admincomments.vue'
-
-
+import Moderateposts from '../views/Moderateposts.vue'
+import Moderatecomments from '../views/Moderatecomments.vue'
 
 
 Vue.use(VueRouter)
@@ -78,6 +78,16 @@ const routes = [
     path: '/admin/comments',
     name: 'Admincomments',
     component: Admincomments
+  },
+  {
+    path: '/moderate/posts',
+    name: 'ModeratePosts',
+    component: Moderateposts
+  },
+  {
+    path: '/moderate/comments',
+    name: 'ModerateComments',
+    component: Moderatecomments
   }
 ]
 

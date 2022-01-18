@@ -24,6 +24,10 @@ const post = sequelize.define('post', {
     user_id: {
         type: DataTypes.SMALLINT,
         allowNull: false
+    },
+    moderate: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 },
 {

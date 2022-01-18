@@ -7,14 +7,16 @@
                     <tr>
                         <th>Nom</th>
                         <th>Prénom</th>
-                        <th>Titre</th>
-                        <th>Message</th>
+                        <th>Titre du post</th>
+                        <th>Message du post</th>
+                        <th>Image du post</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(post, index) in posts">
-                        <td><input type="text" v-model="post.user.nom" placeholder="Nom" required aria-label="Nom de l'auteur du post"></td>
-                        <td><input type="text" v-model="post.user.prenom" placeholder="Prénom" required aria-label="Prénom de l'auteur du post"></td>
-                        <td><input type="text" v-model="post.title" placeholder="Titre" required aria-label="Titre du post"></td>
-                        <td><textarea type="text" v-model="post.content" placeholder="Message" required aria-label="Message du post"></textarea></td>
+                        <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
+                        <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
+                        <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
+                        <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
+                        <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
                         <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="far fa-trash-alt"></i></button>
                     </tr>
                 </table>
@@ -38,10 +40,11 @@ export default {
     },
     data () {
         return {
-            posts: []
+            posts: [],
         }
     },
     methods : {
+
         getPosts() {
             const token = JSON.parse(localStorage.getItem("userToken"))
 
@@ -54,6 +57,7 @@ export default {
             
             .then(response => response.json())
             .then(data => (this.posts = data))
+            .catch(alert)
         },
         deletePost(index) {
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -70,8 +74,9 @@ export default {
                 .then(response => response.json())
                 .then(data => (this.posts[index] = data))
                 .then(() => {
-                    alert("La suppression du post est bien prise en compte")
-                    this.$router.go() })
+                    this.$router.go()
+                })
+                .catch(alert)
             }
         }
     },
@@ -104,6 +109,7 @@ table {
 }
 
 button {
+    margin-top: 25px;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
@@ -117,6 +123,16 @@ button {
 input,
 textarea {
         font-size: 1vw;
+}
+
+img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+}
+
+tr {
+    padding-bottom: 80px;
 }
 
 @media screen and (max-width:1024px) {
@@ -136,7 +152,7 @@ textarea {
 
     button {
         width: 20%;
-        margin: 0 0 5px 0;
+        margin: 0 0 50px 0;
         padding: 5px 10px;
     }
 
@@ -152,6 +168,7 @@ textarea {
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 0;
     }
 
     .button {

@@ -35,6 +35,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
+                    moderate: false,
                     image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
     
@@ -46,6 +47,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
+                    moderate: false,
                     image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
         
@@ -58,24 +60,39 @@ exports.modifyPost = (req, res, next) => {
     } else {
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
-            if (post.image) {
-                const filename = post.image.split('/images/posts/')[1];
-                fs.unlink(`images/posts/${filename}`, () => {
+            if (post.moderate === true) {
+                if (post.image) {
+                    const filename = post.image.split('/images/posts/')[1];
+                    fs.unlink(`images/posts/${filename}`, () => {
+                        const modifyPost = {
+                            title: req.body.title,
+                            content: req.body.content,
+                            moderate: false,
+                            image: ''
+                        };
+
+                        Post.update(modifyPost , { where: { id: req.params.id } })
+
+                            .then(() => res.status(200).json({message : 'Post modifié !'}))
+                            .catch( error => res.status(400).json({error}));
+                    })
+                } else {
                     const modifyPost = {
                         title: req.body.title,
                         content: req.body.content,
-                        image: ''
+                        moderate: false,
                     };
-
+            
                     Post.update(modifyPost , { where: { id: req.params.id } })
-
+            
                         .then(() => res.status(200).json({message : 'Post modifié !'}))
                         .catch( error => res.status(400).json({error}));
-                })
+                }
             } else {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
+                    moderate: req.body.moderate,
                 };
         
                 Post.update(modifyPost , { where: { id: req.params.id } })
@@ -83,6 +100,7 @@ exports.modifyPost = (req, res, next) => {
                     .then(() => res.status(200).json({message : 'Post modifié !'}))
                     .catch( error => res.status(400).json({error}));
             }
+            
         })
     }
 }
@@ -137,10 +155,10 @@ exports.getPostsUser = (req, res, next) => {
         where: {
             user_id : req.params.user_id
         },
-            include: [{
+        include: [{
             model : User,
         }],
-            order: [["date", "ASC"]]})
+        order: [["date", "ASC"]]})
 
     .then( posts => res.status(200).json(posts))
     .catch( error => res.status(400).json({error}))

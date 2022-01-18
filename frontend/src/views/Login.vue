@@ -45,17 +45,16 @@ export default {
           password: this.password
       };
 
-      fetch("http://localhost:3000/api/auth/login",
-      {
+      fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
           headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
           },
-          method: "POST",
           body: JSON.stringify(data)
       })
       
-      .then(response => {
+      .then( response => {
         if(response.ok) {
           return response.json()
         } else {
@@ -74,9 +73,7 @@ export default {
         localStorage.setItem("userId", userId);
         localStorage.setItem("role", role);
         this.$router.push("/allposts");
-        }
-      )
-
+      })
       .catch(alert)
     }
   }
@@ -87,7 +84,7 @@ export default {
 
 h1 {
     margin: 30px 0 50px 0;
-    width: 100%;
+    width: 98%;
     font-size: 2rem;
     background: #ffd7d7;
     border: 2px solid #fd2d01;
