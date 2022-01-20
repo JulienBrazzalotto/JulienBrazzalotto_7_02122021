@@ -12,6 +12,9 @@
             <a href="mailto:admin@groupomania.com" aria-label="Envoyer un mail à l'administrateur" > Contacter l'administrateur</a>
         </li>
     </ul>
+    <div class="copyright">
+      <p>© Groupomania | 2022 | Création du site Brazzalotto Julien </p>
+    </div>
   </footer>
 </template>
 
@@ -43,6 +46,10 @@ img {
     height: 150px;
 }
 
+.copyright{
+  font-size: 1rem;
+}
+
 @media screen and (max-width:768px) {
   a {
     font-size: 0.7rem;
@@ -58,6 +65,10 @@ img {
 
   img {
     height: 15vw;
+  }
+
+  .copyright{
+  font-size: 0.8rem;
   }
 }
 
