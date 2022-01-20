@@ -140,7 +140,7 @@ export default {
                 .then((response) => response.json())
                 .then(() => {
                     alert("Votre modification est bien prise en compte")
-                    this.$router.push("/profile");
+                    this.$router.go();
                 })
                 .catch(error => console.log(error))
             }
@@ -281,6 +281,7 @@ input {
 @media screen and (max-width:1024px) {
 
     h1 {
+        width: 98%;
         font-size: 1.5rem;
     }
     
