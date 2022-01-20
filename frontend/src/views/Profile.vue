@@ -118,7 +118,7 @@ export default {
                 .then(data => (this.user = data))
                 .then(() => {
                     alert("Votre modification est bien prise en compte")
-                    this.$router.go();
+                    this.$router.push("/profile");
                 })
                 .catch(alert)
         
@@ -139,7 +139,8 @@ export default {
                 })
                 .then((response) => response.json())
                 .then(() => {
-                    this.$router.go();
+                    alert("Votre modification est bien prise en compte")
+                    this.$router.push("/profile");
                 })
                 .catch(alert)
             }
