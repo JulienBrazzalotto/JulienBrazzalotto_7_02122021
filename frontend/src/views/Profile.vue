@@ -118,9 +118,9 @@ export default {
                 .then(data => (this.user = data))
                 .then(() => {
                     alert("Votre modification est bien prise en compte")
-                    this.$router.push("/profile");
+                    this.$router.go();
                 })
-                .catch(alert)
+                .catch(error => console.log(error))
         
             } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != null) {
                 let data = new FormData()
@@ -142,7 +142,7 @@ export default {
                     alert("Votre modification est bien prise en compte")
                     this.$router.push("/profile");
                 })
-                .catch(alert)
+                .catch(error => console.log(error))
             }
         },
         deleteUser() {
