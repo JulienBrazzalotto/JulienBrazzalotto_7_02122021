@@ -1,6 +1,7 @@
 const Post = require('../models/post-models');
 const User = require('../models/user-models');
 const fs = require('fs');
+const { DATE } = require('sequelize/dist');
 
 exports.createPost = (req, res, next) => {
     if (req.file) {
@@ -35,6 +36,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
+                    updated_date: Date.now(),
                     moderate: false,
                     image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
@@ -47,6 +49,7 @@ exports.modifyPost = (req, res, next) => {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
+                    updated_date: Date.now(),
                     moderate: false,
                     image: `${req.protocol}://${req.get('host')}/images/posts/${req.file.filename}`
                 };
@@ -57,42 +60,33 @@ exports.modifyPost = (req, res, next) => {
                     .catch( error => res.status(400).json({error}));
             }
         })
+        .catch(error => res.status(500).json({ error }));
+
     } else {
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
-            if (post.moderate === true) {
-                if (post.image) {
-                    const filename = post.image.split('/images/posts/')[1];
-                    fs.unlink(`images/posts/${filename}`, () => {
-                        const modifyPost = {
-                            title: req.body.title,
-                            content: req.body.content,
-                            moderate: false,
-                            image: ''
-                        };
-
-                        Post.update(modifyPost , { where: { id: req.params.id } })
-
-                            .then(() => res.status(200).json({message : 'Post modifié !'}))
-                            .catch( error => res.status(400).json({error}));
-                    })
-                } else {
+            if (post.image) {
+                const filename = post.image.split('/images/posts/')[1];
+                fs.unlink(`images/posts/${filename}`, () => {
                     const modifyPost = {
                         title: req.body.title,
                         content: req.body.content,
+                        updated_date: Date.now(),
                         moderate: false,
+                        image: ''
                     };
-            
+
                     Post.update(modifyPost , { where: { id: req.params.id } })
-            
+
                         .then(() => res.status(200).json({message : 'Post modifié !'}))
                         .catch( error => res.status(400).json({error}));
-                }
+                })
             } else {
                 const modifyPost = {
                     title: req.body.title,
                     content: req.body.content,
-                    moderate: req.body.moderate,
+                    updated_date: Date.now(),
+                    moderate: false,
                 };
         
                 Post.update(modifyPost , { where: { id: req.params.id } })
@@ -100,8 +94,8 @@ exports.modifyPost = (req, res, next) => {
                     .then(() => res.status(200).json({message : 'Post modifié !'}))
                     .catch( error => res.status(400).json({error}));
             }
-            
         })
+        .catch(error => res.status(500).json({ error }));
     }
 }
 
@@ -158,8 +152,23 @@ exports.getPostsUser = (req, res, next) => {
         include: [{
             model : User,
         }],
-        order: [["date", "ASC"]]})
+        order: [["created_date", "ASC"]]})
 
     .then( posts => res.status(200).json(posts))
     .catch( error => res.status(400).json({error}))
 };
+
+exports.moderatePost = (req, res, nest) => {
+    Post.findOne({ where: { id: req.params.id }})
+    .then(() => {
+        const moderation = {
+            moderate : req.body.moderate
+        };
+
+        Post.update(moderation, { where: { id: req.params.id }})
+        .then(() => { res.status(201).json({ message: 'Moderation effectué !' })})
+        .catch(error => res.status(400).json({ error }));
+
+    })
+    .catch(error => res.status(500).json({ error }));
+}

@@ -13,7 +13,7 @@
         </li>
     </ul>
     <div class="copyright">
-      <p>© Groupomania | 2022 | Création du site Brazzalotto Julien </p>
+      <p>© Groupomania | 2022 | Créateur du site Brazzalotto Julien </p>
     </div>
   </footer>
 </template>

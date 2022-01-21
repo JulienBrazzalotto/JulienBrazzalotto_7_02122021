@@ -12,7 +12,12 @@ const post = sequelize.define('post', {
     image: {
         type: DataTypes.STRING,
     },
-    date: {
+    created_date: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
+    },
+    updated_date: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         allowNull: false

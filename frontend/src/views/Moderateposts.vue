@@ -85,15 +85,18 @@ export default {
 
             if (confirm("Voulez-vous vraiment valider ce post") === true) {
                 
-                let data = new FormData()
-                    data.append('moderate', true)
+                let data = {
+                    moderate : true
+                }
 
-                fetch(`http://localhost:3000/api/posts/${this.filterList[index].id}`, {
+                fetch(`http://localhost:3000/api/posts/moderate/${this.filterList[index].id}`, {
                     method: "PUT",
                     headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
                     },
-                    body: data
+                    body: JSON.stringify(data)
                 })
                 .then((response) => response.json())
                 .then(data => (this.filterList[index] = data))
