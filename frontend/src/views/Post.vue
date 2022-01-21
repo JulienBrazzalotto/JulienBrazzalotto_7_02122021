@@ -7,15 +7,22 @@
                         <h1>{{ post.title }}</h1>
                     </div>
                     <div>
-                        <p class="info">
-                            Posté par 
-                            <b>{{ post.user.nom }} 
-                            <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
-                            <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
-                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
-                            le <b>{{ dateFormat(post.date) }}</b>
-                            à <b>{{ hourFormat(post.date) }}</b>
-                        </p>
+                        <div class="info">
+                            <p>
+                                Posté par 
+                                <b>{{ post.user.nom }} 
+                                <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>     
+                                <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
+                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil"><br>
+                                le <b>{{ dateFormat(post.created_date) }}</b>
+                                à <b>{{ hourFormat(post.created_date) }}</b><br>
+                            </p>
+                            <p v-if="post.created_date === post.updated_date">
+                                Modifié 
+                                le <b>{{ dateFormat(post.updated_date) }}</b>
+                                à <b>{{ hourFormat(post.updated_date) }}</b>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -38,7 +45,7 @@
                                 <b>{{ comment.user.nom }} 
                                 <span v-if="comment.user.role != 0">{{ comment.user.prenom }} </span></b> 
                                 <img class="photo-profil" v-if="comment.user.image" :src="comment.user.image" alt="photo de profil">
-                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                                <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil"><br>
                                 le <b>{{ dateFormat(comment.date) }}</b>
                                 à <b>{{ hourFormat(comment.date) }}</b>
                             </p>
@@ -80,7 +87,8 @@ export default {
             id_param: this.$route.params.id,
             post: {
                 content:'',
-                date:'',
+                created_date:'',
+                updated_date:'',
                 id:'',
                 image:'',
                 title:'',

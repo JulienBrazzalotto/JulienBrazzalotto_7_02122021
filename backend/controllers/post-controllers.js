@@ -158,7 +158,7 @@ exports.getPostsUser = (req, res, next) => {
         include: [{
             model : User,
         }],
-        order: [["date", "ASC"]]})
+        order: [["created_date", "ASC"]]})
 
     .then( posts => res.status(200).json(posts))
     .catch( error => res.status(400).json({error}))

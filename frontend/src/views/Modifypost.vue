@@ -89,7 +89,7 @@ export default {
                     .then(data => (this.post = data))
                     .then(() => {
                         alert("Votre modification est bien prise en compte")
-                        this.$router.go();
+                        this.$router.push(`/post/${this.id_param}`);
                     })
                 .catch(alert)
 
