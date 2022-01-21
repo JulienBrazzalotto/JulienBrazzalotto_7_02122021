@@ -225,6 +225,8 @@ export default {
         modifyPassword() {
             const Id = JSON.parse(localStorage.getItem("userId"))
             const token = JSON.parse(localStorage.getItem("userToken"))
+            const regexPassword = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{3,50}$/;
+
 
             if (this.oldPassword === '')
                 alert("Veuillez remplir votre ancien mot de passe")
@@ -235,7 +237,9 @@ export default {
             if (this.confirmNewPassword === '')
                 alert("Veuillez remplir votre confirmation de mot de passe")
 
-			if (this.confirmNewPassword === this.newPassword) {
+            if (regexPassword.test(this.newPassword) === false){
+                alert("Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!")
+            } else if (this.confirmNewPassword === this.newPassword) {
 
 				let data = {
                     oldPassword: this.oldPassword,
