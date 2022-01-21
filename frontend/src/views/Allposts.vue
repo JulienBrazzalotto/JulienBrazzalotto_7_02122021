@@ -19,9 +19,14 @@
                             <b>{{ post.user.nom }} 
                             <span v-if="post.user.role != 0">{{ post.user.prenom }} </span></b>
                             <img class="photo-profil" v-if="post.user.image" :src="post.user.image" alt="photo de profil">
-                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil">
+                            <img class="photo-profil" v-else src="../assets/images/photo-profil.jpg" alt="photo de profil"><br>
                             le <b>{{ dateFormat(post.created_date) }}</b>
                             à <b>{{ hourFormat(post.created_date) }}</b>
+                        </p>
+                        <p v-if="post.created_date != post.updated_date"  class="info">
+                            Modifié 
+                            le <b>{{ dateFormat(post.updated_date) }}</b>
+                            à <b>{{ hourFormat(post.updated_date) }}</b>
                         </p>
                     </div>
                 </div>

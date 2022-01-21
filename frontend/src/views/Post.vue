@@ -17,7 +17,7 @@
                                 le <b>{{ dateFormat(post.created_date) }}</b>
                                 à <b>{{ hourFormat(post.created_date) }}</b><br>
                             </p>
-                            <p v-if="post.created_date === post.updated_date">
+                            <p v-if="post.created_date != post.updated_date">
                                 Modifié 
                                 le <b>{{ dateFormat(post.updated_date) }}</b>
                                 à <b>{{ hourFormat(post.updated_date) }}</b>
