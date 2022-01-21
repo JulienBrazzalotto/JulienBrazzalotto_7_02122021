@@ -29,7 +29,7 @@
                     <p>{{ post.content }}</p>
                 </div>
 
-                <button v-if="comments.length != 0" v-on:click="show" class="comment-button" aria-label="Voir commentaire">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
+                <button v-if="comments.length != 0 && displaycomments === false " v-on:click="show" class="comment-button" aria-label="Voir commentaire">Voir {{ comments.length }} commentaire<span v-if="comments.length >= 2">s</span></button>
                 <article v-if="displaycomments">
                     <div v-bind:key="index" v-for="(comment, index) in comments" class="comment">
                         <div>
@@ -52,7 +52,7 @@
                     <button v-on:click="hide" class="comment-button" aria-label="Cacher commentaire">Cacher le<span v-if="comments.length >= 2">s</span> commentaire<span v-if="comments.length >= 2">s</span></button>
                 </article>
 
-                <button v-on:click="show2" class="button" aria-label="Ecrire un commentaire">Ecrire un commentaire</button>
+                <button v-if="displayCreateComment === false" v-on:click="show2" class="button" aria-label="Ecrire un commentaire">Ecrire un commentaire</button>
                 <article v-if="displayCreateComment" class="createcomment">
                     <textarea v-model="commentaire" placeholder="Commentaire" cols="60" rows="5" aria-label="Message du commentaire"></textarea>
                     <button @click="createComment()" class="buttonenvoyer" aria-label="Envoyer le commentaire">Envoyer le commentaire</button>

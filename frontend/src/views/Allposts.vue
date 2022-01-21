@@ -193,7 +193,7 @@ h2 {
     }
 
     .image {
-        height: 40vw;
+        height: 30vw;
     }
 
     .header,
@@ -246,7 +246,7 @@ h2 {
     }
 
     .image {
-        height: 50vw;
+        height: 40vw;
     }
 
     .search{

@@ -77,7 +77,7 @@ export default {
                 })
                 .then(() => {
                     this.$router.push("/allposts");
-                    this.$router.go() })
+                })
                 .catch(alert)
 
             } else if (this.titre != '' && this.contenu != '') {
@@ -97,7 +97,6 @@ export default {
                 .then((response) => response.json())
                 .then(() => {
                     this.$router.push("/allposts");
-                    this.$router.go()
                 })
                 .catch(alert)
             }
