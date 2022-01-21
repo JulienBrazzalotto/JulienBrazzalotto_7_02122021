@@ -25,6 +25,15 @@
                         <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer la photo de profil"> Supprimer cette photo de profil</button>
                         <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Photo de profil">
                     </li>
+                    <li>
+                        <button v-on:click="show" class="button">Modifier son mot de passe</button>
+                    </li>
+                    <li v-if="button">
+                        <input v-model="oldPassword" type="text" placeholder="Ancien mot de passe" size="30" class="password">
+                        <input v-model="newPassword" type="text" placeholder="Nouveau mot de passe" size="30" class="password">
+                        <input v-model="confirmNewPassword" type="text" placeholder="Confirmer le mot de passe" size="30" class="password">
+                        <button @click="modifyPassword()" class="button">Valider mon nouveau mot de passe</button>
+                    </li>
                 </ul>
                 <div class="submit">
                     <button @click="updateUser()" class="button" aria-label="Modifier le compte de cet utilisateur"><i class="fas fa-edit"></i> Enregistrer les modifications</button>
@@ -57,14 +66,20 @@ export default {
                 image:''
             },
             preview: null,
-            posts: []
-        
+            posts: [],
+            oldPassword:'',
+            newPassword:'',
+            confirmNewPassword:'',
+            button : false
         }
     },
     mounted () {
         this.getUser();
     },
     methods: {
+        show: function () {
+            return this.button = true;
+        },
         getUser() {
             const Id = JSON.parse(localStorage.getItem("userId"))
             const token = JSON.parse(localStorage.getItem("userToken"))
@@ -178,11 +193,11 @@ export default {
                 .then(() => {
                     fetch(`http://localhost:3000/api/auth/${Id}`, {
                         method: "DELETE",
-                            headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'authorization': `Bearer ${token}`
-                            }
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'authorization': `Bearer ${token}`
+                        }
                     })
                         .then(response => response.json())
                         .then(() => { 
@@ -206,6 +221,54 @@ export default {
         },
         deletefile() {
             this.user.image = '';
+        },
+        modifyPassword() {
+            const Id = JSON.parse(localStorage.getItem("userId"))
+            const token = JSON.parse(localStorage.getItem("userToken"))
+
+            if (this.oldPassword === '')
+                alert("Veuillez remplir votre ancien mot de passe")
+            
+            if (this.newPassword === '')
+                alert("Veuillez remplir votre nouveau mot de passe")
+
+            if (this.confirmNewPassword === '')
+                alert("Veuillez remplir votre confirmation de mot de passe")
+
+			if (this.confirmNewPassword === this.newPassword) {
+
+				let data = {
+                    oldPassword: this.oldPassword,
+					password : this.newPassword
+				}
+
+				fetch(`http://localhost:3000/api/auth/profile/${Id}`, {
+                    method: "PUT",
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+				})
+                .then(response => {
+                    if(response.ok) {
+                    return response.json()
+                    } else {
+                    return response.text()
+                    .then((text) => {
+                        throw new Error(text)}
+                    )
+                    }
+                })
+				.then(() => {
+                    alert("Le mot de passe a été modifié")
+					this.$router.go();
+				})
+				.catch(alert)
+			} else {
+				alert("Le nouveau mot de passe et sa confirmation ne sont pas identiques")
+			}
         }
     }
 }
@@ -276,6 +339,10 @@ input {
 
 .submit {
     margin-bottom: 30px;
+}
+
+.password {
+    margin-top: 5px;
 }
 
 @media screen and (max-width:1024px) {

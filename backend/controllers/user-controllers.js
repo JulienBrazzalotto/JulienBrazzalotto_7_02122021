@@ -196,7 +196,7 @@ exports.AdminModifyUser = (req, res, next) => {
 
     user.update(modifyUser, { where: { id: req.params.id }
         })
-        .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
+        .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
         .catch((error)=> res.status(400).json({error}));
 };
 
@@ -205,3 +205,36 @@ exports.getAllUsers = (req, res, next) => {
     .then((users) => res.status(200).json(users))
     .catch((error) => res.status(400).json(error))
 };
+
+exports.modifyPassword = (req, res, next) => {
+    user.findOne({ where: { id: req.params.id }})
+    .then(User => {
+        bcrypt.compare(req.body.oldPassword, User.password)
+            .then(valid => {
+
+            if (!valid) {
+                return res.status(401).json("Mot de passe actuel incorrect");
+            }
+
+            if (!schema.validate(req.body.password)) {
+                return res.status(401).json('Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!')
+            }
+
+                bcrypt.hash(req.body.password, 10)
+                .then(hash => {
+                    const newPassword = {
+                        password : hash
+                    };
+
+                    user.update(newPassword, { where: { id: req.params.id }})
+                    .then(() => { res.status(201).json({ message: 'Mot de passe modifié !' })})
+                    .catch(error => res.status(400).json({ error }));
+
+                })
+                .catch(error => res.status(500).json({ error }));
+            })
+            .catch(error => res.status(500).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
+}
+
