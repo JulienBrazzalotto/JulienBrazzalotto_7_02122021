@@ -205,6 +205,7 @@ export default {
                             localStorage.clear();
                         })
                         .then(this.$router.push("/"))
+                        .catch(alert)
                 })
                 .catch(alert)
             }
