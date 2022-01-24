@@ -16,7 +16,7 @@
                             <label v-if="!post.image " for="file" class="label-file" aria-label="Choisir une photo pour ce post">Choisir une image</label>
                             <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer cette photo du post"> Supprimer cette image</button>
                             
-                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Image du post">
+                            <input type="file" accept=".jpeg, .jpg, .png, .webp, .gif" v-on:change="uploadFile" id="file" class="input-file" aria-label="Image du post">
                         </li>
                         <li>
                             <label for="message" aria-label="Message">Message</label>
@@ -95,23 +95,33 @@ export default {
 
             } else if (this.post.title != "" && this.post.content != "") {
 
-                let data = new FormData()
-                data.append('image', fileField.files[0])
-                data.append('title', this.post.title)
-                data.append('content', this.post.content)
+                var fileName = document.getElementById("file").value
+                var idxDot = fileName.lastIndexOf(".") + 1;
+                var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                
+                if (extFile === "jpg" || extFile === "jpeg" || extFile === "png" || extFile === "webp" || extFile === "gif"|| extFile ===""){
+                    let data = new FormData()
+                    data.append('image', fileField.files[0])
+                    data.append('title', this.post.title)
+                    data.append('content', this.post.content)
 
-                fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
-                    method: "PUT",
-                    headers: {
-                        'authorization': `Bearer ${token}`
-                    },
-                    body: data
-                })
-                .then((response) => response.json())
-                .then(() => {
-                    this.$router.push(`/post/${this.id_param}`);
-                })
-                .catch(alert)
+                    fetch(`http://localhost:3000/api/posts/${this.id_param}`, {
+                        method: "PUT",
+                        headers: {
+                            'authorization': `Bearer ${token}`
+                        },
+                        body: data
+                    })
+                    .then((response) => response.json())
+                    .then(() => {
+                        this.$router.push(`/post/${this.id_param}`);
+                    })
+                    .catch(alert)
+                } else {
+                    alert("Uniquement les fichiers jpg, jpeg, png, webp et gif sont acceptés!");
+                }
+
+                
             }
         },
         uploadFile(e) {

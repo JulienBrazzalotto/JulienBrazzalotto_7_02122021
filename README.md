@@ -19,7 +19,8 @@ Compte administrateur:
     -  Password : Azerty32  
 If you wish you can change the email and password of the administrator directly in the file groupomania.sql.
 
--   From within the project folder, run `npm install`.  
+-   From on the backend folder, run `npm install`.  
+Create an "images" folder containing a "posts" folder and another "profiles" folder.  
 Change the .env file in the root of the backend folder with the database configuration information and the token key.  
 You can then run the server with `nodemon server`.  
 The server should run on `localhost` with default port `3000`.  

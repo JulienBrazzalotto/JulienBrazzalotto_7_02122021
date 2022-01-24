@@ -14,7 +14,7 @@
                         <li>
                             <label v-if="!image" for="file" class="label-file" aria-label="Choisir une photo pour ce post">Choisir une image</label>
                             <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer cette photo du post"> Supprimer cette image</button>
-                            <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Image du post">
+                            <input type="file" accept=".jpeg, .jpg, .png, .webp, .gif" v-on:change="uploadFile" id="file" class="input-file" aria-label="Image du post">
                         </li>
                         <li>
                             <textarea v-model="contenu" placeholder="Contenu" rows="10" cols="60" required aria-label="Message du post"></textarea>
@@ -81,24 +81,33 @@ export default {
                 .catch(alert)
 
             } else if (this.titre != '' && this.contenu != '') {
-                let data = new FormData()
-                data.append('image', fileField.files[0])
-                data.append('title', this.titre)
-                data.append('content', this.contenu)
-                data.append('user_id', Id)
 
-                fetch("http://localhost:3000/api/posts", {
-                    method: "POST",
-                    headers: {
-                    'authorization': `Bearer ${token}`
-                    },
-                    body: data
-                })
-                .then((response) => response.json())
-                .then(() => {
-                    this.$router.push("/allposts");
-                })
-                .catch(alert)
+                var fileName = document.getElementById("file").value
+                var idxDot = fileName.lastIndexOf(".") + 1;
+                var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                
+                if (extFile === "jpg" || extFile === "jpeg" || extFile === "png" || extFile === "webp" ||extFile === "gif"){
+                    let data = new FormData()
+                    data.append('image', fileField.files[0])
+                    data.append('title', this.titre)
+                    data.append('content', this.contenu)
+                    data.append('user_id', Id)
+
+                    fetch("http://localhost:3000/api/posts", {
+                        method: "POST",
+                        headers: {
+                        'authorization': `Bearer ${token}`
+                        },
+                        body: data
+                    })
+                    .then((response) => response.json())
+                    .then(() => {
+                        this.$router.push("/allposts");
+                    })
+                    .catch(alert)
+                } else {
+                    alert("Uniquement les fichiers jpg, jpeg, png, webp et gif sont acceptés!");
+                }
             }
         },
         uploadFile(e) {
