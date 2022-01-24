@@ -186,7 +186,7 @@ export default {
                             },
                         })
                             .then(response => response.json())
-                            .catch(alert)
+                            .catch(error => console.log(error))
                         }
                     }
                 })
@@ -205,9 +205,9 @@ export default {
                             localStorage.clear();
                         })
                         .then(this.$router.push("/"))
-                        .catch(alert)
+                        .catch(error => console.log(error))
                 })
-                .catch(alert)
+                .catch(error => console.log(error))
             }
         },
         uploadFile(e) {
