@@ -65,7 +65,7 @@ exports.modifyPost = (req, res, next) => {
     } else {
         Post.findOne({ where: { id: req.params.id }})
         .then(post => {
-            if (post.image) {
+            if (post.image && req.body.image === '') {
                 const filename = post.image.split('/images/posts/')[1];
                 fs.unlink(`images/posts/${filename}`, () => {
                     const modifyPost = {
