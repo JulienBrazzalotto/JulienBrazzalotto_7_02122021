@@ -75,6 +75,7 @@ export default {
                 alert("Veuillez remplir votre message");
             if (this.post.image === null && this.post.title != "" && this.post.content != "") {
                 let data = new FormData()
+                data.append('image', '')
                 data.append('title', this.post.title)
                 data.append('content', this.post.content)
 

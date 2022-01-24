@@ -173,7 +173,6 @@ export default {
                 })
                 .then(response => response.json())
                 .then(() => { 
-                    alert("La suppression du post est bien prise en compte")
                     this.$router.push("/allposts") })
                 .catch(alert)
             }
@@ -210,7 +209,7 @@ export default {
                 .then(() => {
                     this.$router.go()
                 })
-                .catch(alert)
+                .catch(error => console.log(error))
             }
         },
         deleteComment (index) {
