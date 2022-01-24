@@ -106,7 +106,7 @@ table {
 }
 
 button {
-    margin-top: 10px;
+    margin: 20px 10px 0 0;
     padding: 5px 5px ;
     border: 2px solid #fd2d01;
     border-radius: 10px;
