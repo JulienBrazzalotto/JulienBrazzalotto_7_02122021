@@ -12,11 +12,10 @@ You will need to have SQL, Node and `npm` installed locally on your machine.
 
 -   Clone this repo.
 
--   Create a "groupomania" database and import the file groupomania.sql.
-
+-   Create a "groupomania" database and import the file groupomania.sql.  
 Compte administrateur:
     -  Email : admin@groupomania.com
-    -  Password : Azerty32
+    -  Password : Azerty32  
 If you wish you can change the email and password of the administrator directly in the file groupomania.sql
 
 -   From within the project folder, run `npm install`.
