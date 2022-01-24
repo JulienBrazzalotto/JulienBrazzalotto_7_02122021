@@ -12,10 +12,10 @@
                         <th>Image du post</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(post, index) in posts">
-                        <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post"></td>
-                        <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post"></td>
-                        <td><input type="text" v-model="post.title" required aria-label="Titre du post"></td>
-                        <td><textarea type="text" v-model="post.content" required aria-label="Message du post"></textarea></td>
+                        <td><input type="text" v-model="post.user.nom" required aria-label="Nom de l'auteur du post" disabled></td>
+                        <td><input type="text" v-model="post.user.prenom" required aria-label="Prénom de l'auteur du post" disabled></td>
+                        <td><input type="text" v-model="post.title" required aria-label="Titre du post" disabled></td>
+                        <td><textarea type="text" v-model="post.content" required aria-label="Message du post" disabled></textarea></td>
                         <td><img v-if="post.image" :src="post.image" alt="Image du post"></td>
                         <button @click="deletePost(index)" aria-label="Supprimer ce post"><i class="far fa-trash-alt"></i></button>
                     </tr>
@@ -123,6 +123,10 @@ button {
 input,
 textarea {
         font-size: 1vw;
+}
+
+textarea {
+    resize: none;
 }
 
 img {
