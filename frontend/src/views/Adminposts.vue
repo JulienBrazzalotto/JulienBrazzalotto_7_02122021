@@ -122,7 +122,7 @@ button {
 
 input,
 textarea {
-        font-size: 1vw;
+    font-size: 1vw;
 }
 
 textarea {

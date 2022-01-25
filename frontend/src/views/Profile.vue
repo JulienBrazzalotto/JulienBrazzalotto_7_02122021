@@ -118,16 +118,19 @@ export default {
                 alert("Veuillez remplir votre adresse email");
             } else if (regexEmail.test(this.user.email) === false) {
                 alert("Veuillez écrire une adresse email valide");
-            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image === null) {
-            
+            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image === '') {
+                let data = new FormData()
+                    data.append('nom', this.user.nom)
+                    data.append('prenom', this.user.prenom)
+                    data.append('email', this.user.email)
+                    data.append('image', '')
+
                 fetch(`http://localhost:3000/api/auth/${Id}`, {
                     method: "PUT",
                         headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify(this.user)
+                        body: data
                 })
                 .then(response => response.json())
                 .then(data => (this.user = data))
@@ -137,7 +140,7 @@ export default {
                 })
                 .catch(error => console.log(error))
         
-            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != null) {
+            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != '') {
                 
                 var fileName = document.getElementById("file").value
                 var idxDot = fileName.lastIndexOf(".") + 1;
