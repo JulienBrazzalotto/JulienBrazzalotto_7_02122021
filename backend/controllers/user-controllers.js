@@ -65,7 +65,8 @@ exports.login = (req, res, next) => {
                         image: user.image,
                         role: user.role,
                         token: jwt.sign(
-                            {userId: user.id},
+                            {userId: user.id,
+                            role: user.role},
                             process.env.TOKEN, 
                             {expiresIn: '24h'} 
                         )
@@ -77,25 +78,37 @@ exports.login = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
+
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId
+    const role = decodedToken.role
     user.findOne({ where: { id: req.params.id }})
     .then(User => {
-        if (User.image != null) {
-            const filename = User.image.split('/images/profiles/')[1];
-            fs.unlink(`images/profiles/${filename}`, () => {
+        if (userId === User.id || role === 0) {
+            if (User.image != null) {
+                const filename = User.image.split('/images/profiles/')[1];
+                fs.unlink(`images/profiles/${filename}`, () => {
+                    user.destroy({ where: { id: req.params.id } })
+
+                    .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
+                    .catch( error => res.status(400).json({error}));
+                })
+            
+        
+            } else {
                 user.destroy({ where: { id: req.params.id } })
 
                 .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
                 .catch( error => res.status(400).json({error}));
-            })
-        
-    
+            }
         } else {
-            user.destroy({ where: { id: req.params.id } })
-
-            .then(() => res.status(200).json({message : 'Utilisateur supprimé !'}))
-            .catch( error => res.status(400).json({error}));
+            res.status(401).json({
+                error: new Error
+            });
         }
     })
+    .catch(error => res.status(400).json({error}));
 }
 
 exports.getOneUser = (req, res, next) => {
