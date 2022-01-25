@@ -69,7 +69,7 @@ exports.modifyPost = (req, res, next) => {
                 }
             } else {
                 res.status(401).json({
-                    error: new Error('401:unauthorized request')
+                    message: 'Requête non autorisée !'
                 });
             }
         })
@@ -110,7 +110,7 @@ exports.modifyPost = (req, res, next) => {
                 }
             } else {
                 res.status(401).json({
-                    error: new Error('401:unauthorized request')
+                    message: 'Requête non autorisée !'
                 });
             }
         })
@@ -146,7 +146,7 @@ exports.deletePost = (req, res, next) => {
                 }
             } else {
                 res.status(401).json({
-                    error: new Error('401:unauthorized request')
+                    message: 'Requête non autorisée !'
                 });
             }
         })
@@ -208,7 +208,7 @@ exports.moderatePost = (req, res, nest) => {
             .catch(error => res.status(400).json({ error }));
         } else {
             res.status(401).json({
-                error: new Error('401:unauthorized request')
+                message: 'Requête non autorisée !' 
             });
         }
     })
