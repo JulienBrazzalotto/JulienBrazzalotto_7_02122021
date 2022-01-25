@@ -200,7 +200,7 @@ exports.modifyUser = (req, res, next) => {
                 });
             }
         })
-    
+        .catch( error => res.status(400).json({error}));
     }
 };
 
@@ -235,33 +235,43 @@ exports.getAllUsers = (req, res, next) => {
 };
 
 exports.modifyPassword = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId
+
     user.findOne({ where: { id: req.params.id }})
     .then(User => {
-        bcrypt.compare(req.body.oldPassword, User.password)
-            .then(valid => {
+        if (userId === User.id) {
+            bcrypt.compare(req.body.oldPassword, User.password)
+                .then(valid => {
 
-            if (!valid) {
-                return res.status(401).json("Mot de passe actuel incorrect");
-            }
+                if (!valid) {
+                    return res.status(401).json("Mot de passe actuel incorrect");
+                }
 
-            if (!schema.validate(req.body.password)) {
-                return res.status(401).json('Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!')
-            }
+                if (!schema.validate(req.body.password)) {
+                    return res.status(401).json('Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!')
+                }
 
-                bcrypt.hash(req.body.password, 10)
-                .then(hash => {
-                    const newPassword = {
-                        password : hash
-                    };
+                    bcrypt.hash(req.body.password, 10)
+                    .then(hash => {
+                        const newPassword = {
+                            password : hash
+                        };
 
-                    user.update(newPassword, { where: { id: req.params.id }})
-                    .then(() => { res.status(201).json({ message: 'Mot de passe modifié !' })})
-                    .catch(error => res.status(400).json({ error }));
+                        user.update(newPassword, { where: { id: req.params.id }})
+                        .then(() => { res.status(201).json({ message: 'Mot de passe modifié !' })})
+                        .catch(error => res.status(400).json({ error }));
 
+                    })
+                    .catch(error => res.status(500).json({ error }));
                 })
                 .catch(error => res.status(500).json({ error }));
-            })
-            .catch(error => res.status(500).json({ error }));
+        } else {
+            res.status(401).json({
+                error: new Error('401:unauthorized request')
+            });
+        }
     })
     .catch(error => res.status(500).json({ error }));
 }
