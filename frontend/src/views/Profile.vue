@@ -23,7 +23,7 @@
                     <li>
                         <label v-if="!user.image" for="file" class="label-file" aria-label="Choisir la photo de profil">Choisir une photo de profil</label>
                         <button v-else @click="deletefile()" class="label-file" aria-label="Supprimer la photo de profil"> Supprimer cette photo de profil</button>
-                        <input type="file" accept="image/jpeg, image/jpg, image/png, image/webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Photo de profil">
+                        <input type="file" accept=".jpeg, .jpg, .png, .webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Photo de profil">
                     </li>
                     <li>
                         <button v-on:click="show" class="button">Modifier son mot de passe</button>
@@ -118,16 +118,19 @@ export default {
                 alert("Veuillez remplir votre adresse email");
             } else if (regexEmail.test(this.user.email) === false) {
                 alert("Veuillez écrire une adresse email valide");
-            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image === null) {
-            
+            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image === '') {
+                let data = new FormData()
+                    data.append('nom', this.user.nom)
+                    data.append('prenom', this.user.prenom)
+                    data.append('email', this.user.email)
+                    data.append('image', '')
+
                 fetch(`http://localhost:3000/api/auth/${Id}`, {
                     method: "PUT",
                         headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
                         },
-                        body: JSON.stringify(this.user)
+                        body: data
                 })
                 .then(response => response.json())
                 .then(data => (this.user = data))
@@ -137,27 +140,36 @@ export default {
                 })
                 .catch(error => console.log(error))
         
-            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != null) {
-                let data = new FormData()
-                data.append('nom', this.user.nom)
-                data.append('prenom', this.user.prenom)
-                data.append('email', this.user.email)
-                data.append('image', fileField.files[0])
+            } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != '') {
+                
+                var fileName = document.getElementById("file").value
+                var idxDot = fileName.lastIndexOf(".") + 1;
+                var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+                
+                if (extFile === "jpg" || extFile === "jpeg" || extFile === "png" || extFile === "webp" || extFile === ""){
+                    let data = new FormData()
+                        data.append('nom', this.user.nom)
+                        data.append('prenom', this.user.prenom)
+                        data.append('email', this.user.email)
+                        data.append('image', fileField.files[0])
 
 
-                fetch(`http://localhost:3000/api/auth/${Id}`, {
-                    method: "PUT",
-                        headers: {
-                        'authorization': `Bearer ${token}`
-                        },
-                        body: data
-                })
-                .then((response) => response.json())
-                .then(() => {
-                    alert("Votre modification est bien prise en compte")
-                    this.$router.go();
-                })
-                .catch(error => console.log(error))
+                        fetch(`http://localhost:3000/api/auth/${Id}`, {
+                            method: "PUT",
+                                headers: {
+                                'authorization': `Bearer ${token}`
+                                },
+                                body: data
+                        })
+                        .then((response) => response.json())
+                        .then(() => {
+                            alert("Votre modification est bien prise en compte")
+                            this.$router.go();
+                        })
+                        .catch(error => console.log(error))
+                }else{
+                    alert("Uniquement les fichiers jpg, jpeg, png et webp sont acceptés!");
+                }   
             }
         },
         deleteUser() {

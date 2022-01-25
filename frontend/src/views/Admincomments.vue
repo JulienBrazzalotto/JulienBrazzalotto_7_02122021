@@ -11,10 +11,10 @@
                         <th>Commentaire</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(comment, index) in comments">
-                        <td><input type="text" v-model="comment.user.nom" required aria-label="Nom de l'auteur du commentaire"></td>
-                        <td><input type="text" v-model="comment.user.prenom" required aria-label="Prénom de l'auteur du commentaire"></td>
-                        <td><input type="text" v-model="comment.post.title" required aria-label="Titre du post"></td>
-                        <td><textarea type="text" v-model="comment.content" rows="3" cols="50" required aria-label="Commentaire"></textarea></td>
+                        <td><input type="text" v-model="comment.user.nom" required aria-label="Nom de l'auteur du commentaire" disabled></td>
+                        <td><input type="text" v-model="comment.user.prenom" required aria-label="Prénom de l'auteur du commentaire" disabled></td>
+                        <td><input type="text" v-model="comment.post.title" required aria-label="Titre du post" disabled></td>
+                        <td><textarea type="text" v-model="comment.content" rows="3" cols="50" required aria-label="Commentaire" disabled></textarea></td>
                         <button @click="deleteComments(index)" aria-label="Supprimer ce commentaire"><i class="far fa-trash-alt"></i></button>
                     </tr>
                 </table>
@@ -120,6 +120,10 @@ button {
 input,
 textarea {
     font-size: 1vw;
+}
+
+textarea {
+    resize: none;
 }
 
 @media screen and (max-width:1024px) {

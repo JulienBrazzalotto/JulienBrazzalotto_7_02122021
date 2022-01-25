@@ -140,7 +140,7 @@ exports.modifyUser = (req, res, next) => {
     } else {
         user.findOne({ where: { id: req.params.id }})
         .then(User => {
-            if (User.image) {
+            if (User.image && req.body.image === '') {
                 const filename = User.image.split('/images/profiles/')[1];
                 fs.unlink(`images/profiles/${filename}`, () => {
                     const modifyUser = {
@@ -160,7 +160,6 @@ exports.modifyUser = (req, res, next) => {
                     nom: req.body.nom,
                     prenom: req.body.prenom,
                     email: req.body.email,
-                    image: ''
                 };
         
                 user.update(modifyUser , { where: { id: req.params.id } })
@@ -171,18 +170,6 @@ exports.modifyUser = (req, res, next) => {
         })
     
     }
-    
-    const modifyUser = {
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        email: req.body.email,
-        image: req.body.image,
-    };
-
-    user.update(modifyUser, { where: { id: req.params.id }
-        })
-        .then(()=> res.status(200).json({message : 'Utilisateur modifié !'}))
-        .catch((error)=> res.status(400).json({error}));
 };
 
 exports.AdminModifyUser = (req, res, next) => {
