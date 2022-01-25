@@ -15,9 +15,9 @@
                         <th>Photo de profil</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
-                        <td><input type="text" v-model="user.nom" required aria-label="Nom" disabled></td>
-                        <td><input type="text" v-model="user.prenom" required aria-label="Prénom" disabled></td>
-                        <td><input type="text" v-model="user.email" required class="email" aria-label="Email" disabled></td>
+                        <td><input type="text" v-model="user.nom" required aria-label="Nom"></td>
+                        <td><input type="text" v-model="user.prenom" required aria-label="Prénom"></td>
+                        <td><input type="text" v-model="user.email" required class="email" aria-label="Email"></td>
                         <td>
                             <select v-model="user.role" name="role" id="role-select">
                                 <option value="0">Admin</option>

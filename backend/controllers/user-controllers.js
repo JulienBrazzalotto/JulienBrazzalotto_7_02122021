@@ -78,11 +78,11 @@ exports.login = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN);
     const userId = decodedToken.userId
     const role = decodedToken.role
+
     user.findOne({ where: { id: req.params.id }})
     .then(User => {
         if (userId === User.id || role === 0) {
@@ -104,7 +104,7 @@ exports.delete = (req, res, next) => {
             }
         } else {
             res.status(401).json({
-                error: new Error
+                error: new Error('401:unauthorized request')
             });
         }
     })
@@ -118,86 +118,114 @@ exports.getOneUser = (req, res, next) => {
 };
 
 exports.modifyUser = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId
+    const role = decodedToken.role
+
     if (req.file) {
 
         user.findOne({ where: { id: req.params.id }})
         .then(User => {
-            if (User.image) {
-            const filename = User.image.split('/images/profiles/')[1];
-            fs.unlink(`images/profiles/${filename}`, () => {
-                const modifyUser = {
-                    nom: req.body.nom,
-                    prenom: req.body.prenom,
-                    email: req.body.email,
-                    image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
-                };
-    
-                user.update(modifyUser , { where: { id: req.params.id } })
-            
-                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
-                    .catch( error => res.status(400).json({error}));
-            })} else {
-                const modifyUser = {
-                    nom: req.body.nom,
-                    prenom: req.body.prenom,
-                    email: req.body.email,
-                    image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
-                };
-        
-                user.update(modifyUser , { where: { id: req.params.id } })
-        
-                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
-                    .catch( error => res.status(400).json({error}));
-            }
-        })
-    } else {
-        user.findOne({ where: { id: req.params.id }})
-        .then(User => {
-            if (User.image && req.body.image === '') {
+            if (userId === User.id || role === 0) {
+                if (User.image) {
                 const filename = User.image.split('/images/profiles/')[1];
                 fs.unlink(`images/profiles/${filename}`, () => {
                     const modifyUser = {
                         nom: req.body.nom,
                         prenom: req.body.prenom,
                         email: req.body.email,
-                        image: ''
+                        image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
                     };
-
+        
                     user.update(modifyUser , { where: { id: req.params.id } })
-
+                
                         .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
                         .catch( error => res.status(400).json({error}));
-                })
+                })} else {
+                    const modifyUser = {
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        email: req.body.email,
+                        image: `${req.protocol}://${req.get('host')}/images/profiles/${req.file.filename}`
+                    };
+            
+                    user.update(modifyUser , { where: { id: req.params.id } })
+            
+                        .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                        .catch( error => res.status(400).json({error}));
+                }
             } else {
-                const modifyUser = {
-                    nom: req.body.nom,
-                    prenom: req.body.prenom,
-                    email: req.body.email,
-                };
-        
-                user.update(modifyUser , { where: { id: req.params.id } })
-        
-                    .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
-                    .catch( error => res.status(400).json({error}));
+                res.status(401).json({
+                    error: new Error('401:unauthorized request')
+                });
             }
         })
-    
+        .catch( error => res.status(400).json({error}));
+
+    } else {
+        user.findOne({ where: { id: req.params.id }})
+        .then(User => {
+            if (userId === User.id || role === 0) {
+                if (User.image && req.body.image === '') {
+                    const filename = User.image.split('/images/profiles/')[1];
+                    fs.unlink(`images/profiles/${filename}`, () => {
+                        const modifyUser = {
+                            nom: req.body.nom,
+                            prenom: req.body.prenom,
+                            email: req.body.email,
+                            image: ''
+                        };
+
+                        user.update(modifyUser , { where: { id: req.params.id } })
+
+                            .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                            .catch( error => res.status(400).json({error}));
+                    })
+                } else {
+                    const modifyUser = {
+                        nom: req.body.nom,
+                        prenom: req.body.prenom,
+                        email: req.body.email,
+                    };
+            
+                    user.update(modifyUser , { where: { id: req.params.id } })
+            
+                        .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+                        .catch( error => res.status(400).json({error}));
+                }
+            } else {
+                res.status(401).json({
+                    error: new Error('401:unauthorized request')
+                });
+            }
+        })
+        .catch( error => res.status(400).json({error}));
     }
 };
 
 exports.AdminModifyUser = (req, res, next) => {
-    
-    const modifyUser = {
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        email: req.body.email,
-        role: req.body.role
-    };
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const role = decodedToken.role
 
-    user.update(modifyUser, { where: { id: req.params.id }
-        })
-        .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
-        .catch((error)=> res.status(400).json({error}));
+    if (role === 0) {
+        const modifyUser = {
+            nom: req.body.nom,
+            prenom: req.body.prenom,
+            email: req.body.email,
+            role: req.body.role
+        };
+
+        user.update(modifyUser, { where: { id: req.params.id }
+            })
+            .then(() => res.status(200).json({message : 'Utilisateur modifié !'}))
+            .catch((error)=> res.status(400).json({error}));
+    } else {
+        res.status(401).json({
+            error: new Error('401:unauthorized request')
+        });
+    }
 };
 
 exports.getAllUsers = (req, res, next) => {
@@ -207,33 +235,43 @@ exports.getAllUsers = (req, res, next) => {
 };
 
 exports.modifyPassword = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId
+
     user.findOne({ where: { id: req.params.id }})
     .then(User => {
-        bcrypt.compare(req.body.oldPassword, User.password)
-            .then(valid => {
+        if (userId === User.id) {
+            bcrypt.compare(req.body.oldPassword, User.password)
+                .then(valid => {
 
-            if (!valid) {
-                return res.status(401).json("Mot de passe actuel incorrect");
-            }
+                if (!valid) {
+                    return res.status(401).json("Mot de passe actuel incorrect");
+                }
 
-            if (!schema.validate(req.body.password)) {
-                return res.status(401).json('Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!')
-            }
+                if (!schema.validate(req.body.password)) {
+                    return res.status(401).json('Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!')
+                }
 
-                bcrypt.hash(req.body.password, 10)
-                .then(hash => {
-                    const newPassword = {
-                        password : hash
-                    };
+                    bcrypt.hash(req.body.password, 10)
+                    .then(hash => {
+                        const newPassword = {
+                            password : hash
+                        };
 
-                    user.update(newPassword, { where: { id: req.params.id }})
-                    .then(() => { res.status(201).json({ message: 'Mot de passe modifié !' })})
-                    .catch(error => res.status(400).json({ error }));
+                        user.update(newPassword, { where: { id: req.params.id }})
+                        .then(() => { res.status(201).json({ message: 'Mot de passe modifié !' })})
+                        .catch(error => res.status(400).json({ error }));
 
+                    })
+                    .catch(error => res.status(500).json({ error }));
                 })
                 .catch(error => res.status(500).json({ error }));
-            })
-            .catch(error => res.status(500).json({ error }));
+        } else {
+            res.status(401).json({
+                error: new Error('401:unauthorized request')
+            });
+        }
     })
     .catch(error => res.status(500).json({ error }));
 }

@@ -1,6 +1,7 @@
 const Comment = require('../models/comment-models');
 const Post = require('../models/post-models');
 const User = require('../models/user-models');
+const jwt = require('jsonwebtoken');
 
 exports.createComment = (req, res, next) => {
     Comment.create({
@@ -13,10 +14,24 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.deleteComment = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId
+    const role = decodedToken.role
+
     Comment.destroy({ where: { id: req.params.id } })
 
-        .then(() => res.status(200).json({message : 'Commentaire supprimé !'}))
-        .catch( error => res.status(400).json({error}));
+    .then((comment) => {
+        if (userId === comment.user_id || role === 0 || role === 1) {
+            res.status(200).json({message : 'Commentaire supprimé !'})
+
+        } else {
+            res.status(401).json({
+                error: new Error('401:unauthorized request')
+            });
+        }
+    })
+    .catch( error => res.status(400).json({error}));
 };
 
 exports.getPostComments = (req, res, next) => {
@@ -48,16 +63,27 @@ exports.getAllComments = (req, res, next) => {
 };
 
 exports.modifyComment = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId
+    const role = decodedToken.role
+
     Comment.findOne({ where: { id: req.params.id }})
         .then(() => {
-            const modifyComment = {
-                moderate: req.body.moderate
-            };
+            if (role === 1) {
+                const modifyComment = {
+                    moderate: req.body.moderate
+                };
 
-            Comment.update(modifyComment , { where: { id: req.params.id } })
+                Comment.update(modifyComment , { where: { id: req.params.id } })
 
-            .then(() => res.status(200).json({message : 'Commentaire modifié !'}))
-            .catch( error => res.status(400).json({error}));
+                .then(() => res.status(200).json({message : 'Commentaire modifié !'}))
+                .catch( error => res.status(400).json({error}));
+            } else {
+                res.status(401).json({
+                    error: new Error('401:unauthorized request')
+                });
+            }
         })
-    
+        .catch( error => res.status(400).json({error}))
 };

@@ -34,6 +34,7 @@
                     <p class="message"></p><br>
                     <img class="image" v-if="post.image" :src="post.image" :alt="post.title">
                     <p class="text">{{ post.content }}</p>
+                    <p>{{post.comments.length}} <i class="fas fa-comments link"></i></p>
                 </div>
             </router-link>
         </article>

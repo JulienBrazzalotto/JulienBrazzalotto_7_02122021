@@ -1,6 +1,6 @@
 <template>
     <header class="nav">
-        <img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" />
+        <router-link to="/allposts" ><img src="../assets/images/logo-groupomania.png" alt="Logo Groupomania" /></router-link>
         <nav>
             <router-link to="/admin/users" v-if="role === 0" aria-label="Administration"><i class="fas fa-user-lock link"></i></router-link>
             <router-link to="/moderate/posts" v-else-if="role === 1" aria-label="Administration"><i class="fas fa-user-lock link"></i></router-link>
