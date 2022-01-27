@@ -351,6 +351,10 @@ input {
     cursor: pointer;
 }
 
+.label-file {
+    margin-bottom: 30px;
+}
+
 .espacement {
     margin-left: 10px;
 }
