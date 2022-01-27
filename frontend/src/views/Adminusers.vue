@@ -19,10 +19,10 @@
                         <td><input type="text" v-model="user.prenom" required aria-label="Prénom"></td>
                         <td><input type="text" v-model="user.email" required class="email" aria-label="Email"></td>
                         <td>
-                            <select v-model="user.role" name="role" id="role-select">
-                                <option value="0">Admin</option>
-                                <option value="1">Modérateur</option>
-                                <option value="2">Utilisateur</option>
+                            <select v-model="user.role" name="role" id="role-select" aria-label="Role">
+                                <option value="0" aria-label="Role administrateur">Admin</option>
+                                <option value="1" aria-label="Role Modérateur">Modérateur</option>
+                                <option value="2" aria-label="Role Utilisateur">Utilisateur</option>
                             </select>
                         </td>
                         <td><img v-if="user.image" :src="user.image" alt="photo de profil"></td>

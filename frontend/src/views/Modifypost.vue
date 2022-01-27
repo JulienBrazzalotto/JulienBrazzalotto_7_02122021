@@ -6,8 +6,8 @@
                 <form>
                     <ul>
                         <li>
-                            <label for="titre"  aria-label="Titre">Titre</label>
-                            <input type="text" v-model="post.title" placeholder="Titre" size="50" required aria-label="Titre du post">
+                            <label for="titre" aria-label="Titre">Titre</label>
+                            <input type="text" v-model="post.title" id="titre" placeholder="Titre" size="50" required aria-label="Titre du post">
                         </li>
                         <li v-if="post.image">
                             <img :src="post.image" alt="Image du post" class="file">
@@ -20,7 +20,7 @@
                         </li>
                         <li>
                             <label for="message" aria-label="Message">Message</label>
-                            <textarea v-model="post.content" placeholder="Contenu" rows="10" cols="60" required aria-label="Message du post"></textarea>
+                            <textarea v-model="post.content" id="message" placeholder="Contenu" rows="10" cols="60" required aria-label="Message du post"></textarea>
                         </li>
                     </ul>
                 </form>

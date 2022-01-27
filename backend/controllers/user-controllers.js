@@ -104,7 +104,7 @@ exports.delete = (req, res, next) => {
             }
         } else {
             res.status(401).json({
-                error: new Error('401:unauthorized request')
+                message: 'Requête non autorisée !'
             });
         }
     })
@@ -157,7 +157,7 @@ exports.modifyUser = (req, res, next) => {
                 }
             } else {
                 res.status(401).json({
-                    error: new Error('401:unauthorized request')
+                    message: 'Requête non autorisée !'
                 });
             }
         })
@@ -196,7 +196,7 @@ exports.modifyUser = (req, res, next) => {
                 }
             } else {
                 res.status(401).json({
-                    error: new Error('401:unauthorized request')
+                    message: 'Requête non autorisée !'
                 });
             }
         })
@@ -223,7 +223,7 @@ exports.AdminModifyUser = (req, res, next) => {
             .catch((error)=> res.status(400).json({error}));
     } else {
         res.status(401).json({
-            error: new Error('401:unauthorized request')
+            message: 'Requête non autorisée !'
         });
     }
 };
@@ -269,7 +269,7 @@ exports.modifyPassword = (req, res, next) => {
                 .catch(error => res.status(500).json({ error }));
         } else {
             res.status(401).json({
-                error: new Error('401:unauthorized request')
+                message: 'Requête non autorisée !'
             });
         }
     })
