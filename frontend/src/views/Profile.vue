@@ -6,15 +6,15 @@
             <form>
                 <ul>
                     <li>
-                        <label for="nom">Nom</label>
+                        <label for="nom" aria-label="Nom de l'utilisateur">Nom</label>
                         <input type="text" v-model="user.nom" placeholder="Nom" size="50" required aria-label="Nom de l'utilisateur">
                     </li>
                     <li>
-                        <label for="prenom">Prénom</label>
+                        <label for="prenom" aria-label="Prénom de l'utilisateur">Prénom</label>
                         <input type="text" v-model="user.prenom" placeholder="Prenom" size="50" required aria-label="Prénom de l'utilisateur">
                     </li>
                     <li>
-                        <label for="email">Email</label>
+                        <label for="email" aria-label="Email de l'utilisateur">Email</label>
                         <input type="email" v-model="user.email" placeholder="Email" size="50" required aria-label="Email de l'utilisateur">
                     </li>
                     <li v-if="user.image">
