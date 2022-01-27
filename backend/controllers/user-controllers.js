@@ -228,6 +228,40 @@ exports.AdminModifyUser = (req, res, next) => {
     }
 };
 
+exports.AdminModifyPassword = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const role = decodedToken.role
+
+    user.findOne({ where: { id: req.params.id }})
+    .then(() => {
+        if (role === 0) {
+            if (!schema.validate(req.body.password)) {
+                return res.status(401).json('Le nouveau mot de passe doit avoir une longueur de 3 à 50 caractères avec au moins un chiffre, une minuscule, une majuscule !!!')
+            }
+
+                bcrypt.hash(req.body.password, 10)
+                .then(hash => {
+                    const newPassword = {
+                        password : hash
+                    };
+
+                    user.update(newPassword, { where: { id: req.params.id }})
+                    .then(() => { res.status(201).json({ message: 'Mot de passe modifié !' })})
+                    .catch(error => res.status(400).json({ error }));
+
+                })
+                .catch(error => res.status(500).json({ error }));
+            
+        } else {
+            res.status(401).json({
+                message: 'Requête non autorisée !'
+            });
+        }
+    })
+    .catch(error => res.status(500).json({ error }));
+}
+
 exports.getAllUsers = (req, res, next) => {
     user.findAll()
     .then((users) => res.status(200).json(users))

@@ -8,6 +8,7 @@
                 </div>
                 <table>
                     <tr>
+                        <th>Modification MDP</th>
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
@@ -15,6 +16,9 @@
                         <th>Photo de profil</th>
                     </tr>
                     <tr v-bind:key="index" v-for="(user, index) in filterList">
+                        <td>
+                            <button @click="modifyPassword(index)" aria-label="Modifier le mot de passe de ce utilisateur"><i class="fas fa-edit"></i></button>
+                        </td>
                         <td><input type="text" v-model="user.nom" required aria-label="Nom"></td>
                         <td><input type="text" v-model="user.prenom" required aria-label="Prénom"></td>
                         <td><input type="text" v-model="user.email" required class="email" aria-label="Email"></td>
@@ -144,6 +148,9 @@ export default {
                 })
                 .catch(alert)
             }
+        },
+        modifyPassword(index) {
+            this.$router.push(`/modifyPassword/${this.filterList[index].id}`)
         }
     },
     mounted(){

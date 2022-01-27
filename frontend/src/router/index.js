@@ -14,6 +14,7 @@ import Adminposts from '../views/Adminposts.vue'
 import Admincomments from '../views/Admincomments.vue'
 import Moderateposts from '../views/Moderateposts.vue'
 import Moderatecomments from '../views/Moderatecomments.vue'
+import ModifyPassword from '../views/ModifyPassword.vue'
 
 
 Vue.use(VueRouter)
@@ -88,6 +89,11 @@ const routes = [
     path: '/moderate/comments',
     name: 'ModerateComments',
     component: Moderatecomments
+  },
+  {
+    path: '/modifyPassword/:id',
+    name: 'modifyPassword',
+    component: ModifyPassword
   }
 ]
 
