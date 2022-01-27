@@ -7,15 +7,15 @@
                 <ul>
                     <li>
                         <label for="nom" aria-label="Nom de l'utilisateur">Nom</label>
-                        <input type="text" v-model="user.nom" placeholder="Nom" size="50" required aria-label="Nom de l'utilisateur">
+                        <input type="text" v-model="user.nom" id="nom" placeholder="Nom" size="50" required aria-label="Nom de l'utilisateur">
                     </li>
                     <li>
                         <label for="prenom" aria-label="Prénom de l'utilisateur">Prénom</label>
-                        <input type="text" v-model="user.prenom" placeholder="Prenom" size="50" required aria-label="Prénom de l'utilisateur">
+                        <input type="text" v-model="user.prenom" id="prenom" placeholder="Prenom" size="50" required aria-label="Prénom de l'utilisateur">
                     </li>
                     <li>
                         <label for="email" aria-label="Email de l'utilisateur">Email</label>
-                        <input type="email" v-model="user.email" placeholder="Email" size="50" required aria-label="Email de l'utilisateur">
+                        <input type="email" v-model="user.email" id="email" placeholder="Email" size="50" required aria-label="Email de l'utilisateur">
                     </li>
                     <li v-if="user.image">
                         <img :src="user.image" alt="Photo de profil" class="file" width="200px" height="200px">
@@ -26,12 +26,12 @@
                         <input type="file" accept=".jpeg, .jpg, .png, .webp" v-on:change="uploadFile" id="file" class="input-file" aria-label="Photo de profil">
                     </li>
                     <li>
-                        <button v-on:click="show" class="button">Modifier son mot de passe</button>
+                        <button v-on:click="show" v-if="button === false" class="button">Modifier son mot de passe</button>
                     </li>
                     <li v-if="button">
-                        <input v-model="oldPassword" type="text" placeholder="Ancien mot de passe" size="30" class="password">
-                        <input v-model="newPassword" type="text" placeholder="Nouveau mot de passe" size="30" class="password">
-                        <input v-model="confirmNewPassword" type="text" placeholder="Confirmer le mot de passe" size="30" class="password">
+                        <input v-model="oldPassword" type="text" placeholder="Ancien mot de passe" size="30" class="password" aria-label="Ancien mot de passe">
+                        <input v-model="newPassword" type="text" placeholder="Nouveau mot de passe" size="30" class="password" aria-label="Nouveau mot de passe">
+                        <input v-model="confirmNewPassword" type="text" placeholder="Confirmer le mot de passe" size="30" class="password" aria-label="Confirmation du mot de passe">
                         <button @click="modifyPassword()" class="button">Valider mon nouveau mot de passe</button>
                     </li>
                 </ul>
@@ -282,7 +282,8 @@ export default {
                     alert("Le mot de passe a été modifié")
 					this.$router.go();
 				})
-				.catch(alert)
+				.catch(error => console.log(error))
+
 			} else {
 				alert("Le nouveau mot de passe et sa confirmation ne sont pas identiques")
 			}
