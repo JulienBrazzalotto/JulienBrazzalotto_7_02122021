@@ -243,7 +243,6 @@ select {
     }
 
     button {
-        width: 20%;
         margin: 0 0 5px 0;
         padding: 5px 10px;
     }
