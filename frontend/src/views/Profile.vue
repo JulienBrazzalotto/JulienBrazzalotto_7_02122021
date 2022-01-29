@@ -191,7 +191,7 @@ export default {
 
                     for ( let i = 0 ; i < pub.length ; i++) {
                         if (pub[i].image) {
-                        fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
+                        return fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
                             method: "DELETE",
                             headers: {
                                 'authorization': `Bearer ${token}`
@@ -206,21 +206,19 @@ export default {
                     fetch(`http://localhost:3000/api/auth/${Id}`, {
                         method: "DELETE",
                         headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
                         'authorization': `Bearer ${token}`
                         }
                     })
                         .then(response => response.json())
                         .then(() => { 
                             alert("La suppression du compte est bien prise en compte")
-                            localStorage.clear();
                         })
-                        .then(this.$router.push("/"))
                         .catch(error => console.log(error))
                 })
                 .catch(error => console.log(error))
             }
+            this.$router.push("/")
+            localStorage.clear();
         },
         uploadFile(e) {
             if (e.target.files) {

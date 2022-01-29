@@ -65,7 +65,6 @@ exports.getAllComments = (req, res, next) => {
 exports.modifyComment = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN);
-    const userId = decodedToken.userId
     const role = decodedToken.role
 
     Comment.findOne({ where: { id: req.params.id }})
