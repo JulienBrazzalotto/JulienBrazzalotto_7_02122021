@@ -191,7 +191,7 @@ export default {
 
                     for ( let i = 0 ; i < pub.length ; i++) {
                         if (pub[i].image) {
-                        return fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
+                        fetch(`http://localhost:3000/api/posts/${pub[i].id}`, {
                             method: "DELETE",
                             headers: {
                                 'authorization': `Bearer ${token}`
