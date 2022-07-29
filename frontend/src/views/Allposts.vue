@@ -79,7 +79,6 @@ export default {
             
             .then(response => response.json())
             .then(data => (this.posts = data))
-            .catch(error => console.log(error))
         },
         dateFormat(createdDate) {
             const date = new Date(createdDate)

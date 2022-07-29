@@ -138,7 +138,6 @@ export default {
                     alert("Votre modification est bien prise en compte")
                     this.$router.go();
                 })
-                .catch(error => console.log(error))
         
             } else if ((regexText.test(this.user.nom) === true) && regexText.test(this.user.prenom) === true && regexEmail.test(this.user.email) === true && this.user.image != '') {
                 
@@ -166,7 +165,6 @@ export default {
                             alert("Votre modification est bien prise en compte")
                             this.$router.go();
                         })
-                        .catch(error => console.log(error))
                 }else{
                     alert("Uniquement les fichiers jpg, jpeg, png et webp sont acceptés!");
                 }   
@@ -198,7 +196,6 @@ export default {
                             },
                         })
                             .then(response => response.json())
-                            .catch(error => console.log(error))
                         }
                     }
                 })
@@ -213,9 +210,7 @@ export default {
                         .then(() => { 
                             alert("La suppression du compte est bien prise en compte")
                         })
-                        .catch(error => console.log(error))
                 })
-                .catch(error => console.log(error))
             }
             this.$router.push("/")
             localStorage.clear();
@@ -280,7 +275,6 @@ export default {
                     alert("Le mot de passe a été modifié")
 					this.$router.go();
 				})
-				.catch(error => console.log(error))
 
 			} else {
 				alert("Le nouveau mot de passe et sa confirmation ne sont pas identiques")

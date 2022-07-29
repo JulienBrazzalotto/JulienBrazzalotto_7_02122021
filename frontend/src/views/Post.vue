@@ -209,7 +209,6 @@ export default {
                 .then(() => {
                     this.$router.go()
                 })
-                .catch(error => console.log(error))
             }
         },
         deleteComment (index) {

@@ -106,7 +106,6 @@ export default {
                                 },
                             })
                             .then(response => response.json())
-                            .catch(error => console.log(error))
                         }
                     }
                 })
@@ -121,9 +120,7 @@ export default {
                     .then(() => { 
                         this.$router.go()
                         })
-                    .catch(error => console.log(error))
                 })
-                .catch(error => console.log(error))
             }
         },
         modifyUser(index) {
@@ -146,7 +143,6 @@ export default {
                 .then(() => { 
                     this.$router.go()
                 })
-                .catch(error => console.log(error))
             }
         },
         modifyPassword(index) {
