@@ -18,5 +18,8 @@
     "mysql2": "^2.3.3",
     "password-validator": "^5.2.1",
     "sequelize": "^6.12.0-beta.1"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
